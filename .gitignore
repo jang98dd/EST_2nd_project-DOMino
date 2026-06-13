@@ -1,6 +1,4 @@
 node_modules/
 crawl/node_modules/
 
-css/
-
-.Ds
+.DS_Store
