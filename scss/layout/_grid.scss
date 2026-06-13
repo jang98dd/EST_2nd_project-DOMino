@@ -1,0 +1,20 @@
+/* mobile */
+.grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* tablet */
+@include tablet {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* desktop */
+@include desktop {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
