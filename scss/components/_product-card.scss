@@ -1,0 +1,27 @@
+.product-card {
+  width: 160px;
+  @include flex-column;
+}
+.product-card_img {
+  width: 100%;
+  aspect-ratio: 1/1;
+}
+.product-card_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* tablet */
+@include tablet {
+  .product-card {
+    width: 208px;
+  }
+}
+
+/* desktop */
+@include desktop {
+  .product-card {
+    width: 264px;
+  }
+}
