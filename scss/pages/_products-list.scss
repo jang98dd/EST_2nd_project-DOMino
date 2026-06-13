@@ -14,3 +14,6 @@
 .page-header__spacer {
   justify-self: end;
 }
+.product-toolbar {
+  @include flex-between;
+}

@@ -398,4 +398,8 @@ header {
   justify-self: end;
 }
 
-/*# sourceMappingURL=style.css.map */
+.product-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
