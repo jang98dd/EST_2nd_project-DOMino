@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>상품목록</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="header__left">
+      <h1 class="header__logo">
+        <a href="/" aria-label="ROUNZ 홈">ROUNZ</a>
+      </h1>
+    </div>
+
+    <div class="header__right">
+      <div class="header__utility">
+        <button type="button" class="icon-btn" aria-label="검색 열기">
+          <span class="material-icons" aria-hidden="true">search</span>
+        </button>
+
+        <button type="button" class="icon-btn" aria-label="장바구니, 현재 1개 상품">
+          <span class="material-icons" aria-hidden="true">shopping_bag</span>
+          <span class="cart-badge" aria-hidden="true">1</span>
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="header__toggle icon-btn"
+        aria-label="메뉴 열기"
+        aria-expanded="false"
+        aria-controls="global-nav">
+        <span class="material-icons" aria-hidden="true">menu</span>
+      </button>
+    </div>
+  </header>
+  <main class="page page--product-list">
+    <nav class="page-header" aria-label="페이지 위치">
+      <button type="button" class="back-btn" aria-label="이전 페이지로 이동">
+        이전
+      </button>
+
+      <h2 class="page-title">EYEGLASSES</h2>
+      <div class="page-header__spacer" aria-hidden="true"></div>
+    </nav>
+    <section class="product-toolbar" aria-label="상품 정렬 및 정보">
+      <button type="button" class="sort-btn" aria-haspopup="listbox" aria-expanded="false">
+        인기순
+        <span class="material-icons" aria-hidden="true">keyboard_arrow_down</span>
+      </button>
+
+      <p class="product-count">
+        <span class="sr-only">전체 상품 수</span>
+        100개의 상품
+      </p>
+    </section>
+    <section class="product-list" aria-label="상품 목록">
+      <h2 class="sr-only">상품 목록</h2>
+
+      <div class="product-cards" aria-live="polite">
+      </div>
+
+      <button type="button" class="btn-more">
+        더보기
+      </button>
+    </section>
+
+  </main>
+  <div class="floating-actions" role="region" aria-label="빠른 필터 및 추천">
+    <button type="button" class="filter-btn" aria-label="필터 열기, 현재 0개 적용됨">
+      <span class="material-icons" aria-hidden="true">filter_alt</span>
+      필터 (0)
+    </button>
+
+    <button type="button" class="recommend-btn" aria-label="추천 프레임 보기">
+      <span class="material-icons" aria-hidden="true">eyeglasses</span>
+      함께 보면 좋은 프레임
+    </button>
+  </div>
+
+</body>
+</html>

@@ -41,9 +41,37 @@ $lh-150: 1.5;
 $lh-100: 1;
 
 /* line-height - desktop */
+$lh-114: 1.14;
+$lh-142: 1.42;
 $lh-122: 1.22;
 $lh-128: 1.28;
 $lh-133: 1.33;
 $lh-140-d: 1.4;
 $lh-150-d: 1.5;
 $lh-155: 1.55;
+
+$indicator-gap: (
+  mobile: 8px,
+  tablet: 8px,
+  desktop: 16px
+);
+$indicator-top: (
+  mobile: 16px,
+  tablet: 16px,
+  desktop:32px
+);
+
+$indicator-height: (
+  mobile: 2px,
+  tablet: 4px,
+  desktop: 4px
+);
+
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+$space-7: 40px;
+$space-8: 48px;
