@@ -4,8 +4,22 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 16px;
+  flex-wrap: nowrap;
 }
-
+.header__left {
+  flex-shrink: 0;
+}
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+}
+.header__utility {
+  display: flex;
+  gap: 24px;
+  align-items:center;
+}
 /* desktop */
 @include desktop {
   header {

@@ -47,3 +47,17 @@
 @mixin aspect-ratio ($w, $h) {
   aspect-ratio: $w / $h;
 }
+
+@mixin respond($size) {
+  @if $size == mobile {
+    @media (min-width: 480px) { @content; }
+  }
+
+  @if $size == tablet {
+    @media (min-width: 768px) { @content; }
+  }
+
+  @if $size == desktop {
+    @media (min-width: 1200px) { @content; }
+  }
+}
