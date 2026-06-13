@@ -1,10 +1,9 @@
-/* Error: Undefined variable.
+/* Error: Can't find stylesheet to import.
  *   ,
- * 6 |   font-size: $font-body-s-b-100px;
- *   |              ^^^^^^^^^^^^^^^^^^^^
+ * 6 | @import "components/_header";
+ *   |         ^^^^^^^^^^^^^^^^^^^^
  *   '
- *   scss\base\_typography.scss 6:14  @import
- *   scss\style.scss 4:9              root stylesheet */
+ *   scss\style.scss 6:9  root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
@@ -14,5 +13,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a   \2577 \a 6 \2502    font-size: $font-body-s-b-100px;\d\a   \2502               ^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   scss\\base\\_typography.scss 6:14  @import\a   scss\\style.scss 4:9              root stylesheet";
+  content: "Error: Can't find stylesheet to import.\a   \2577 \a 6 \2502  @import \"components/_header\";\d\a   \2502          ^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   scss\\style.scss 6:9  root stylesheet";
 }
