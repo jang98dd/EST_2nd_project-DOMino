@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOMINO</title>
+
+</head>
+<body>
+  <header class="header">
+  </header>
+  <main class="mobile-cartframe">
+    <pre class="page-title">장바구니</pre>
+
+    <section class="cart-main">
+      <div class="product-card" data-id="1">
+        <input class="product-checkbox" type="checkbox"/>
+        <img src="" alt="" class="">
+        <div class="product-info">
+          <span class="product-name">선글라스</span>
+          <span class="product-price">39,000원</span>
+          <div class="qte-buttons">
+            <button class="qte-btn">−</button>
+            <span class="count" id="qty-1">1</span>
+            <button class="qte-btn" >+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="mobile-footer">
+      <aside class="payment-info">
+        <span class="payment-title">결제 정보</span>
+        <div class="payment-row">
+          <span>상품금액</span>
+          <span id="subtotal">117,000원</span>
+        </div>
+        <div class="payment-total">
+          <span class="payment-total-label">최종 결제 금액</span>
+          <span class="payment-total-value" id="total">117,000원</span>
+        </div>
+      </aside>
+      <button class="buy-btn">구매하기</button>
+    </footer>
+  </main>
+  <script type="module" src="js/modules/cart.js"></script>
+</body>
+</html>
