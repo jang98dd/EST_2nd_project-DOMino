@@ -1,13 +1,19 @@
 @import "base/_reset";
 @import "base/_variables";
 @import "base/_mixins";
+@import "base/_typography";
 
 @import "components/_header";
 @import "components/_footer";
 @import "components/_tabs";
 @import "components/_product-card";
 @import "components/_button";
-@import "components/_carousel";
+@import "components/_carousel-indicator";
+
+@import "layout/_carousel";
+@import "layout/_footer";
+@import "layout/_grid";
+@import "layout/_header";
 
 @import "pages/_home";
 @import "pages/_products-list";
