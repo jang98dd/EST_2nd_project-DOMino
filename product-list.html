@@ -71,17 +71,73 @@
     </section>
 
   </main>
-  <div class="floating-actions" role="region" aria-label="빠른 필터 및 추천">
-    <button type="button" class="filter-btn" aria-label="필터 열기, 현재 0개 적용됨">
-      <span class="material-icons" aria-hidden="true">filter_alt</span>
-      필터 (0)
-    </button>
+  <!-- FILTER TRIGGER (floating) -->
+<div class="floating-actions">
+  <button class="btn btn--utility filter-btn" id="openFilter">
+    <span class="material-icons">filter_alt</span>
+    필터 (0)
+  </button>
+</div>
 
-    <button type="button" class="recommend-btn" aria-label="추천 프레임 보기">
-      <span class="material-icons" aria-hidden="true">eyeglasses</span>
-      함께 보면 좋은 프레임
-    </button>
-  </div>
 
-</body>
+<!-- 🔥 BOTTOM SHEET FILTER SYSTEM -->
+<div class="bottom-sheet" id="filterSheet">
+
+  <!-- dim -->
+  <div class="bottom-sheet__backdrop"></div>
+
+  <!-- panel -->
+  <div class="bottom-sheet__panel">
+
+    <!-- HEADER -->
+    <header class="filter-header">
+      <h2 class="filter-title">필터</h2>
+      <button class="material-icons">close</button>
+    </header>
+    <div class="filter-body">
+      <section class="filter-group">
+        <h3>모양</h3>
+        <div class="chip-grid">
+          <button class="chip is-active">라운드</button>
+          <button class="chip">스퀘어</button>
+          <button class="chip">보잉</button>
+          <button class="chip">하금테</button>
+          <button class="chip">캣아이</button>
+          <button class="chip">고글</button>
+          <button class="chip">기타</button>
+          <button class="chip">믹스</button>
+        </div>
+      </section>
+          <section class="filter-group">
+            <h3>성별</h3>
+            <div class="chip-grid">
+              <button class="chip is-active">공용</button>
+              <button class="chip">남성</button>
+              <button class="chip">여성</button>
+            </div>
+          </section>
+          <section class="filter-group">
+            <h3>프레임 크기</h3>
+            <div class="chip-grid">
+              <button class="chip is-active">S</button>
+              <button class="chip">M</button>
+              <button class="chip">L</button>
+            </div>
+          </section>
+          <section class="filter-group">
+            <h3>프레임 스펙</h3>
+            <div class="color-grid">
+              <button class="color-dot"></button>
+              <button class="color-dot"></button>
+              <button class="color-dot"></button>
+            </div>
+          </section>
+        </div>
+        <footer class="filter-footer">
+          <button class="btn btn--utility">취소</button>
+          <button class="btn btn--cta">필터 적용</button>
+        </footer>
+      </div>
+    </div>
+  </body>
 </html>
