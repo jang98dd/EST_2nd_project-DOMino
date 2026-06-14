@@ -17,3 +17,6 @@
 .product-toolbar {
   @include flex-between;
 }
+.chip-grid {
+  @include grid-column-5;
+}
