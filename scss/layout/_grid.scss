@@ -1,20 +1,15 @@
-/* mobile */
+:root {
+  --grid-gap: 16px;
+}
 .grid {
   display: grid;
-  gap: 8px;
-  grid-template-columns: repeat(2, 1fr);
+  gap: var(--grid-gap, 16px);
 }
 
-/* tablet */
-@include tablet {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-/* desktop */
-@include desktop {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }

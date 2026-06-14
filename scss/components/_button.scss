@@ -7,6 +7,7 @@
   cursor: pointer;
   transition: all 0.25s ease;
   font-weight: 500;
+  white-space: nowrap;
 
   &:disabled {
     opacity: 0.4;
@@ -19,16 +20,12 @@
   font-size: 18px;
   background: $primary;
   color: $white;
-  border-radius: $radius;
 }
 
 /* ACTION: 보조 행동 (필터, 저장, 더보기, 분석) */
 .btn-action {
   height: 44px;
   font-size: 16px;
-  background: $black;
-  color: $white;
-  border-radius: $radius;
 }
 
 /* UTILITY: 도구 (검색, 닫기, 페이지네이션, 칩) */
@@ -55,6 +52,10 @@
   width: 36px; height: 36px;
 }
 
+.btn-more {
+  @include flex-center;
+  border: 1px solid $primary;
+}
 @include respond(tablet) {
   .btn-cta {
     height: 56px;

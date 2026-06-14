@@ -17,9 +17,159 @@
 .product-toolbar {
   @include flex-between;
 }
+.sort-btn {
+  @include flex-center;
+}
 .chip-grid {
   @include grid-column-5;
+  padding: 0 8px;
+  gap:32px;
 }
 .color-grid {
   @include grid-column-7;
+  justify-items: center;
+}
+.color-grid {
+  button {
+    &:first-child {
+      background: $primary;
+    }
+    &:nth-child(2) {
+      background: $black;
+    }
+    &:nth-child(3) {
+      background: $purple;
+    }
+    &:nth-child(4) {
+      background: $gray;
+    }
+    &:nth-child(5) {
+      background: $superGray;
+    }
+    &:last-child {
+      background: $secondary;
+    }
+  }
+}
+.color-dot {
+  border-radius: 50%;
+  display: flex;
+}
+.frame-list__item {
+  width:100%;
+}
+.frame-option {
+  @include flex-column;
+  align-items:center;
+  justify-content:center;
+  gap: 16px;
+}
+.filter-group {
+  padding: 12px 16px;
+  @include flex-column;
+}
+.btn-list {
+  @include flex-center;
+}
+.floating-actions {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.floating-actions .btn {
+  min-width: 0; 
+  padding:0 24px;      
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.product-list {
+  width: 100%;  
+}
+.price-filter {
+  @include flex-column;
+  gap: 8px;
+}
+
+.price-range {
+  width: 100%;
+}
+
+.price-current {
+  @include flex-between;
+  font-size: 14px;
+  color: $superGray;
+}
+.filter-footer {
+  display: flex;
+  justify-content: space-between;
+  gap:12px;
+  width: 100%;
+  padding: 16px;
+}
+.filter-footer .btn {
+  padding: 0 48px;
+  text-align: center;
+}
+.product-list button {
+  padding: 0 80px;
+}
+.filter-footer .btn-reset {
+  background: $secondary;
+  border: 1px solid $black;
+}
+.filter-footer .btn-filter-apply {
+  border: 1px solid $primary;
+}
+.btn-more {
+  display: block;
+  margin: 24px auto;
+}
+.product-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:8px;
+
+  max-width: 328px;
+  margin: 0 auto;
+}
+.product-cards h3 {
+  height: 52px;
+}
+.sort-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.sort-trigger {
+  display: flex;
+  align-items: center;
+}
+.sort-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  background: $white;
+  border: 1px solid $gray;
+  min-width: 120px;
+  z-index: 10;
+  padding:0;
+}
+
+.sort-menu.is-open {
+  display: block;
+}
+
+.sort-menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.sort-menu li:hover {
+  background: $white;
 }
