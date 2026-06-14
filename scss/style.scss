@@ -1,10 +1,9 @@
-@import "base/_reset";
 @import "base/_variables";
 @import "base/_mixins";
+@import "base/_reset";
 @import "base/_typography";
+@import "base/_layout";
 
-@import "components/_header";
-@import "components/_footer";
 @import "components/_tabs";
 @import "components/_product-card";
 @import "components/_button";
