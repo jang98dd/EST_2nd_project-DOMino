@@ -35,6 +35,14 @@
   flex-direction: column;
 }
 
+@mixin grid-column-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+@mixin grid-column-7 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
 /* button-reset */
 @mixin button-reset {
   border: none;
