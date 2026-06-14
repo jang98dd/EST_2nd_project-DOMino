@@ -440,4 +440,14 @@ header {
   align-items: center;
 }
 
+.chip-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
 /*# sourceMappingURL=style.css.map */

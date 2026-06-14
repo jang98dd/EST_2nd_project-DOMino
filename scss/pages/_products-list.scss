@@ -20,3 +20,6 @@
 .chip-grid {
   @include grid-column-5;
 }
+.color-grid {
+  @include grid-column-7;
+}

@@ -1,131 +1,249 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>상품목록</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상품목록</title>
 
-  <link rel="stylesheet" href="css/style.css" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-</head>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
-  <header class="header">
-    <div class="header__left">
-      <h1 class="header__logo">
-        <a href="/" aria-label="ROUNZ 홈">ROUNZ</a>
-      </h1>
-    </div>
-
-    <div class="header__right">
-      <div class="header__utility">
-        <button type="button" class="icon-btn" aria-label="검색 열기">
-          <span class="material-icons" aria-hidden="true">search</span>
-        </button>
-
-        <button type="button" class="icon-btn" aria-label="장바구니, 현재 1개 상품">
-          <span class="material-icons" aria-hidden="true">shopping_bag</span>
-          <span class="cart-badge" aria-hidden="true">1</span>
-        </button>
+  <body>
+    <header class="header">
+      <div class="header__left">
+        <h1 class="header__logo">
+          <a href="/" aria-label="ROUNZ 홈">ROUNZ</a>
+        </h1>
       </div>
 
-      <button
-        type="button"
-        class="header__toggle icon-btn"
-        aria-label="메뉴 열기"
-        aria-expanded="false"
-        aria-controls="global-nav">
-        <span class="material-icons" aria-hidden="true">menu</span>
-      </button>
-    </div>
-  </header>
-  <main class="page page--product-list">
-    <nav class="page-header" aria-label="페이지 위치">
-      <button type="button" class="back-btn" aria-label="이전 페이지로 이동">
-        이전
-      </button>
+      <div class="header__right">
+        <div class="header__utility">
+          <button type="button" class="icon-btn" aria-label="검색 열기">
+            <span class="material-icons" aria-hidden="true">search</span>
+          </button>
 
-      <h2 class="page-title">EYEGLASSES</h2>
-      <div class="page-header__spacer" aria-hidden="true"></div>
-    </nav>
-    <section class="product-toolbar" aria-label="상품 정렬 및 정보">
-      <button type="button" class="sort-btn" aria-haspopup="listbox" aria-expanded="false">
-        인기순
-        <span class="material-icons" aria-hidden="true">keyboard_arrow_down</span>
-      </button>
-
-      <p class="product-count">
-        <span class="sr-only">전체 상품 수</span>
-        100개의 상품
-      </p>
-    </section>
-    <section class="product-list" aria-label="상품 목록">
-      <h2 class="sr-only">상품 목록</h2>
-
-      <div class="product-cards" aria-live="polite">
-      </div>
-
-      <button type="button" class="btn-more">
-        더보기
-      </button>
-    </section>
-
-  </main>
-  <!-- FILTER TRIGGER (floating) -->
-<div class="floating-actions">
-  <button class="btn btn--utility filter-btn" id="openFilter">
-    <span class="material-icons">filter_alt</span>
-    필터 (0)
-  </button>
-</div>
-
-
-<!-- 🔥 BOTTOM SHEET FILTER SYSTEM -->
-<div class="bottom-sheet" id="filterSheet">
-
-  <!-- dim -->
-  <div class="bottom-sheet__backdrop"></div>
-
-  <!-- panel -->
-  <div class="bottom-sheet__panel">
-
-    <!-- HEADER -->
-    <header class="filter-header">
-      <h2 class="filter-title">필터</h2>
-      <button class="material-icons">close</button>
-    </header>
-    <div class="filter-body">
-      <section class="filter-group">
-        <h3>모양</h3>
-        <div class="chip-grid">
-          <button class="btn btn-chip chip is-active">라운드</button>
-          <button class="btn-btn-chip chip">스퀘어</button>
-          <button class="btn btn-chip chip">보잉</button>
-          <button class="btn btn-chip chip">하금테</button>
-          <button class="btn btn-chip chip">캣아이</button>
-          <button class="btn btn-chip chip">고글</button>
-          <button class="btn btn-chip chip">기타</button>
-          <button class="btn btn-chip chip">믹스</button>
+          <button
+            type="button"
+            class="icon-btn"
+            aria-label="장바구니, 현재 1개 상품"
+          >
+            <span class="material-icons" aria-hidden="true">shopping_bag</span>
+            <span class="cart-badge" aria-hidden="true">1</span>
+          </button>
         </div>
+
+        <button
+          type="button"
+          class="header__toggle icon-btn"
+          aria-label="메뉴 열기"
+          aria-expanded="false"
+          aria-controls="global-nav"
+        >
+          <span class="material-icons" aria-hidden="true">menu</span>
+        </button>
+      </div>
+    </header>
+    <main class="page page--product-list">
+      <nav class="page-header" aria-label="페이지 위치">
+        <button type="button" class="back-btn" aria-label="이전 페이지로 이동">
+          이전
+        </button>
+
+        <h2 class="page-title">EYEGLASSES</h2>
+        <div class="page-header__spacer" aria-hidden="true"></div>
+      </nav>
+      <section class="product-toolbar" aria-label="상품 정렬 및 정보">
+        <button
+          type="button"
+          class="sort-btn"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+        >
+          인기순
+          <span class="material-icons" aria-hidden="true"
+            >keyboard_arrow_down</span
+          >
+        </button>
+
+        <p class="product-count">
+          <span class="sr-only">전체 상품 수</span>
+          100개의 상품
+        </p>
       </section>
+      <section class="product-list" aria-label="상품 목록">
+        <h2 class="sr-only">상품 목록</h2>
+
+        <div class="product-cards" aria-live="polite"></div>
+
+        <button type="button" class="btn-more">더보기</button>
+      </section>
+    </main>
+    <div class="floating-actions">
+      <button class="btn btn--utility filter-btn" id="openFilter">
+        <span class="material-icons">filter_alt</span>
+        필터 (0)
+      </button>
+    </div>
+    <div class="bottom-sheet" id="filterSheet">
+      <div class="bottom-sheet__backdrop"></div>
+      <div class="bottom-sheet__panel">
+        <header class="filter-header">
+          <h2 class="filter-title">필터</h2>
+          <button class="material-icons">close</button>
+        </header>
+        <div class="filter-body">
+          <section class="filter-group">
+            <h3>모양</h3>
+              <ul class="chip-grid" role="group" aria-label="안경 프레임 필터">
+                <li class="frame-list__item">
+                  <button
+                    class="btn btn-utility frame-option"
+                    aria-pressed="false"
+                    aria-label="라운드 프레임 선택"
+                  >
+                    <img
+                      src="assets/icons/frame_round.svg"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span class="frame-option__label">라운드</span>
+                  </button>
+                </li>
+  
+                <li class="frame-list__item">
+                  <button
+                    class="btn btn-utility frame-option"
+                    aria-pressed="false"
+                    aria-label="스퀘어 프레임 선택"
+                  >
+                    <img
+                      src="assets/icons/frame_square.svg"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span class="frame-option__label">스퀘어</span>
+                  </button>
+                </li>
+                <li class="frame-list__item">
+                  <button
+                    class="btn btn-utility frame-option"
+                    aria-pressed="false"
+                    aria-label="보잉 프레임 선택"
+                  >
+                    <img
+                      src="assets/icons/frame_browline.svg"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span class="frame-option__label">보잉</span>
+                  </button>
+                </li>
+                <li class="frame-list__item">
+                  <button
+                    class="btn btn-utility frame-option"
+                    aria-pressed="false"
+                    aria-label="하금테 프레임 선택"
+                  >
+                    <img
+                      src="assets/icons/frame_aviator.svg"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span class="frame-option__label">하금테</span>
+                  </button>
+                </li>
+                <li class="frame-list__item">
+                  <button
+                    class="btn btn-utility frame-option"
+                    aria-pressed="false"
+                    aria-label="캣아이 프레임 선택"
+                  >
+                    <img
+                      src="assets/icons/frame_cat-eye.svg"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span class="frame-option__label">캣아이</span>
+                  </button>
+                </li>
+                <li class="frame-list__item">
+                  <button
+                    class="btn btn-utility frame-option"
+                    aria-pressed="false"
+                    aria-label="고글 프레임 선택"
+                  >
+                    <img
+                      src="assets/icons/frame_goggle.svg"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span class="frame-option__label">고글</span>
+                  </button>
+                </li>
+                <li class="frame-list__item">
+                  <button
+                    class="btn btn-utility frame-option"
+                    aria-pressed="false"
+                    aria-label="믹스 프레임 선택"
+                  >
+                    <img
+                      src="assets/icons/frame_mix.svg"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span class="frame-option__label">믹스</span>
+                  </button>
+                </li>
+                <li class="frame-list__item">
+                  <button
+                    class="btn btn-utility frame-option"
+                    aria-pressed="false"
+                    aria-label="기타 프레임 선택"
+                  >
+                    <img
+                      src="assets/icons/frame_other.svg"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    <span class="frame-option__label">기타</span>
+                  </button>
+                </li>
+              </ul>
+          </section>
           <section class="filter-group">
             <h3>성별</h3>
-            <div class="chip-grid">
-              <button class="btn btn-chip chip is-active">공용</button>
-              <button class="btn btn-chip chip">남성</button>
-              <button class="btn btn-chip chip">여성</button>
-            </div>
+            <ul class="chip-grid">
+              <li>
+                <button class="btn btn-chip chip is-active">공용</button>
+              </li>
+              <li>
+                <button class="btn btn-chip chip">남성</button>
+              </li>
+              <li>
+                <button class="btn btn-chip chip">여성</button>
+              </li>
+            </ul>
           </section>
           <section class="filter-group">
             <h3>프레임 크기</h3>
-            <div class="chip-grid">
-              <button class="btn btn-chip chip is-active">S</button>
-              <button class="btn btn-chip chip">M</button>
-              <button class="btn btn-chip chip">L</button>
-            </div>
+            <ul class="chip-grid">
+              <li>
+                <button class="btn btn-chip chip is-active">S</button>
+              </li>
+              <li>
+                <button class="btn btn-chip chip">M</button>
+              </li>  
+              <li>
+                <button class="btn btn-chip chip">L</button>
+              </li>  
+            </ul>
           </section>
           <section class="filter-group">
-            <h3>프레임 스펙</h3>
+            <h3>색상</h3>
             <div class="color-grid">
               <button class="color-dot"></button>
               <button class="color-dot"></button>
