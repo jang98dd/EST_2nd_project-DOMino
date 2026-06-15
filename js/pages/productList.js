@@ -124,7 +124,7 @@ function initBottomSheet() {
 
     currentY = e.clientY;
     diff = currentY - startY;
-
+    
     if(diff > 0) {
       requestAnimationFrame(() => {
         panel.style.transform = `translateY(${diff}px)`;
