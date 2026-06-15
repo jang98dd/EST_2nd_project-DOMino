@@ -1,12 +1,16 @@
 /* PAGE LAYOUT */
 
 .page {
-  padding: 0 16px;
   width: 100%;
+  padding: 0 16px;
 }
 
-.app {
+.page__inner {
   width: 100%;
+  margin: 0 auto;
+}
+.app {
+ width: 100%;
 }
 
 .page > section {
@@ -53,7 +57,7 @@
 .chip-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  padding: 0 8px;
+  width: 100%;
   gap: 32px;
 }
 
@@ -125,14 +129,15 @@
 
 .product-list {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .product-cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  max-width: 328px;
-  margin: 0 auto;
+  justify-items: center;
 }
 .product-card {
   display: flex;
@@ -148,10 +153,10 @@
 .product-cards h3 {
   height: 52px;
 }
-
 .btn-more {
-  display: block;
-  margin: 24px auto;
+  width: 232px;
+  height: var(--btn-sm);
+  border: 1px solid var(--black);
 }
 .product-card .btn-like {
   position: absolute;
@@ -171,30 +176,34 @@
   padding: 0 8px;
   right: 8px;
   bottom: 8px;
+  display: flex;
+  align-items: center;
   border: 1px solid var(--gray);
   color: var(--gray);
 }
 /* FLOATING ACTIONS */
 
-.floating-actions {
+.fab-group {
   position: fixed;
   left: 16px;
   right: 16px;
-  bottom: 0;
-
+  bottom: 16px;
   display: flex;
   justify-content: space-between;
+  z-index: 9999;
   gap: 16px;
 }
 
-.floating-actions .btn {
+.fab-group .btn {
   min-width: 0;
   padding: 0 24px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.btn--filter.is-active {
+  display: block;
+}
 /* SORT DROPDOWN\ */
 
 .sort-dropdown {
@@ -233,8 +242,7 @@
 .bottom-sheet {
   position: fixed;
   inset: 0;
-  padding: 12px 16px 32px;
-
+  padding: 12px 0 32px;
   visibility: hidden;
   pointer-events: none;
   opacity: 0;
@@ -251,31 +259,43 @@
 .bottom-sheet__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  pointer-events: auto;
   opacity: 0;
-  transition: 0.3s ease;
-  cursor: pointer;
+  transition: opacity 0.3s ease;
 }
-
 .bottom-sheet.is-open .bottom-sheet__backdrop {
   opacity: 1;
 }
+.filter-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gray);
+}
+.filter-header .close-btn {
+ justify-content: end;
+ margin-right: 10px;
+}
+.filter-body {
+  flex: 1;
+  overflow-y: auto;
+}
 
+.filter-footer {
+  bottom: 0;
+}
 /* panel */
 .bottom-sheet__panel {
   position: absolute;
   bottom: 0;
   width: 100%;
-
-  background: #f8f8f8;
-  border-radius: 16px 16px 0 0;
-
+  height: 90vh;
   transform: translateY(100%);
-  transition: transform 0.3s ease;
-}
-
-.bottom-sheet.is-open .bottom-sheet__panel {
-  transform: translateY(0);
+  pointer-events: auto;
 }
 
 body.is-sheet-open {
@@ -286,8 +306,14 @@ body.is-sheet-open {
 .handle {
   width: 40px;
   height: 4px;
-  background: gray;
+  background: var(--gray);
   border-radius: 2px;
   margin: 8px auto;
   cursor: grab;
+}
+@media (min-width: 1200px) {
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 }

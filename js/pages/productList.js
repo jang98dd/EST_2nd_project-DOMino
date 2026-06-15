@@ -16,7 +16,49 @@ const state = {
   page: 1,
   limit: 12
 };
-let isSheetOpen = false;
+/* const sheetState = {
+  mode: "closed",
+  startY: 0,
+  currentY: 0,
+  diff: 0
+};
+const SNAP = {
+  full: 0,
+  half: window.innerHeight * 0.4,
+  closed: window.innerHeight
+};
+const panel = document.querySelector('.bottom-sheet__panel');
+const sheet = document.querySelector('.bottom-sheet');
+const handle = document.querySelector('.handle');
+const filterBtn = document.querySelector('.btn--filter');
+
+let startY = 0;
+let startTranslate = 0;
+let currentY = 0;
+
+let lastY = 0;
+let lastTime = 0;
+let velocity = 0;
+
+let isDragging = false; */
+const sheet = document.querySelector('.bottom-sheet');
+const panel = document.querySelector('.bottom-sheet__panel');
+const handle = document.querySelector('.handle');
+const backdrop = document.querySelector('.bottom-sheet__backdrop');
+const openBtn = document.querySelector('.btn--filter');
+const closeBtn = document.querySelector('.close-btn');
+
+let isOpen = false;
+let isDragging = false;
+let startY = 0;
+let currentTranslate = 100;
+let startTranslate = 100;
+
+const SNAP = {
+  closed: 100,
+  half: 50,
+  full: 0
+};
 
 const productCards = document.querySelector('.product-cards');
 async function init() {
@@ -62,7 +104,7 @@ function createProductCard(product) {
       <div class="product-card__thumb">
       <img src="${product.thumbnail}" alt="${product.title}">
       <button class="btn-like btn--utility-sm" aria-pressed="false" aria-label="찜하기"><span class="material-icons">favorite_border</span></button>
-      <button class="btn-fit btn--utility-sm font-body-sm">착용하기</button>
+      <a href="/fit/${product.id}" class="btn-fit btn--utility-sm font-body-sm">착용하기</a>
       </div>
       <p>${product.brand}</p>
       <h3>${product.title}</h3>
@@ -112,3 +154,4 @@ function bindUI() {
   const loadMoreBtn = document.querySelector('.btn-more');
   loadMoreBtn.addEventListener('click', handleLoadMore);
 }
+
