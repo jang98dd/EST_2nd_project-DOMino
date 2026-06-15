@@ -269,3 +269,14 @@
 body.is-sheet-open {
   overflow: hidden;
 }
+
+.product-card h3 {
+  font-size: var(--font-14);
+  line-height: var(--lh-tight);
+  font-weight: 600;
+}
+
+.product-card p {
+  font-size: var(--font-14);
+  font-weight: 800;
+}

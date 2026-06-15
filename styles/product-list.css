@@ -1,6 +1,4 @@
-/* =========================
-   PAGE LAYOUT
-========================= */
+/* PAGE LAYOUT */
 
 .page {
   padding: 0 16px;
@@ -15,9 +13,7 @@
   margin-bottom: 40px;
 }
 
-/* =========================
-   PAGE HEADER
-========================= */
+/* PAGE HEADER */
 
 .page-header {
   display: grid;
@@ -37,9 +33,7 @@
   justify-self: end;
 }
 
-/* =========================
-   PRODUCT TOOLBAR
-========================= */
+/* PRODUCT TOOLBAR */
 
 .product-toolbar {
   display: flex;
@@ -54,9 +48,7 @@
   align-items: center;
 }
 
-/* =========================
-   CHIP GRID
-========================= */
+/* CHIP GRID */
 
 .chip-grid {
   display: grid;
@@ -65,9 +57,7 @@
   gap: 32px;
 }
 
-/* =========================
-   COLOR GRID
-========================= */
+/* COLOR GRID */
 
 .color-grid {
   display: grid;
@@ -87,9 +77,7 @@
   display: flex;
 }
 
-/* =========================
-   FRAME OPTIONS
-========================= */
+/* FRAME OPTIONS */
 
 .frame-list__item {
   width: 100%;
@@ -103,9 +91,7 @@
   gap: 16px;
 }
 
-/* =========================
-   FILTER
-========================= */
+/* FILTER */
 
 .filter-group {
   padding: 12px 16px;
@@ -135,9 +121,7 @@
   color: #535762;
 }
 
-/* =========================
-   PRODUCT LIST
-========================= */
+/* PRODUCT LIST */
 
 .product-list {
   width: 100%;
@@ -150,7 +134,17 @@
   max-width: 328px;
   margin: 0 auto;
 }
-
+.product-card {
+  display: flex;
+  flex-direction: column;
+}
+.product-card__thumb {
+  position: relative;
+}
+.product-card__thumb img {
+  display: block;
+  width: 100%;
+}
 .product-cards h3 {
   height: 52px;
 }
@@ -159,10 +153,28 @@
   display: block;
   margin: 24px auto;
 }
-
-/* =========================
-   FLOATING ACTIONS
-========================= */
+.product-card .btn-like {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+.product-card span {
+  font-size: 12px;
+  color: var(--primary);
+  transition: color .2s ease;
+}
+.btn-like[aria-pressed="true"]{
+  color: var(--primary);
+}
+.product-card .btn-fit {
+  position: absolute;
+  padding: 0 8px;
+  right: 8px;
+  bottom: 8px;
+  border: 1px solid var(--gray);
+  color: var(--gray);
+}
+/* FLOATING ACTIONS */
 
 .floating-actions {
   position: fixed;
@@ -183,9 +195,7 @@
   text-overflow: ellipsis;
 }
 
-/* =========================
-   SORT DROPDOWN
-========================= */
+/* SORT DROPDOWN\ */
 
 .sort-dropdown {
   position: relative;
@@ -218,9 +228,7 @@
   background: #f8f8f8;
 }
 
-/* =========================
-   BOTTOM SHEET
-========================= */
+/* BOTTOM SHEET */
 
 .bottom-sheet {
   position: fixed;
