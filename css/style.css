@@ -399,20 +399,20 @@ header {
 }
 
 /*# sourceMappingURL=style.css.map */
-/* ==========================
-   HEADER
-========================== */
+/* =========================
+HEADER
+========================= */
 
 .header {
   height: 88px;
+  background: #111;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
   padding: 0 16px;
 
-  background: #111;
   color: #fff;
 }
 
@@ -423,27 +423,30 @@ header {
 
 .header__right {
   display: flex;
-  align-items: center;
   gap: 24px;
+  align-items: center;
+}
+
+.icon-btn {
+  color: #fff;
+  font-size: 20px;
 }
 
 .gnb {
   display: none;
 }
 
-@media (min-width: 1200px) {
-  .gnb {
-    display: block;
-  }
-
-  .gnb__list {
-    display: flex;
-    gap: 80px;
-  }
+.gnb__list {
+  display: flex;
+  gap: 80px;
 }
+
+/* =========================
+MOBILE MENU
+========================= */
+
 .mobile-menu {
   position: fixed;
-
   left: -100%;
   top: 0;
 
@@ -452,7 +455,7 @@ header {
 
   background: #000;
 
-  transition: 0.3s;
+  transition: .3s;
   z-index: 999;
 }
 
@@ -464,39 +467,144 @@ header {
   height: 88px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
   padding: 0 20px;
 
   color: #fff;
 }
 
-.mobile-nav {
+.search-box {
+  position: relative;
   padding: 20px;
+}
+
+.search-box input {
+  width: 100%;
+  height: 48px;
+
+  background: #111;
+  border: 1px solid #333;
+
+  color: #fff;
+}
+
+.search-box i {
+  position: absolute;
+  right: 35px;
+  top: 35px;
+
+  color: #888;
+}
+
+.mobile-nav {
+  padding: 0 20px;
 }
 
 .accordion {
   width: 100%;
+  color: #fff;
 
   display: flex;
   justify-content: space-between;
 
-  color: white;
-
   padding: 20px 0;
+
+  border-bottom: 1px solid #222;
 }
 
 .panel {
   display: none;
-
-  padding-bottom: 20px;
+  padding: 20px 0;
 }
 
 .panel a {
   display: block;
-
-  color: #999;
-
   margin-bottom: 10px;
+  color: #888;
+}
+
+/* =========================
+DESKTOP MEGA MENU
+========================= */
+
+.mega-menu {
+  display: none;
+
+  position: absolute;
+  left: 0;
+  top: 88px;
+
+  width: 100%;
+
+  background: #050505;
+}
+
+.mega-menu.active {
+  display: block;
+}
+
+.mega-inner {
+  display: flex;
+
+  max-width: 1600px;
+
+  margin: auto;
+
+  padding: 40px;
+
+  gap: 40px;
+}
+
+.service-column {
+  width: 280px;
+}
+
+.service-card {
+  background: #111;
+
+  padding: 20px;
+
+  margin-top: 16px;
+
+  border-radius: 10px;
+}
+
+.menu-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-column.blue {
+  background: #032b87;
+  padding: 40px;
+}
+
+/* =========================
+TABLET
+========================= */
+
+@media (min-width:768px) {
+
+  .mobile-menu {
+    width: 760px;
+  }
+
+}
+
+/* =========================
+DESKTOP
+========================= */
+
+@media (min-width:1200px) {
+
+  .gnb {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
 }
