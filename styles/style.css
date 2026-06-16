@@ -402,3 +402,25 @@ header {
     padding: 30px 70px;
   }
 }
+
+/* reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* typography */
+body {
+  font-family: system-ui, sans-serif;
+}
+
+/* button */
+.btn {
+  ...
+}
+
+/* input */
+input {
+  ...
+}

@@ -1,133 +1,63 @@
-<main class="join">
+<main class="auth auth--signup">
 
   <section class="auth__intro">
+    ...
+  </section>
 
-    <h2 class="auth__title">
-      Find the Frame<br>
-      that fits your style.
-    </h2>
+  <section class="auth__form">
 
-    <p class="auth__desc">
-      당신에게 가장 잘 어울리는 안경을 찾아보세요.
-    </p>
+    <form id="signupForm">
+
+      <div class="form-group">
+
+        <label>이름 *</label>
+
+        <input type="text">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>이메일 *</label>
+
+        <input id="email">
+
+        <p class="error-message">
+          이메일은 반드시 @를 포함하여 작성하시오
+        </p>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>비밀번호 *</label>
+
+        <input id="password">
+
+        <p class="error-message">
+          사용자 이름을 포함해서 작성하지 마시오
+        </p>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>비밀번호 확인 *</label>
+
+        <input id="passwordCheck">
+
+        <p class="error-message">
+          위의 비밀번호와 동일하게 작성하시오
+        </p>
+
+      </div>
+
+      <button class="btn-black">
+        회원가입
+      </button>
+
+    </form>
 
   </section>
 
-  <form class="join-form">
-
-    <div class="radio-group">
-
-      <label>
-        <input type="radio" name="gender">
-        내국인
-      </label>
-
-      <label>
-        <input type="radio" name="gender">
-        외국인(foreigner)
-      </label>
-
-    </div>
-
-    <div class="radio-group">
-
-      <label>
-        <input type="radio" name="adult">
-        미성년자
-      </label>
-
-      <label>
-        <input type="radio" name="adult">
-        성인
-      </label>
-
-    </div>
-
-    <div class="form-group">
-      <label>이름</label>
-      <input type="text">
-    </div>
-
-    <div class="form-group">
-      <label>이메일</label>
-      <input type="email">
-    </div>
-
-    <div class="form-group">
-      <label>비밀번호</label>
-
-      <div class="input-password">
-        <input type="password">
-        <button type="button">👁</button>
-      </div>
-
-    </div>
-
-    <div class="form-group">
-      <label>비밀번호 확인</label>
-
-      <div class="input-password">
-        <input type="password">
-        <button type="button">👁</button>
-      </div>
-
-    </div>
-
-    <div class="form-group">
-      <label>휴대폰 번호</label>
-
-      <div class="phone-group">
-
-        <input class="phone-prefix" value="010" readonly>
-
-        <input type="tel" placeholder="번호를 입력해주세요">
-
-      </div>
-
-    </div>
-
-    <div class="form-group">
-
-      <label>생년월일</label>
-
-      <input type="date">
-
-    </div>
-
-    <div class="radio-group">
-
-      <label>
-        <input type="radio" name="sex">
-        남성
-      </label>
-
-      <label>
-        <input type="radio" name="sex">
-        여성
-      </label>
-
-    </div>
-
-    <div class="check-group">
-
-      <label>
-        <input type="checkbox">
-        이벤트 및 마케팅 수신 동의
-      </label>
-
-      <label>
-        <input type="checkbox">
-        개인정보 수집 이용 동의
-      </label>
-
-    </div>
-
-    <button type="submit" class="btn-join">
-      회원가입
-    </button>
-
-  </form>
-
 </main>
-<link rel="stylesheet" href="./css/style.css">
-<link rel="stylesheet" href="./css/auth.css">
