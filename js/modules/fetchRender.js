@@ -1,9 +1,16 @@
-export async function fetchProducts() {
-  const response = await fetch('/data/products.json');
-  const data = await response.json();
-  return data.products.slice(1);
-}
+const DATA_URL = '../data/products.json';
 
+export async function fetchProducts() {
+  try {
+    const res = await fetch(DATA_URL);
+    if(!res.ok) throw new Error('fetch fail');
+    
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
 function createProductCard() {
 
 }

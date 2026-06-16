@@ -1,154 +1,157 @@
-import { fetchProducts } from '../modules/fetchRender.js';
+import { fetchProducts } from "../modules/fetchRender.js";
 
 const state = {
   products: [],
-  sortType: "popular"
+  
+  sortType: "popular",
+
+  filters: {
+    shape: [],
+    gender: 'all',
+    size: [],
+    color: [],
+    price: 500000
+  },
+
+  page: 1,
+  limit: 12
+};
+/* const sheetState = {
+  mode: "closed",
+  startY: 0,
+  currentY: 0,
+  diff: 0
+};
+const SNAP = {
+  full: 0,
+  half: window.innerHeight * 0.4,
+  closed: window.innerHeight
+};
+const panel = document.querySelector('.bottom-sheet__panel');
+const sheet = document.querySelector('.bottom-sheet');
+const handle = document.querySelector('.handle');
+const filterBtn = document.querySelector('.btn--filter');
+
+let startY = 0;
+let startTranslate = 0;
+let currentY = 0;
+
+let lastY = 0;
+let lastTime = 0;
+let velocity = 0;
+
+let isDragging = false; */
+const sheet = document.querySelector('.bottom-sheet');
+const panel = document.querySelector('.bottom-sheet__panel');
+const handle = document.querySelector('.handle');
+const backdrop = document.querySelector('.bottom-sheet__backdrop');
+const openBtn = document.querySelector('.btn--filter');
+const closeBtn = document.querySelector('.close-btn');
+
+let isOpen = false;
+let isDragging = false;
+let startY = 0;
+let currentTranslate = 100;
+let startTranslate = 100;
+
+const SNAP = {
+  closed: 100,
+  half: 50,
+  full: 0
 };
 
-const sorters = {
-  popular: (a, b) => (b.id - a.id),
-  priceLow: (a, b) => a.price - b.price,
-  priceHigh: (a, b) => b.price - a.price,
-  newest: (a, b) => b.id - a.id
-}; 
-const trigger = document.getElementById('sortTrigger');
-const menu = document.getElementById('sortMenu');
+const productCards = document.querySelector('.product-cards');
+async function init() {
+  const data = await fetchProducts();
+  console.log(state.products);
 
-trigger.addEventListener('click', () => {
-  menu.classList.toggle('is-open');
-});
-
-menu.addEventListener('click', (e) => {
-  if (!e.target.dataset.sort) return;
-
-  state.sortType = e.target.dataset.sort;
-  renderProducts();
-
-  trigger.innerHTML = `${e.target.textContent} <span class="material-icons">keyboard_arrow_down</span>`;
-  menu.classList.remove('is-open');
-});
-/* 초기화 */
-async function initProductList() {
-  await loadProducts();
-  renderProducts();
-  initSort();
+  state.products = data.products;
+  initLikeButton();  
+  updateView();
+  bindUI();
 }
-function initSort() {
-  const btns = document.querySelectorAll('[data-sort]');
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.sortType = btn.dataset.sort;
-      renderProducts();
-      updateActiveUI(btn);
-    });
-  });
-}
-function updateActiveUI(activeBtn) {
-  document.querySelectorAll('[data-sort]').forEach(btn => btn.classList.remove('is-active'));
+init();
 
-  activeBtn.classList.add('is-active');
+function updateView() {
+  let products = [...state.products];
+  console.log(state.products);
+  state.filteredProducts = products;
+  const paginatedProducts = applyPagination(products);
+  products = applyPagination(products);
+  renderProducts(paginatedProducts);
+  renderProductCount();
+  updateLoadMoreButton();
 }
-/* 데이터 */
-async function loadProducts() {
-  const products = await fetchProducts();
-  state.products = products;
-  console.log(products);
-}
-initProductList();
-/* 렌더링 */
-function renderProducts() {
+function renderProducts(products) {
   const container = document.querySelector('.product-cards');
-  const sorted = sortProducts();
-  container.innerHTML = sorted.map(createProductCard).join('');
-  console.log(document.querySelector('.product-cards'));
+
+  container.innerHTML = products
+    .map(createProductCard)
+    .join('');
+}
+function renderProductCount() {
+  const visibleCount = Math.min(state.page * state.limit, 
+    state.filteredProducts.length
+  );
+  const totalCount = state.filteredProducts.length;
+  const countElement = document.querySelector('.product-count');
+  countElement.innerHTML = `<span class="sr-only">전체 상품 수</span>
+  ${visibleCount} / ${totalCount}개의 상품`
 }
 function createProductCard(product) {
   return `
     <article class="product-card">
-      <img src="${product.thumbnail}" alt="${product.title}"/>
-      <p class="font-body-s-b-100">${product.brand}</p>
-      <h3 class="font-body-sm">${product.title}</h3>
-      <p class="font-body-s-b-100">${product.price}</p>
+      <div class="product-card__thumb">
+      <img src="${product.thumbnail}" alt="${product.title}">
+      <button class="btn-like btn--utility-sm" aria-pressed="false" aria-label="찜하기"><span class="material-icons">favorite_border</span></button>
+      <a href="/fit/${product.id}" class="btn-fit btn--utility-sm font-body-sm">착용하기</a>
+      </div>
+      <p>${product.brand}</p>
+      <h3>${product.title}</h3>
+      <p>${product.price}</p>
     </article>`;
 }
-
-function renderSkeleton() {
-
-}
-function renderError() {
-
+function initLikeButton() {
+  productCards.addEventListener('click', handleLikeClick);
 }
 
-/* 필터 */
-function applyFilters() {
+function handleLikeClick(e) {
+  const likeBtn = e.target.closest('.btn-like');
 
-}
-function handleFilterApply() {
+  if(!likeBtn) return;
 
-}
-function resetFilters() {
-
+  toggleLikeButton(likeBtn);
 }
 
-/* 정렬 */
-function sortProducts() {
-  const sortFn = sorters[state.sortType];
-  return [...state.products].sort(sortFn);
-}
-function handleSortChange() {
+function toggleLikeButton(button) {
+  const icon = button.querySelector('.material-icons');
 
-}
+  const isLiked = button.getAttribute('aria-pressed') === 'true';
 
-/* 더보기 */
+  button.setAttribute('aria-pressed', String(!isLiked));
+  icon.textContent = isLiked ? "favorite_border" : "favorite";
+}
 function handleLoadMore() {
-
+  state.page += 1;
+  console.log('page:', state.page);
+  updateView();
 }
 
-/* 바텀시트 */
-function initBottomSheet() {
-  const handle = document.querySelector('.handle');
-  const panel = document.querySelector('.bottom-sheet__panel');
+const excluded_product_count = 1;
+function applyPagination(products) {
+  const end = excluded_product_count + state.page * state.limit;
 
-  let startY = 0;
-  let currentY = 0;
-  let diff = 0;
-  let isDragging = false;
-
-  handle.addEventListener('pointerdown', (e) => {
-    startY = e.clientY;
-    isDragging = true;
-    panel.style.transform = 'none';
-  });
-  handle.addEventListener('pointermove', (e) => {
-    if(!isDragging) return;
-
-    currentY = e.clientY;
-    diff = currentY - startY;
-
-    if(diff > 0) {
-      requestAnimationFrame(() => {
-        panel.style.transform = `translateY(${diff}px)`;
-      });
-    }
-  });
-  handle.addEventListener('pointerup', () => {
-    isDragging = false;
-    panel.style.transition = 'transform .3s ease';
-
-    if(diff > 80) {
-      closeSheet();
-    } else {
-      panel.style.transform = 'translateY(0)';
-    }
-  });
+  return products.slice(excluded_product_count, end);
 }
-initBottomSheet();
-function openFilterSheet() {
+function updateLoadMoreButton() {
+  const btn = document.querySelector('.btn-more');
 
-}
-function closeFilterSheet() {
+  const visibleCount = state.page * state.limit;
 
+  btn.hidden = visibleCount >= state.filteredProducts.length;
 }
-function toggleFilterSheet() {
+function bindUI() {
+  const loadMoreBtn = document.querySelector('.btn-more');
+  loadMoreBtn.addEventListener('click', handleLoadMore);
+}
 
-}
