@@ -74,6 +74,8 @@
 
 .page-title {
   justify-self: center;
+  margin: 0;
+  font-size: var(--font-22);
 }
 
 .page-header__spacer {

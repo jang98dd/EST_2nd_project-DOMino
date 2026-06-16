@@ -4,10 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/normalize.css">
-    <link rel="stylesheet" href="styles/common.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/normalize.css" />
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/product-detail.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="app">
@@ -47,7 +51,7 @@
           </div>
         </div>
       </header>
-      <main class="page page--product-list" role="main">
+      <main class="page--product-list" role="main">
         <div class="page__inner">
           <nav class="page-header" aria-label="페이지 위치">
             <button
@@ -61,26 +65,170 @@
             </button>
 
             <h2 class="page-title"></h2>
-
-            <div class="page-icon">
-              <button
-                type="button"
-                class="btn-like"
-                aria-label="찜하기">
-                <span class="material-icons">
-                  favorite
-                </span>
-              </button>
-              <button
-                type="button"
-                class="btn-cart"
-                aria-label="장바구니">
-                <span class="material-icons">
-                  shopping_cart
-                </span>
-              </button>
-            </div>
+            <button type="button" class="btn-like" aria-label="찜하기">
+              <span class="material-icons"> favorite </span>
+            </button>
           </nav>
+          <section class="product-detail__image">
+            <img id="productImage" src="" alt="product image" />
+          </section>
+          <div class="page page__inner">
+            <section class="product-detail__info">
+              <h1 id="productTitle"></h1>
+              <p id="productBrand"></p>
+
+              <div class="product-detail__price">
+                <span id="productPrice"></span>
+              </div>
+
+              <div class="product-detail__rating">
+                <div class="stars" id="productStars"></div>
+                <span class="rating-text">
+                  <span id="productRating"></span>
+                  <span id="productReviewCount"></span>
+                </span>
+              </div>
+            </section>
+            <section class="product-detail__options">
+              <div class="option option--color">
+                <h3>Color</h3>
+                <div id="colorOptions" class="option__list"></div>
+              </div>
+              <div class="custom-select">
+                <button type="button" class="select-btn" id="selectBtn">
+                  <span id="selectText">Select size</span>
+                  <span class="material-icons">keyboard_arrow_down</span>
+                </button>
+
+                <ul class="select-list hidden" id="selectList">
+                  <li data-value="S">S</li>
+                  <li data-value="M">M</li>
+                  <li data-value="L">L</li>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <section class="product-detail__tabs">
+            <div class="tabs">
+              <button class="tab active" data-tab="detail">상세 정보</button>
+              <button class="tab" data-tab="review">리뷰</button>
+              <button class="tab" data-tab="shipping">배송/교환/환불</button>
+            </div>
+
+            <div class="page">
+              <div class="tab-content">
+                <div id="tabDetail">
+                  <div class="product-description">
+                    <p class="desc-title">상품 상세</p>
+  
+                    <p class="desc-text">
+                      이 제품은 클래식한 디자인과 현대적인 감각을 결합한
+                      아이웨어입니다. 데일리 착용에 적합하며 다양한 얼굴형에 잘
+                      어울립니다.
+                    </p>
+  
+                    <ul class="desc-list">
+                      <li>브랜드: RAY-BAN</li>
+                      <li>카테고리: Eyewear</li>
+                      <li>소재: 아세테이트 / 메탈</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="size-guide">
+                  <button type="button" id="sizeGuideBtn">
+                    Size Guide
+                    <span class="material-icons">info</span>
+                  </button>
+  
+                  <div class="size-guide-modal hidden" id="sizeGuideModal">
+                    <h3>Size Guide</h3>
+  
+                    <table>
+                      <tr>
+                        <th>Size</th>
+                        <th>Lens Width</th>
+                        <th>Bridge</th>
+                      </tr>
+                      <tr>
+                        <td>S</td>
+                        <td>48mm</td>
+                        <td>18mm</td>
+                      </tr>
+                      <tr>
+                        <td>M</td>
+                        <td>50mm</td>
+                        <td>19mm</td>
+                      </tr>
+                      <tr>
+                        <td>L</td>
+                        <td>52mm</td>
+                        <td>20mm</td>
+                      </tr>
+                    </table>
+  
+                    <p class="note">
+                      * 안경은 착용감에 따라 개인 차이가 있을 수 있습니다.
+                    </p>
+                  </div>
+                </div>
+                <div class="review-item">
+                  <div class="review-header">
+                    <strong>user123</strong>
+                    <div class="stars stars--review"></div>
+                  </div>
+                  <p>착용감 좋고 가볍습니다.</p>
+                </div>
+                <div id="tabShipping">
+                  <div class="shipping-box">
+                    <h3>배송 안내</h3>
+                    <p>• 무료배송 / 1~2일 내 출고</p>
+  
+                    <h3>교환 / 환불</h3>
+                    <p>• 수령 후 7일 이내 가능</p>
+                    <p>• 사용 흔적 있을 경우 불가</p>
+  
+                    <h3>주의사항</h3>
+                    <p>• 렌즈 제품은 개봉 후 교환 불가</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="fab-group page" aria-label="필터 및 추천">
+            <button
+              class="btn btn--action btn--filter"
+              type="button"
+              aria-label="가상 피팅 시작하기"
+              aria-expanded="false"
+            >
+              가상 피팅 시작하기
+            </button>
+            <button
+              class="btn btn--action btn--filter"
+              type="button"
+              aria-label="얼굴형 분석 시작하기"
+              aria-expanded="false"
+            >
+              얼굴형 분석 시작하기
+            </button>
+            <button
+              class="btn btn--action btn--filter"
+              type="button"
+              aria-label="장바구니 담기"
+              aria-expanded="false"
+            >
+              장바구니 담기
+            </button>
+
+            <button
+              class="btn btn--action btn--filter"
+              type="button"
+              aria-label="바로 구매하기"
+              aria-expanded="false"
+            >
+              바로 구매하기
+            </button>
+          </div>
         </div>
       </main>
     </div>
