@@ -12,85 +12,62 @@
 /* =========================
    RESET
 ========================= */
-*,
-*::before,
-*::after {
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
-
+/* body 기본 */
 body {
+  font-family: system-ui, -apple-system, sans-serif;
   line-height: 1.5;
-  font-family: system-ui, -apple-system, "Pretendard", sans-serif;
-  color: #1c1c1c;
-  background: #f8f8f8;
-  padding: 0;
-  margin: 0;
+  color: #111;
+  background: #fff;
 }
 
-img,
-video,
-svg {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-  color: inherit;
-  background: none;
-  border: none;
-  outline: none;
-}
-
-button {
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
+/* 리스트 */
 ul,
 ol {
   list-style: none;
 }
 
+/* 링크 */
 a {
   text-decoration: none;
   color: inherit;
 }
 
+/* 버튼 */
+button {
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* 이미지 */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* input / textarea */
 input,
 textarea {
+  font: inherit;
   outline: none;
 }
 
+/* table */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 button,
@@ -106,7 +83,6 @@ a {
 .font-body-s-b-100 {
   font-size: 14px;
   line-height: 1;
-  font-weight: 700;
 }
 
 .font-body-lg {
@@ -117,7 +93,6 @@ a {
 .font-body-sm {
   font-size: 14px;
   line-height: 1.15;
-  font-weight: 500;
 }
 
 .font-body-sm-b {
@@ -225,24 +200,13 @@ a {
   }
 }
 .page {
-  padding: 0 16px;
-  width: 100%;
-}
-
-.app {
-  width: 100%;
+  padding-inline: 16px;
 }
 
 .page > section {
   margin-bottom: 40px;
 }
 
-@media (min-width: 1200px) {
-  .page {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-}
 .product-card {
   width: 160px;
   display: flex;
@@ -276,86 +240,46 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: none;
   cursor: pointer;
-  transition: all 0.25s ease;
-  font-weight: 500;
-  white-space: nowrap;
+  transition: all 0.3s ease;
 }
 .btn:disabled {
-  opacity: 0.4;
   cursor: not-allowed;
+  opacity: 0.4;
 }
 
-/* CTA: 주요 행동 (결제, 구매, 로그인, 회원가입, 시작) */
-.btn-cta {
+.btn-sm {
+  height: 40px;
+}
+
+.btn-md {
   height: 48px;
-  font-size: 18px;
-  background: #072369;
-  color: #f8f8f8;
 }
 
-/* ACTION: 보조 행동 (필터, 저장, 더보기, 분석) */
-.btn-action {
-  height: 44px;
-  font-size: 16px;
-}
-
-/* UTILITY: 도구 (검색, 닫기, 페이지네이션, 칩) */
-.btn-utility {
-  height: 36px;
-  font-size: 14px;
-  background: transparent;
-  color: #1c1c1c;
-}
-
-/* full width */
-.btn-full {
-  width: 100%;
-}
-
-/* icon */
-.btn-icon {
-  width: 24px;
-  height: 24px;
-  padding: 0;
-}
-
-.btn-chip {
-  width: 36px;
-  height: 36px;
-}
-
-.btn-more {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #072369;
+.btn-lg {
+  height: 56px;
 }
 
 @media (min-width: 768px) {
-  .btn-cta {
-    height: 56px;
-    font-size: 18px;
+  .btn-sm {
+    height: 44px;
   }
-  .btn-action {
-    height: 48px;
-    font-size: 16px;
+  .btn-md {
+    height: 52px;
   }
-  .btn-utility {
-    height: 40px;
-    font-size: 14px;
+  .btn-lg {
+    height: 60px;
   }
 }
 @media (min-width: 1200px) {
-  .btn-cta {
-    height: 64px;
+  .btn-sm {
+    height: 48px;
   }
-  .btn-action {
+  .btn-md {
     height: 56px;
   }
-  .btn-utility {
-    height: 44px;
+  .btn-lg {
+    height: 64px;
   }
 }
 .carousel-indicator {
@@ -405,23 +329,25 @@ a {
   z-index: 5;
 }
 
-:root {
-  --grid-gap: 16px;
-}
-
+/* mobile */
 .grid {
   display: grid;
-  gap: var(--grid-gap, 16px);
+  gap: 8px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
-.grid--2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+/* tablet */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
-
-.grid--3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+/* desktop */
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
-
 header {
   height: 88px;
   display: flex;
@@ -470,197 +396,6 @@ header {
 
 .page-header__spacer {
   justify-self: end;
-}
-
-.product-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.sort-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.chip-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 0 8px;
-  gap: 32px;
-}
-
-.color-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  justify-items: center;
-}
-
-.color-grid button:first-child {
-  background: #072369;
-}
-.color-grid button:nth-child(2) {
-  background: #1c1c1c;
-}
-.color-grid button:nth-child(3) {
-  background: #a09bee;
-}
-.color-grid button:nth-child(4) {
-  background: #d9d9d9;
-}
-.color-grid button:nth-child(5) {
-  background: #535762;
-}
-.color-grid button:last-child {
-  background: #f2b705;
-}
-
-.color-dot {
-  border-radius: 50%;
-  display: flex;
-}
-
-.frame-list__item {
-  width: 100%;
-}
-
-.frame-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-
-.filter-group {
-  padding: 12px 16px;
-  display: flex;
-  flex-direction: column;
-}
-
-.btn-list {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.floating-actions {
-  position: fixed;
-  left: 16px;
-  right: 16px;
-  bottom: 0;
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.floating-actions .btn {
-  min-width: 0;
-  padding: 0 24px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.product-list {
-  width: 100%;
-}
-
-.price-filter {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.price-range {
-  width: 100%;
-}
-
-.price-current {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  color: #535762;
-}
-
-.filter-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  padding: 16px;
-}
-
-.filter-footer .btn {
-  padding: 0 48px;
-  text-align: center;
-}
-
-.product-list button {
-  padding: 0 80px;
-}
-
-.filter-footer .btn-reset {
-  background: #f2b705;
-  border: 1px solid #1c1c1c;
-}
-
-.filter-footer .btn-filter-apply {
-  border: 1px solid #072369;
-}
-
-.btn-more {
-  display: block;
-  margin: 24px auto;
-}
-
-.product-cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  max-width: 328px;
-  margin: 0 auto;
-}
-
-.product-cards h3 {
-  height: 52px;
-}
-
-.sort-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.sort-trigger {
-  display: flex;
-  align-items: center;
-}
-
-.sort-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: none;
-  background: #f8f8f8;
-  border: 1px solid #d9d9d9;
-  min-width: 120px;
-  z-index: 10;
-  padding: 0;
-}
-
-.sort-menu.is-open {
-  display: block;
-}
-
-.sort-menu li {
-  padding: 10px;
-  cursor: pointer;
-}
-
-.sort-menu li:hover {
-  background: #f8f8f8;
 }
 
 /*# sourceMappingURL=style.css.map */
