@@ -1,17 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>상품목록</title>
+
   <link rel="stylesheet" href="styles/reset.css">
   <link rel="stylesheet" href="styles/normalize.css">
   <link rel="stylesheet" href="styles/common.css" />
+  <link rel="stylesheet" href="styles/product-list.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 
 <body>
-  <header class="header">
+  <div class="app">
+  <header class="header" role="banner">
+
     <div class="header__left">
       <h1 class="header__logo">
         <a href="/" aria-label="ROUNZ 홈">ROUNZ</a>
@@ -19,70 +23,263 @@
     </div>
 
     <div class="header__right">
-      <div class="header__utility">
-        <button type="button" class="icon-btn" aria-label="검색 열기">
+      <div class="header__actions">
+
+        <button
+          type="button"
+          class="icon-btn"
+          aria-label="검색 열기"
+        >
           <span class="material-icons" aria-hidden="true">search</span>
         </button>
 
-        <button type="button" class="icon-btn" aria-label="장바구니, 현재 1개 상품">
+        <button
+          type="button"
+          class="icon-btn"
+          aria-label="장바구니, 현재 1개 상품"
+        >
           <span class="material-icons" aria-hidden="true">shopping_bag</span>
           <span class="cart-badge" aria-hidden="true">1</span>
         </button>
-      </div>
 
-      <button
-        type="button"
-        class="header__toggle icon-btn"
-        aria-label="메뉴 열기"
-        aria-expanded="false"
-        aria-controls="global-nav">
-        <span class="material-icons" aria-hidden="true">menu</span>
-      </button>
+        <button
+          type="button"
+          class="icon-btn"
+          aria-label="전체 메뉴 열기"
+          aria-expanded="false"
+          aria-controls="global-nav"
+        >
+          <span class="material-icons" aria-hidden="true">menu</span>
+        </button>
+
+      </div>
     </div>
+
   </header>
-  <main class="page page--product-list">
-    <nav class="page-header" aria-label="페이지 위치">
-      <button type="button" class="back-btn" aria-label="이전 페이지로 이동">
-        이전
-      </button>
-
-      <h2 class="page-title">EYEGLASSES</h2>
-      <div class="page-header__spacer" aria-hidden="true"></div>
-    </nav>
-    <section class="product-toolbar" aria-label="상품 정렬 및 정보">
-      <button type="button" class="sort-btn" aria-haspopup="listbox" aria-expanded="false">
-        인기순
-        <span class="material-icons" aria-hidden="true">keyboard_arrow_down</span>
-      </button>
-
-      <p class="product-count">
-        <span class="sr-only">전체 상품 수</span>
-        100개의 상품
-      </p>
-    </section>
-    <section class="product-list" aria-label="상품 목록">
-      <h2 class="sr-only">상품 목록</h2>
-
-      <div class="product-cards" aria-live="polite">
-      </div>
-
-      <button type="button" class="btn-more">
-        더보기
-      </button>
-    </section>
-
+  <main class="page page--product-list" role="main">
+    <div class="page__inner">
+      <nav class="page-header" aria-label="페이지 위치">
+        <button
+          type="button"
+          class="back-btn"
+          aria-label="이전 페이지로 이동"
+        >
+          <span class="material-icons" aria-hidden="true">chevron_left</span>
+        </button>
+  
+        <h2 class="page-title">EYEGLASSES</h2>
+  
+        <div class="page-header__spacer" aria-hidden="true"></div>
+  
+      </nav>
+      <section
+        class="product-toolbar"
+        aria-label="상품 정렬 및 개수"
+      >
+  
+        <div class="sort-dropdown">
+  
+          <button
+            class="sort-trigger"
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-controls="sortMenu"
+            id="sortTrigger"
+          >
+            인기순
+            <span class="material-icons" aria-hidden="true">keyboard_arrow_down</span>
+          </button>
+  
+          <ul
+            class="sort-menu"
+            id="sortMenu"
+            role="listbox"
+            aria-labelledby="sortTrigger"
+          >
+            <li role="option" tabindex="0" data-sort="popular">인기순</li>
+            <li role="option" tabindex="0" data-sort="newest">최신순</li>
+            <li role="option" tabindex="0" data-sort="priceLow">낮은가격순</li>
+            <li role="option" tabindex="0" data-sort="priceHigh">높은가격순</li>
+          </ul>
+  
+        </div>
+  
+        <p class="product-count" aria-live="polite">
+          <span class="sr-only">전체 상품 수</span>
+        </p>
+  
+      </section>
+      <section class="product-list" aria-label="상품 목록">
+  
+        <h2 class="sr-only">상품 목록</h2>
+  
+        <div class="skeleton-list" aria-hidden="true">
+          <article class="skeleton-card"></article>
+          <article class="skeleton-card"></article>
+          <article class="skeleton-card"></article>
+          <article class="skeleton-card"></article>
+        </div>
+  
+        <div class="product-cards grid grid--2" aria-live="polite"></div>
+  
+        <button
+          type="button"
+          class="btn btn--action btn-more"
+          aria-label="더 많은 상품 불러오기"
+        >더 보기
+          <span class="material-icons">chevron_right</span>
+        </button>
+  
+      </section>
+  
+    </div>
   </main>
-  <div class="floating-actions" role="region" aria-label="빠른 필터 및 추천">
-    <button type="button" class="filter-btn" aria-label="필터 열기, 현재 0개 적용됨">
+  <div class="fab-group" aria-label="필터 및 추천">
+
+    <button
+      class="btn btn--action btn--filter"
+      type="button"
+      id="openFilter"
+      aria-controls="filterSheet"
+      aria-expanded="false"
+    >
       <span class="material-icons" aria-hidden="true">filter_alt</span>
       필터 (0)
     </button>
 
-    <button type="button" class="recommend-btn" aria-label="추천 프레임 보기">
-      <span class="material-icons" aria-hidden="true">eyeglasses</span>
+    <button
+      class="btn btn--action btn--filter"
+      type="button"
+      id="openFrameRecommend"
+      aria-label="함께 보면 좋은 프레임 보기"
+    >
+      <img src="assets/icons/frame_round.svg" alt="" aria-hidden="true">
       함께 보면 좋은 프레임
     </button>
+
+  </div>
+  <div
+    class="bottom-sheet"
+    id="filterSheet"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="filterTitle"
+  >
+
+    <div class="bottom-sheet__backdrop" data-close="filter"></div>
+
+    <div class="bottom-sheet__panel">
+
+      <div class="handle" aria-hidden="true"></div>
+
+      <header class="filter-header">
+        <div></div>
+        <h2 class="filter-title" id="filterTitle">필터</h2>
+
+        <button
+          class="close-btn icon-btn"
+          type="button"
+          aria-label="필터 닫기"
+          data-close="filter"
+        >
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
+
+      </header>
+
+      <div class="filter-body">
+
+        <!-- FRAME -->
+        <section class="filter-group" aria-label="모양 필터">
+          <h3>모양</h3>
+
+          <ul class="chip-grid" role="group">
+
+            <li><button class="btn-utility" aria-pressed="false">라운드</button></li>
+            <li><button class="btn-utility" aria-pressed="false">스퀘어</button></li>
+            <li><button class="btn-utility" aria-pressed="false">보잉</button></li>
+            <li><button class="btn-utility" aria-pressed="false">하금테</button></li>
+            <li><button class="btn-utility" aria-pressed="false">캣아이</button></li>
+            <li><button class="btn-utility" aria-pressed="false">고글</button></li>
+            <li><button class="btn-utility" aria-pressed="false">믹스</button></li>
+            <li><button class="btn-utility" aria-pressed="false">기타</button></li>
+
+          </ul>
+        </section>
+        <section class="filter-group" aria-label="성별 필터">
+          <h3>성별</h3>
+
+          <ul class="chip-grid" role="group">
+            <li><button class="btn-utility" aria-pressed="true">공용</button></li>
+            <li><button class="btn-utility" aria-pressed="false">남성</button></li>
+            <li><button class="btn-utility" aria-pressed="false">여성</button></li>
+          </ul>
+        </section>
+        <section class="filter-group" aria-label="프레임 크기">
+          <h3>프레임 크기</h3>
+
+          <ul class="chip-grid" role="group">
+            <li><button class="btn-utility">S</button></li>
+            <li><button class="btn-utility">M</button></li>
+            <li><button class="btn-utility">L</button></li>
+          </ul>
+
+        </section>
+        <section class="filter-group" aria-label="색상 필터">
+          <h3>색상</h3>
+
+          <div class="color-grid">
+            <button class="color-dot" aria-label="검정색 선택"></button>
+            <button class="color-dot" aria-label="갈색 선택"></button>
+            <button class="color-dot" aria-label="투명 선택"></button>
+            <button class="color-dot" aria-label="금색 선택"></button>
+          </div>
+
+        </section>
+        <section class="filter-group" aria-label="가격 필터">
+          <h3>가격</h3>
+
+          <div class="price-filter">
+
+            <div class="price-current" aria-live="polite">
+              <span>₩0</span>
+              <span>₩500,000</span>
+            </div>
+
+            <input
+              type="range"
+              min="0"
+              max="500000"
+              step="10000"
+              value="500000"
+              aria-label="최대 가격 선택"
+            />
+
+          </div>
+
+        </section>
+
+      </div>
+
+      <footer class="filter-footer">
+
+        <button class="btn btn--action btn-reset">
+          초기화
+        </button>
+
+        <button class="btn btn--action btn-apply">
+          필터 적용
+        </button>
+
+      </footer>
+
+    </div>
   </div>
 
+</div>
 </body>
+
+<script type="module" src="./js/pages/productList.js"></script>
 </html>

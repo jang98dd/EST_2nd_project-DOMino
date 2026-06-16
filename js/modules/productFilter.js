@@ -1,0 +1,7 @@
+function applyFilters() {
+
+}
+
+function applySort() {
+  
+}
