@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>ROUNZ - Product Detail</title>
+
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/normalize.css" />
     <link rel="stylesheet" href="styles/common.css" />
@@ -13,12 +14,13 @@
       rel="stylesheet"
     />
   </head>
+
   <body>
     <div class="app">
       <header class="header" role="banner">
         <div class="header__left">
           <h1 class="header__logo">
-            <a href="/" aria-label="ROUNZ 홈">ROUNZ</a>
+            <a href="/index.html" aria-label="ROUNZ 홈">ROUNZ</a>
           </h1>
         </div>
 
@@ -28,11 +30,7 @@
               <span class="material-icons" aria-hidden="true">search</span>
             </button>
 
-            <button
-              type="button"
-              class="icon-btn"
-              aria-label="장바구니, 현재 1개 상품"
-            >
+            <button type="button" class="icon-btn" aria-label="장바구니">
               <span class="material-icons" aria-hidden="true"
                 >shopping_bag</span
               >
@@ -51,7 +49,7 @@
           </div>
         </div>
       </header>
-      <main class="page--product-list" role="main">
+      <main class="product-page">
         <div class="page__inner">
           <nav class="page-header" aria-label="페이지 위치">
             <button
@@ -64,173 +62,95 @@
               >
             </button>
 
-            <h2 class="page-title"></h2>
-            <button type="button" class="btn-like" aria-label="찜하기">
-              <span class="material-icons"> favorite </span>
+            <h2 class="page-title">EYEGLASSES</h2>
+            <button type="button" class="btn-like" aria-label="찜 하기">
+              <span class="material-icons" aria-hidden="true">favorite</span>
             </button>
+            <div class="page-header__spacer" aria-hidden="true"></div>
           </nav>
-          <section class="product-detail__image">
-            <img id="productImage" src="" alt="product image" />
-          </section>
-          <div class="page page__inner">
-            <section class="product-detail__info">
-              <h1 id="productTitle"></h1>
-              <p id="productBrand"></p>
+          <section class="product-layout">
+            <div class="media">
+              <img id="mainImage" class="main-img" />
 
-              <div class="product-detail__price">
-                <span id="productPrice"></span>
-              </div>
-
-              <div class="product-detail__rating">
-                <div class="stars" id="productStars"></div>
-                <span class="rating-text">
-                  <span id="productRating"></span>
-                  <span id="productReviewCount"></span>
-                </span>
-              </div>
-            </section>
-            <section class="product-detail__options">
-              <div class="option option--color">
-                <h3>Color</h3>
-                <div id="colorOptions" class="option__list"></div>
-              </div>
-              <div class="custom-select">
-                <button type="button" class="select-btn" id="selectBtn">
-                  <span id="selectText">Select size</span>
-                  <span class="material-icons">keyboard_arrow_down</span>
-                </button>
-
-                <ul class="select-list hidden" id="selectList">
-                  <li data-value="S">S</li>
-                  <li data-value="M">M</li>
-                  <li data-value="L">L</li>
-                </ul>
-              </div>
-            </section>
-          </div>
-          <section class="product-detail__tabs">
-            <div class="tabs">
-              <button class="tab active" data-tab="detail">상세 정보</button>
-              <button class="tab" data-tab="review">리뷰</button>
-              <button class="tab" data-tab="shipping">배송/교환/환불</button>
+              <div id="thumbList" class="thumb-list"></div>
             </div>
+            <div class="info">
+              <div class="top-info">
+                <p id="brand"></p>
+                <h1 id="title"></h1>
 
-            <div class="page">
-              <div class="tab-content">
-                <div id="tabDetail">
-                  <div class="product-description">
-                    <p class="desc-title">상품 상세</p>
-  
-                    <p class="desc-text">
-                      이 제품은 클래식한 디자인과 현대적인 감각을 결합한
-                      아이웨어입니다. 데일리 착용에 적합하며 다양한 얼굴형에 잘
-                      어울립니다.
-                    </p>
-  
-                    <ul class="desc-list">
-                      <li>브랜드: RAY-BAN</li>
-                      <li>카테고리: Eyewear</li>
-                      <li>소재: 아세테이트 / 메탈</li>
-                    </ul>
-                  </div>
+                <div class="price" id="price"></div>
+              </div>
+              <div class="options">
+                <div class="option-block">
+                  <h4>Color</h4>
+                  <div id="colors" class="colors"></div>
                 </div>
-                <div class="size-guide">
-                  <button type="button" id="sizeGuideBtn">
-                    Size Guide
-                    <span class="material-icons">info</span>
+
+                <div class="option-block">
+                  <h4>Size</h4>
+                  <button id="sizeBtn" class="select-btn">
+                    <span id="sizeText">사이즈 선택</span>
+                    <span class="material-icons">expand_more</span>
                   </button>
-  
-                  <div class="size-guide-modal hidden" id="sizeGuideModal">
-                    <h3>Size Guide</h3>
-  
-                    <table>
-                      <tr>
-                        <th>Size</th>
-                        <th>Lens Width</th>
-                        <th>Bridge</th>
-                      </tr>
-                      <tr>
-                        <td>S</td>
-                        <td>48mm</td>
-                        <td>18mm</td>
-                      </tr>
-                      <tr>
-                        <td>M</td>
-                        <td>50mm</td>
-                        <td>19mm</td>
-                      </tr>
-                      <tr>
-                        <td>L</td>
-                        <td>52mm</td>
-                        <td>20mm</td>
-                      </tr>
-                    </table>
-  
-                    <p class="note">
-                      * 안경은 착용감에 따라 개인 차이가 있을 수 있습니다.
-                    </p>
-                  </div>
+                  <ul id="sizeList" class="size-list hidden"></ul>
                 </div>
-                <div class="review-item">
-                  <div class="review-header">
-                    <strong>user123</strong>
-                    <div class="stars stars--review"></div>
-                  </div>
-                  <p>착용감 좋고 가볍습니다.</p>
-                </div>
-                <div id="tabShipping">
-                  <div class="shipping-box">
-                    <h3>배송 안내</h3>
-                    <p>• 무료배송 / 1~2일 내 출고</p>
-  
-                    <h3>교환 / 환불</h3>
-                    <p>• 수령 후 7일 이내 가능</p>
-                    <p>• 사용 흔적 있을 경우 불가</p>
-  
-                    <h3>주의사항</h3>
-                    <p>• 렌즈 제품은 개봉 후 교환 불가</p>
+
+                <div class="option-block">
+                  <h4>Quantity</h4>
+                  <div class="qty">
+                    <button id="minus">-</button>
+                    <input id="qty" value="1" readonly />
+                    <button id="plus">+</button>
                   </div>
                 </div>
               </div>
+
+              <!-- TOTAL -->
+              <div class="total">
+                <span>총 금액</span>
+                <strong id="totalPrice"></strong>
+              </div>
+
+              <!-- ACTION -->
+              <div class="actions">
+                <button class="fit">가상피팅</button>
+                <div class="row">
+                  <button class="cart">장바구니</button>
+                  <button class="buy">구매</button>
+                </div>
+              </div>
+
+              <!-- ACCORDION -->
+              <div class="accordion">
+                <button class="acc-btn">상세정보</button>
+                <div class="panel">디자인 설명 영역</div>
+
+                <button class="acc-btn">리뷰</button>
+                <div class="panel hidden" id="reviews"></div>
+
+                <button class="acc-btn">배송/교환</button>
+                <div class="panel hidden">배송 정보</div>
+              </div>
+            </div>
+            <div class="recommend-box">
+              <h3>얼굴형 추천</h3>
+              <div class="fitting-c
+              ontent">
+                <button></button>
+                <button></button>
+              </div>
+            </div>
+            <div class="fitting-box">
+              <h3>가상 피팅</h3>
+              <p>내 얼굴에 가상으로 착용해보세요.</p>
+              <button class="btn--cta-lg"></button>
             </div>
           </section>
-          <div class="fab-group page" aria-label="필터 및 추천">
-            <button
-              class="btn btn--action btn--filter"
-              type="button"
-              aria-label="가상 피팅 시작하기"
-              aria-expanded="false"
-            >
-              가상 피팅 시작하기
-            </button>
-            <button
-              class="btn btn--action btn--filter"
-              type="button"
-              aria-label="얼굴형 분석 시작하기"
-              aria-expanded="false"
-            >
-              얼굴형 분석 시작하기
-            </button>
-            <button
-              class="btn btn--action btn--filter"
-              type="button"
-              aria-label="장바구니 담기"
-              aria-expanded="false"
-            >
-              장바구니 담기
-            </button>
-
-            <button
-              class="btn btn--action btn--filter"
-              type="button"
-              aria-label="바로 구매하기"
-              aria-expanded="false"
-            >
-              바로 구매하기
-            </button>
-          </div>
         </div>
       </main>
     </div>
+
+    <script src="js/product-detail.js"></script>
   </body>
 </html>
