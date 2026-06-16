@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROUNZ</title>
+
+  <link rel="stylesheet" href="./css/style.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- header: 공통 컴포넌트 -->
+
+  <main class="home">
+
+    <!-- ======================
+       HERO
+    ====================== -->
+
+    <section class="hero">
+
+      <video class="hero__video" autoplay loop muted playsinline>
+        <!-- TODO: 히어로 영상 소스 추가 -->
+        <!-- <source src="영상경로.mp4" type="video/mp4"> -->
+      </video>
+
+      <div class="hero__controls">
+
+        <button class="hero__btn hero__btn--play" type="button" aria-label="영상 재생/일시정지">
+          <i class="fa-solid fa-play"></i>
+        </button>
+
+        <button class="hero__btn hero__btn--mute" type="button" aria-label="음소거 켜기/끄기">
+          <i class="fa-solid fa-volume-xmark"></i>
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- footer: 공통 컴포넌트 -->
+
+  <script type="module" src="./js/main.js"></script>
+
+</body>
+
+</html>
