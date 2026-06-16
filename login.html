@@ -1,97 +1,94 @@
-<main class="auth">
+<body>
 
-  <section class="auth__intro">
+  <header class="header">
 
-    <h2 class="auth__title">
-      Find the Frame<br>
-      that fits your style.
-    </h2>
+    <div class="logo">ROUNZ</div>
 
-    <p class="auth__desc">
-      당신에게 가장 잘 어울리는 안경을 찾아보세요.
-    </p>
+    <nav class="gnb">
+      <a href="#">상품</a>
+      <a href="#">가상피팅</a>
+      <a href="#">분석</a>
+      <a href="#">브랜드</a>
+      <a href="#">이벤트</a>
+      <a href="#">고객지원</a>
+    </nav>
 
-  </section>
+    <div class="header-icons">
 
-  <form class="auth-form">
-
-    <div class="form-group">
-
-      <label for="email">
-        이메일
-      </label>
-
-      <input id="email" type="email" placeholder="이메일을 입력해주세요">
+      <button>검색</button>
+      <button>장바구니</button>
+      <button>메뉴</button>
 
     </div>
 
-    <div class="form-group">
+  </header>
 
-      <label for="password">
-        비밀번호
-      </label>
+  <main class="auth auth--login">
 
-      <div class="input-password">
+    <section class="auth__intro">
 
-        <input id="password" type="password" placeholder="영문, 숫자, 특수문자 8자 이상">
+      <h1>
+        Find the Frame<br>
+        that fits your style.
+      </h1>
 
-        <button type="button">
-          👁
+      <p>
+        당신에게 가장 잘 어울리는 안경을 찾아보세요.
+      </p>
+
+    </section>
+
+    <section class="auth__form">
+
+      <form>
+
+        <div class="form-group">
+
+          <label>이메일</label>
+
+          <input type="email" placeholder="이메일을 입력해주세요">
+
+        </div>
+
+        <div class="form-group">
+
+          <label>비밀번호</label>
+
+          <div class="password-wrap">
+
+            <input type="password" id="loginPw" placeholder="비밀번호를 입력해주세요">
+
+            <button type="button" class="toggle-password">
+              👁
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="login-option">
+
+          <label>
+            <input type="checkbox">
+            로그인 상태 유지
+          </label>
+
+          <a href="#">
+            비밀번호 찾기
+          </a>
+
+        </div>
+
+        <button class="btn-black">
+          로그인
         </button>
 
-      </div>
+      </form>
 
-    </div>
+    </section>
 
-    <div class="auth-option">
+  </main>
 
-      <label>
-        <input type="checkbox">
-        로그인 상태 유지
-      </label>
+  <script src="./js/auth.js"></script>
 
-      <a href="#">
-        비밀번호 찾기
-      </a>
-
-    </div>
-
-    <button type="submit" class="btn-login">
-      로그인
-    </button>
-
-    <div class="divider">
-      또는
-    </div>
-
-    <div class="social-login">
-
-      <button class="social kakao">
-        카카오로 로그인
-      </button>
-
-      <button class="social naver">
-        네이버로 로그인
-      </button>
-
-      <button class="social apple">
-        Apple로 로그인
-      </button>
-
-    </div>
-
-    <p class="signup-link">
-
-      아직 회원이 아니신가요?
-
-      <a href="#">
-        회원가입
-      </a>
-
-    </p>
-
-  </form>
-
-</main>
-<link rel="stylesheet" href="./css/style.css">
-<link rel="stylesheet" href="./css/auth.css">
+</body>

@@ -1,0 +1,336 @@
+/* ========================================
+   AUTH PAGE
+======================================== */
+
+.auth {
+  min-height: calc(100vh - 88px);
+  background: #f5f5f5;
+
+  padding: 24px 16px 40px;
+}
+
+/* ========================================
+   INTRO
+======================================== */
+
+.auth__intro {
+  margin-bottom: 40px;
+}
+
+.auth__intro h1 {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.1;
+
+  margin-bottom: 12px;
+}
+
+.auth__intro p {
+  font-size: 14px;
+  color: #444;
+}
+
+/* ========================================
+   FORM
+======================================== */
+
+.auth__form {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  height: 48px;
+
+  padding: 0 16px;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  background: #fff;
+}
+
+.form-group input::placeholder {
+  color: #bbb;
+}
+
+/* ========================================
+   PASSWORD
+======================================== */
+
+.password-wrap {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+
+  top: 50%;
+  right: 12px;
+
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+/* ========================================
+   ERROR
+======================================== */
+
+.error-message {
+  margin-top: 6px;
+
+  font-size: 12px;
+  line-height: 1.4;
+
+  color: #A09BEE;
+}
+
+/* ========================================
+   LOGIN OPTION
+======================================== */
+
+.login-option {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+
+  font-size: 14px;
+}
+
+.login-option label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ========================================
+   BUTTON
+======================================== */
+
+.btn-black {
+  width: 100%;
+  height: 52px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #1a1a1a;
+  color: #fff;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+/* ========================================
+   DIVIDER
+======================================== */
+
+.divider {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  margin: 24px 0;
+
+  color: #999;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+
+  flex: 1;
+  height: 1px;
+
+  background: #ddd;
+}
+
+/* ========================================
+   SOCIAL LOGIN
+======================================== */
+
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.social-btn {
+  width: 100%;
+  height: 52px;
+
+  border-radius: 8px;
+  border: 1px solid #ddd;
+
+  background: #fff;
+
+  cursor: pointer;
+}
+
+.social-btn.kakao {
+  background: #FEE500;
+  border: none;
+}
+
+.social-btn.naver {
+  background: #fff;
+}
+
+.social-btn.apple {
+  background: #fff;
+}
+
+/* ========================================
+   SIGNUP LINK
+======================================== */
+
+.signup-link {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.signup-link a {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* ========================================
+   RADIO
+======================================== */
+
+.radio-group {
+  display: flex;
+  gap: 24px;
+
+  margin-bottom: 24px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ========================================
+   CHECKBOX
+======================================== */
+
+.check-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  margin-bottom: 24px;
+}
+
+.check-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ========================================
+   PHONE
+======================================== */
+
+.phone-group {
+  display: flex;
+  gap: 8px;
+}
+
+.phone-prefix {
+  width: 80px !important;
+}
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (min-width: 768px) {
+
+  .auth {
+    display: grid;
+
+    grid-template-columns: 420px 1fr;
+
+    gap: 40px;
+
+    align-items: center;
+
+    padding: 60px;
+
+    background-image:
+      url("../assets/images/tablet-bg.png");
+
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 55%;
+  }
+
+  .auth__intro {
+    margin-bottom: 0;
+  }
+
+  .auth__intro h1 {
+    font-size: 56px;
+  }
+
+}
+
+/* ========================================
+   DESKTOP
+======================================== */
+
+@media (min-width: 1200px) {
+
+  .auth {
+    display: grid;
+
+    grid-template-columns: 480px 1fr;
+
+    gap: 80px;
+
+    padding: 80px;
+
+    background-image:
+      url("../assets/images/desktop-bg.png");
+
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 60%;
+  }
+
+  .auth__intro h1 {
+    font-size: 72px;
+    font-weight: 300;
+  }
+
+  .auth__form {
+    max-width: 460px;
+  }
+
+}
