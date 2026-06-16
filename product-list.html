@@ -70,65 +70,132 @@
 
             <div class="page-header__spacer" aria-hidden="true"></div>
           </nav>
-          <section class="product-toolbar" aria-label="상품 정렬 및 개수">
-            <div class="sort-dropdown">
+          <div class="product-layout">
+            <aside class="filter-sidebar right-border">
+              <section class="filter-group" aria-label="색상 필터">
+                <h3>색상</h3>
+
+                <div class="color-grid">
+                  <button class="color-dot" aria-label="검정색 선택"></button>
+                  <button class="color-dot" aria-label="갈색 선택"></button>
+                  <button class="color-dot" aria-label="투명 선택"></button>
+                  <button class="color-dot" aria-label="금색 선택"></button>
+                </div>
+              </section>
+              <section class="filter-group" aria-label="가격 필터">
+                <h3>가격</h3>
+
+                <div class="price-filter">
+                  <div class="price-current" aria-live="polite">
+                    <span>₩0</span>
+                    <span>₩500,000</span>
+                  </div>
+
+                  <input
+                    type="range"
+                    min="0"
+                    max="500000"
+                    step="10000"
+                    value="500000"
+                    aria-label="최대 가격 선택"
+                  />
+                </div>
+              </section>
+            </aside>
+
+            <div class="product-content">
+              <section class="product-toolbar" aria-label="상품 정렬 및 개수">
+                <div class="sort-dropdown">
+                  <button
+                    class="sort-trigger"
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-controls="sortMenu"
+                    id="sortTrigger"
+                  >
+                    인기순
+                    <span class="material-icons" aria-hidden="true"
+                      >keyboard_arrow_down</span
+                    >
+                  </button>
+
+                  <ul
+                    class="sort-menu"
+                    id="sortMenu"
+                    role="listbox"
+                    aria-labelledby="sortTrigger"
+                  >
+                    <li role="option" tabindex="0" data-sort="popular">
+                      인기순
+                    </li>
+                    <li role="option" tabindex="0" data-sort="newest">
+                      최신순
+                    </li>
+                    <li role="option" tabindex="0" data-sort="priceLow">
+                      낮은가격순
+                    </li>
+                    <li role="option" tabindex="0" data-sort="priceHigh">
+                      높은가격순
+                    </li>
+                  </ul>
+                </div>
+
+                <p class="product-count" aria-live="polite">
+                  <span class="sr-only">전체 상품 수</span>
+                </p>
+              </section>
+              <section class="product-list" aria-label="상품 목록">
+                <h2 class="sr-only">상품 목록</h2>
+
+                <div class="skeleton-list" aria-hidden="true">
+                  <article class="skeleton-card"></article>
+                  <article class="skeleton-card"></article>
+                  <article class="skeleton-card"></article>
+                  <article class="skeleton-card"></article>
+                </div>
+
+                <div
+                  class="product-cards grid grid--2"
+                  aria-live="polite"
+                ></div>
+              </section>
+              <nav class="pagination"></nav>
               <button
-                class="sort-trigger"
                 type="button"
-                aria-haspopup="listbox"
-                aria-expanded="false"
-                aria-controls="sortMenu"
-                id="sortTrigger"
+                class="btn btn--action btn-more btn-more--mobile"
+                aria-label="더 많은 상품 불러오기"
               >
-                인기순
-                <span class="material-icons" aria-hidden="true"
-                  >keyboard_arrow_down</span
-                >
+                더 보기
+                <span class="material-icons">chevron_right</span>
               </button>
-
-              <ul
-                class="sort-menu"
-                id="sortMenu"
-                role="listbox"
-                aria-labelledby="sortTrigger"
-              >
-                <li role="option" tabindex="0" data-sort="popular">인기순</li>
-                <li role="option" tabindex="0" data-sort="newest">최신순</li>
-                <li role="option" tabindex="0" data-sort="priceLow">
-                  낮은가격순
-                </li>
-                <li role="option" tabindex="0" data-sort="priceHigh">
-                  높은가격순
-                </li>
-              </ul>
             </div>
-
-            <p class="product-count" aria-live="polite">
-              <span class="sr-only">전체 상품 수</span>
-            </p>
-          </section>
-          <section class="product-list" aria-label="상품 목록">
-            <h2 class="sr-only">상품 목록</h2>
-
-            <div class="skeleton-list" aria-hidden="true">
-              <article class="skeleton-card"></article>
-              <article class="skeleton-card"></article>
-              <article class="skeleton-card"></article>
-              <article class="skeleton-card"></article>
-            </div>
-
-            <div class="product-cards grid grid--2" aria-live="polite"></div>
-
-            <button
-              type="button"
-              class="btn btn--action btn-more"
-              aria-label="더 많은 상품 불러오기"
-            >
-              더 보기
-              <span class="material-icons">chevron_right</span>
-            </button>
-          </section>
+          </div>
         </div>
+        <section class="recommend-slider" aria-label="추천 상품">
+          <div class="top-border">
+            <div class="recommend-header">
+              <div class="recommend-header__title">
+                <h3 class="recommend-title">함께 보면 좋은 프레임</h3>
+                <p>현재 프레임과 어울리는 추천</p>
+              </div>
+              <button class="btn btn--action btn-more btn-more--desktop" aria-label="더 많은 상품 불러오기"
+              >
+                더 보기
+                <span class="material-icons">chevron_right</span>
+              </button>
+            </div>
+              <div class="recommend-track">
+              <article class="recommend-card">
+                <img src="..." alt="" />
+              </article>
+
+              <article class="recommend-card"></article>
+              <article class="recommend-card"></article>
+              <article class="recommend-card"></article>
+            </div>
+          </div>
+        </section>
       </main>
       <div class="fab-group" aria-label="필터 및 추천">
         <button
@@ -178,9 +245,7 @@
               <span class="material-icons" aria-hidden="true">close</span>
             </button>
           </header>
-
           <div class="filter-body">
-            <!-- FRAME -->
             <section class="filter-group" aria-label="모양 필터">
               <h3>모양</h3>
 
@@ -221,7 +286,6 @@
             </section>
             <section class="filter-group" aria-label="성별 필터">
               <h3>성별</h3>
-
               <ul class="chip-grid" role="group">
                 <li>
                   <button class="btn-utility" aria-pressed="true">공용</button>
@@ -236,7 +300,6 @@
             </section>
             <section class="filter-group" aria-label="프레임 크기">
               <h3>프레임 크기</h3>
-
               <ul class="chip-grid" role="group">
                 <li><button class="btn-utility">S</button></li>
                 <li><button class="btn-utility">M</button></li>
@@ -261,7 +324,6 @@
                   <span>₩0</span>
                   <span>₩500,000</span>
                 </div>
-
                 <input
                   type="range"
                   min="0"
@@ -273,16 +335,13 @@
               </div>
             </section>
           </div>
-
           <footer class="filter-footer">
             <button class="btn btn--action btn-reset">초기화</button>
-
             <button class="btn btn--action btn-apply">필터 적용</button>
           </footer>
         </div>
       </div>
     </div>
   </body>
-
   <script type="module" src="./js/pages/productList.js"></script>
 </html>
