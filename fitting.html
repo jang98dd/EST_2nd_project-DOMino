@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/normalize.css" />
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/fitting.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header" role="banner">
+        <div class="header__left">
+          <h1 class="header__logo">
+            <a href="/" aria-label="ROUNZ 홈">ROUNZ</a>
+          </h1>
+        </div>
+
+        <div class="header__right">
+          <div class="header__actions">
+            <button type="button" class="icon-btn" aria-label="검색 열기">
+              <span class="material-icons" aria-hidden="true">search</span>
+            </button>
+
+            <button
+              type="button"
+              class="icon-btn"
+              aria-label="장바구니, 현재 1개 상품"
+            >
+              <span class="material-icons" aria-hidden="true"
+                >shopping_bag</span
+              >
+              <span class="cart-badge" aria-hidden="true">1</span>
+            </button>
+
+            <button
+              type="button"
+              class="icon-btn"
+              aria-label="전체 메뉴 열기"
+              aria-expanded="false"
+              aria-controls="global-nav"
+            >
+              <span class="material-icons" aria-hidden="true">menu</span>
+            </button>
+          </div>
+        </div>
+      </header>
+      <main class="page page--product-list" role="main">
+        <div class="page__inner">
+          <nav class="page-header" aria-label="페이지 위치">
+            <button type="button" class="mode-btn is-active" data-mode="fit">
+              피팅
+            </button>
+
+            <div class="page-header__spacer" aria-hidden="true"></div>
+
+            <button type="button" class="mode-btn" data-mode="compare">
+              비교
+            </button>
+          </nav>
+          <section class="fitting-stage">
+            <div class="fitting-stage__canvas">
+              <button
+                type="button"
+                class="canvas-close-btn"
+                aria-label="이미지 제거"
+              >
+                <span class="material-icons">close</span>
+              </button>
+
+              <div class="canvas-layer">
+                <img id="baseImage" class="canvas-base" />
+                <img id="fitImage" class="canvas-overlay draggable" />
+              </div>
+            </div>
+
+            <div class="fitting-stage__status" data-state="idle">
+              <span>대기 중</span>
+            </div>
+          </section>
+          <section class="fitting-controls">
+            <div class="control-group">
+              <label>X축 위치</label>
+              <input type="range" id="posX" min="-100" max="100" />
+            </div>
+
+            <div class="control-group">
+              <label>Y축 위치</label>
+              <input type="range" id="posY" min="-100" max="100" />
+            </div>
+
+            <div class="control-group">
+              <label>크기</label>
+              <input type="range" id="scale" min="0.5" max="2" step="0.01" />
+            </div>
+
+            <div class="control-group">
+              <label>회전</label>
+              <input type="range" id="rotate" min="-180" max="180" />
+            </div>
+          </section>
+        </div>
+      </main>
+      <div class="fab-group">
+        <button id="uploadBtn" class="btn btn--primary">이미지 업로드</button>
+
+        <button id="startFitBtn" class="btn btn--primary">피팅 시작</button>
+
+        <button id="resetBtn" class="btn btn--ghost hidden">초기화</button>
+
+        <button id="doneBtn" class="btn btn--success hidden">피팅 완료</button>
+      </div>
+    </div>
+  </body>
+</html>
