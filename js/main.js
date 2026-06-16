@@ -1,3 +1,4 @@
+import "./modules/auth.js";
 import "./modules/menuToggle.js";
 import {} from './pages/home.js';
 import {} from './pages/productList.js';
