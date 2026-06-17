@@ -1,0 +1,76 @@
+/* ==========================
+   HEADER
+========================== */
+
+.header {
+  height: 70px;
+
+  background: #1a1a1a;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 16px;
+}
+
+.logo {
+  color: #fff;
+
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.gnb {
+  display: none;
+}
+
+.header-icons {
+  display: flex;
+  gap: 16px;
+}
+
+.header-icons button {
+  color: #fff;
+  border: none;
+  background: none;
+}
+
+/* ==========================
+   TABLET
+========================== */
+
+@media (min-width:768px) {
+
+  .header {
+    height: 80px;
+    padding: 0 32px;
+  }
+
+}
+/* ==========================
+   DESKTOP
+========================== */
+
+@media (min-width:1200px) {
+
+  .header {
+
+    height: 88px;
+    padding: 0 48px;
+  }
+
+  .gnb {
+
+    display: flex;
+    gap: 40px;
+  }
+
+  .gnb a {
+
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+}

@@ -1,63 +1,251 @@
-<main class="auth auth--signup">
+<!DOCTYPE html>
 
-  <section class="auth__intro">
-    ...
-  </section>
+<html lang="ko">
 
-  <section class="auth__form">
+<head>
 
-    <form id="signupForm">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <div class="form-group">
+  <title>회원가입</title>
 
-        <label>이름 *</label>
+  <link rel="stylesheet" href="./css/header.css">
 
-        <input type="text">
+  <link rel="stylesheet" href="./css/auth.css">
 
-      </div>
+</head>
 
-      <div class="form-group">
+<body>
 
-        <label>이메일 *</label>
+  <header class="header">
 
-        <input id="email">
+    <div class="logo">ROUNZ</div>
 
-        <p class="error-message">
-          이메일은 반드시 @를 포함하여 작성하시오
-        </p>
+    <nav class="gnb">
+      <a href="#">상품</a>
+      <a href="#">가상피팅</a>
+      <a href="#">분석</a>
+      <a href="#">브랜드</a>
+      <a href="#">이벤트</a>
+      <a href="#">고객지원</a>
+    </nav>
 
-      </div>
+    <div class="header-icons">
 
-      <div class="form-group">
-
-        <label>비밀번호 *</label>
-
-        <input id="password">
-
-        <p class="error-message">
-          사용자 이름을 포함해서 작성하지 마시오
-        </p>
-
-      </div>
-
-      <div class="form-group">
-
-        <label>비밀번호 확인 *</label>
-
-        <input id="passwordCheck">
-
-        <p class="error-message">
-          위의 비밀번호와 동일하게 작성하시오
-        </p>
-
-      </div>
-
-      <button class="btn-black">
-        회원가입
+      <button type="button">
+        검색
       </button>
 
-    </form>
+      <button type="button">
+        장바구니
+      </button>
 
-  </section>
+      <button type="button">
+        메뉴
+      </button>
 
-</main>
+    </div>
+
+  </header>
+
+  <main class="auth auth--signup">
+
+    <div class="auth__content">
+
+      <section class="auth__intro">
+
+        <h1>
+          Find the Frame<br>
+          that fits your style.
+        </h1>
+
+        <p>
+          당신에게 가장 잘 어울리는 안경을 찾아보세요.
+        </p>
+
+      </section>
+
+      <section class="auth__form">
+
+        <form class="signup-form" id="signupForm">
+
+          <div class="signup-grid">
+
+            <div class="form-group">
+
+              <label for="name">
+                이름 *
+              </label>
+
+              <input id="name" type="text" placeholder="이름을 입력해주세요">
+
+            </div>
+
+            <div class="form-group">
+
+              <label>
+                휴대폰 번호 *
+              </label>
+
+              <div class="phone-group">
+
+                <input class="phone-prefix" value="010" readonly>
+
+                <input type="tel" placeholder="'-' 없이 입력해주세요">
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="email">
+                이메일 *
+              </label>
+
+              <input id="email" type="email" placeholder="이메일을 입력해주세요">
+
+              <p class="error-message">
+                이메일은 반드시 @를 포함하여 작성하시오
+              </p>
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="birth">
+                생년월일 *
+              </label>
+
+              <input id="birth" type="date">
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="password">
+                비밀번호 *
+              </label>
+
+              <div class="password-wrap">
+
+                <input id="password" type="password" placeholder="영문, 숫자, 특수문자 8자 이상">
+
+                <button type="button" class="toggle-password">
+                  👁
+                </button>
+
+              </div>
+
+              <p class="error-message">
+                사용자 이름을 포함해서 작성하지 마시오
+              </p>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>
+                성별 *
+              </label>
+
+              <div class="radio-group">
+
+                <label>
+                  <input type="radio" name="gender">
+                  남성
+                </label>
+
+                <label>
+                  <input type="radio" name="gender">
+                  여성
+                </label>
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="passwordCheck">
+                비밀번호 확인 *
+              </label>
+
+              <div class="password-wrap">
+
+                <input id="passwordCheck" type="password" placeholder="비밀번호를 다시 입력해주세요">
+
+                <button type="button" class="toggle-password">
+                  👁
+                </button>
+
+              </div>
+
+              <p class="error-message">
+                위의 비밀번호와 동일하게 작성하시오
+              </p>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>
+                마케팅 정보 수신 동의 (선택)
+              </label>
+
+              <div class="check-group">
+
+                <label>
+                  <input type="checkbox">
+                  이벤트 및 혜택 정보 수신 동의
+                </label>
+
+                <label>
+                  <input type="checkbox">
+                  개인정보 수집 및 이용 동의(필수)
+                </label>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <button type="submit" class="btn-black">
+            회원가입
+          </button>
+
+          <p class="login-link">
+
+            이미 계정이 있으신가요?
+
+            <a href="./login.html">
+              로그인
+            </a>
+
+          </p>
+
+        </form>
+
+      </section>
+
+    </div>
+
+    <div class="auth__visual">
+
+      <picture>
+
+        <source media="(min-width:1200px)" srcset="./assets/images/desktop-bg.png">
+
+        <img src="./assets/images/tablet-bg.png" alt="안경 배경">
+
+      </picture>
+
+    </div>
+
+  </main>
+
+  <script src="./js/auth.js"></script>
+
+</body>
+</html>

@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>로그인</title>
+
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/auth.css">
+</head>
+
 <body>
 
   <header class="header">
@@ -14,81 +28,107 @@
     </nav>
 
     <div class="header-icons">
-
-      <button>검색</button>
-      <button>장바구니</button>
-      <button>메뉴</button>
-
+      <button type="button">검색</button>
+      <button type="button">장바구니</button>
+      <button type="button">메뉴</button>
     </div>
 
   </header>
 
   <main class="auth auth--login">
 
-    <section class="auth__intro">
+    <div class="auth__content">
 
-      <h1>
-        Find the Frame<br>
-        that fits your style.
-      </h1>
+      <section class="auth__intro">
 
-      <p>
-        당신에게 가장 잘 어울리는 안경을 찾아보세요.
-      </p>
+        <h1>
+          Find the Frame<br>
+          that fits your style.
+        </h1>
 
-    </section>
+        <p>
+          당신에게 가장 잘 어울리는 안경을 찾아보세요.
+        </p>
 
-    <section class="auth__form">
+      </section>
 
-      <form>
+      <section class="auth__form">
 
-        <div class="form-group">
+        <form class="login-form">
 
-          <label>이메일</label>
+          <div class="form-group">
 
-          <input type="email" placeholder="이메일을 입력해주세요">
+            <label for="email">이메일</label>
 
-        </div>
-
-        <div class="form-group">
-
-          <label>비밀번호</label>
-
-          <div class="password-wrap">
-
-            <input type="password" id="loginPw" placeholder="비밀번호를 입력해주세요">
-
-            <button type="button" class="toggle-password">
-              👁
-            </button>
+            <input id="email" type="email" placeholder="이메일을 입력해주세요">
 
           </div>
 
-        </div>
+          <div class="form-group">
 
-        <div class="login-option">
+            <label for="loginPw">비밀번호</label>
 
-          <label>
-            <input type="checkbox">
-            로그인 상태 유지
-          </label>
+            <div class="password-wrap">
 
-          <a href="#">
-            비밀번호 찾기
-          </a>
+              <input id="loginPw" type="password" placeholder="비밀번호를 입력해주세요">
 
-        </div>
+              <button type="button" class="toggle-password">
+                👁
+              </button>
 
-        <button class="btn-black">
-          로그인
-        </button>
+            </div>
 
-      </form>
+          </div>
 
-    </section>
+          <div class="login-option">
+
+            <label>
+              <input type="checkbox">
+              로그인 상태 유지
+            </label>
+
+            <a href="#">
+              비밀번호 찾기
+            </a>
+
+          </div>
+
+          <button type="submit" class="btn-black">
+            로그인
+          </button>
+
+          <p class="login-link">
+
+            아직 회원이 아니신가요?
+
+            <a href="./signup.html">
+              회원가입
+            </a>
+
+          </p>
+
+        </form>
+
+      </section>
+
+    </div>
+
+    <div class="auth__visual">
+
+      <picture>
+
+        <source media="(min-width:1200px)" srcset="./assets/images/desktop-bg.png">
+
+        <img src="./assets/images/tablet-bg.png" alt="안경 배경">
+
+      </picture>
+
+    </div>
 
   </main>
 
   <script src="./js/auth.js"></script>
 
 </body>
+
+</html>
