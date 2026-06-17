@@ -1,0 +1,471 @@
+/* HOME 페이지 */
+
+/* 공통 - 섹션 네이비 헤더 */
+.section-bar {
+  margin: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: var(--white);
+  font-size: var(--font-28);
+  font-weight: normal;
+  line-height: var(--lh-tight);
+}
+
+/* Jennie's / More Collection 헤더 */
+.collection .section-bar,
+.more-collection .section-bar {
+  height: 40px;
+  font-size: var(--font-18);
+  font-weight: 700;
+  line-height: var(--lh-loose);
+}
+
+/* 공통 - 스켈레톤 카드 */
+.skeleton-card {
+  aspect-ratio: 1 / 1;
+  background: #ececec;
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* 공통 - 불러오기 실패 안내 */
+.best-pick__error,
+.collection__error,
+.more-collection__error {
+  text-align: center;
+  padding: 24px 0;
+}
+
+.best-pick__error .btn,
+.collection__error .btn,
+.more-collection__error .btn {
+  margin-top: 12px;
+  height: var(--btn-sm);
+  padding: 0 16px;
+  border: 1px solid var(--black);
+}
+
+/* 공통 - 얇은 가로 스크롤바 */
+.best-pick .best-pick__scrollbar,
+.collection .collection__scrollbar,
+.more-collection .more-collection__scrollbar {
+  position: relative;
+  margin-top: 11px; /* 상품 카드 → 스크롤바 */
+  height: 2px;
+  background: var(--gray);
+}
+
+.best-pick .best-pick__scrollbar .swiper-scrollbar-drag,
+.collection .collection__scrollbar .swiper-scrollbar-drag,
+.more-collection .more-collection__scrollbar .swiper-scrollbar-drag {
+  background: var(--black);
+}
+
+/* 1. HERO + 8. BRAND */
+.hero,
+.brand {
+  position: relative;
+}
+
+/* 영상 영역 */
+.hero__video,
+.brand__video {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero__video {
+  aspect-ratio: 360 / 520;
+}
+
+.brand__video {
+  aspect-ratio: 360 / 384;
+}
+
+.hero__iframe,
+.brand__iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: auto;
+  aspect-ratio: 16 / 9;
+  min-width: 100%;
+}
+
+/* 상단 진행바 */
+.hero .hero__pagination.swiper-pagination,
+.brand .brand__pagination.swiper-pagination {
+  position: absolute;
+  top: 15px;
+  bottom: auto;
+  left: 16px;
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  gap: var(--indicator-gap);
+  width: auto;
+  height: var(--indicator-height);
+}
+
+.hero .swiper-pagination-bullet,
+.brand .swiper-pagination-bullet {
+  flex: 1;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.3); /* 비활성 */
+}
+
+.hero .swiper-pagination-bullet-active,
+.brand .swiper-pagination-bullet-active {
+  background: rgba(28, 28, 28, 0.7); /* 활성 */
+}
+
+/* 커스텀 컨트롤 */
+.hero__controls,
+.brand__controls {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  gap: 16px;
+}
+
+.hero__control,
+.brand__control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--btn-2xs);
+  height: var(--btn-2xs);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.hero__control .material-icons,
+.brand__control .material-icons {
+  font-size: 32px;
+}
+
+/* 2. CATEGORY */
+.category {
+  margin-bottom: 56px; /* 마지막 버튼 → 다음 섹션 */
+}
+
+/* .page 좌우 패딩 제거 */
+.category .page {
+  padding: 0;
+}
+
+.category__title {
+  margin: 0 0 16px;
+  padding-left: 16px;
+  color: var(--black);
+  font-weight: normal;
+}
+
+/* 8칸 2열 그리드 */
+.category__grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(2, 160px);
+  justify-content: center;
+  column-gap: 8px;
+  row-gap: 8px;
+}
+
+/* 박스 내부 */
+.category__item {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  column-gap: 14px;
+  width: 100%;
+  height: 48px;
+  background: var(--gray);
+  color: var(--superGray);
+  text-decoration: none;
+}
+
+/* 구분선 */
+.category__item::before {
+  content: "";
+  grid-column: 2;
+  grid-row: 1;
+  width: 1px;
+  height: 14px;
+  background: var(--superGray);
+}
+
+.category__icon {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: end;
+  height: 19px;
+  width: auto;
+}
+
+/* 라벨 */
+.category__label {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: start;
+  width: 42px;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--superGray);
+  font-size: var(--font-14);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* KIDS / 안경테 보기 */
+.category__links {
+  grid-template-columns: repeat(2, 160px);
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.category__kids,
+.category__viewall {
+  width: 100%;
+  height: 48px;
+  font-size: var(--font-14);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.category__kids {
+  background: var(--gray);
+  color: var(--superGray);
+  letter-spacing: 4px;
+}
+
+.category__viewall {
+  gap: 4px;
+  background: transparent;
+  border: 1px solid var(--black);
+  color: var(--black);
+}
+
+.category__viewall .material-icons {
+  font-size: 18px;
+}
+
+/* 얼굴형 분석 / 안경 써보기 */
+.category__cta {
+  grid-template-columns: repeat(2, 160px);
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.category__cta-btn {
+  width: 100%;
+  height: 48px;
+  gap: 8px;
+  font-size: var(--font-18);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.category__cta-icon {
+  height: 27px;
+  width: auto;
+}
+
+.category__cta-btn--analysis {
+  background: var(--secondary);
+  color: var(--black);
+}
+
+.category__cta-btn--fitting {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* 3. BEST PICK */
+/* 브랜드 탭 */
+.best-pick__tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px; /* 헤더 → 탭 */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.best-pick__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.best-pick__tab {
+  flex: 0 0 auto;
+  height: 32px;
+  padding: 0 16px;
+  box-shadow: inset 0 0 0 1px var(--black); /* 테두리 안쪽 (폭에 안 더해짐) */
+  background: transparent;
+  color: var(--black);
+  font-size: var(--font-14);
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* 활성 탭 */
+.best-pick__tab.is-active,
+.best-pick__tab[aria-selected="true"] {
+  background: var(--primary);
+  box-shadow: none;
+  color: var(--white);
+}
+
+/* 상품 패널 */
+.best-pick__panel {
+  margin-top: 16px; /* 탭 → 상품 카드 */
+}
+
+.best-pick__carousel {
+  position: relative;
+}
+
+/* 로딩 스켈레톤 */
+.best-pick__skeleton {
+  column-gap: 8px;
+  row-gap: 16px;
+}
+
+/* 더 보기 */
+.best-pick .btn-more {
+  display: flex;
+  gap: 4px;
+  margin: 11px auto 0; /* 스크롤바 → 더보기 */
+}
+
+/* 4. JENNIE'S COLLECTION / 5. MORE COLLECTION */
+/* 대표 이미지 */
+.collection__signature img,
+.event__banner img,
+.store__image img {
+  display: block;
+  width: 100%;
+}
+
+/* Jennie's 대표 이미지 */
+.collection__signature img {
+  aspect-ratio: 360 / 384;
+  object-fit: cover;
+}
+
+/* 셀럽 이미지 캐러셀 */
+.more-collection__celebs .swiper-slide {
+  width: 272px;
+}
+
+.more-collection__celebs img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 272 / 376;
+  object-fit: cover;
+}
+
+.collection__carousel,
+.more-collection__carousel {
+  position: relative;
+}
+
+.collection__carousel {
+  margin-top: 8px; /* 이미지 → 카드 */
+}
+
+.more-collection__carousel {
+  margin-top: 8px; /* 셀럽 이미지 → 카드 */
+}
+
+/* 스켈레톤 3열 간격 */
+.collection__skeleton,
+.more-collection__skeleton {
+  gap: 8px;
+}
+
+/* 더 보기 */
+.collection .btn-more,
+.more-collection .btn-more,
+.event .btn-more {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  height: var(--btn-lg);
+  margin: 24px auto 0;
+}
+
+/* 6. EVENT */
+.event__title {
+  margin: 24px 0 8px;
+  color: var(--black);
+  font-size: var(--font-22);
+  font-weight: 700;
+}
+
+.event__desc {
+  margin: 0 0 24px;
+  color: var(--superGray);
+  font-size: var(--font-14);
+  line-height: var(--lh-loose);
+}
+
+/* 7. STORE */
+.store__block {
+  margin-top: 24px;
+}
+
+.store__title {
+  margin: 0 0 8px;
+  color: var(--black);
+  font-size: var(--font-22);
+  font-weight: 700;
+}
+
+.store__desc {
+  margin: 0 0 8px;
+  color: var(--superGray);
+  font-size: var(--font-14);
+  line-height: var(--lh-loose);
+}
+
+.store__link {
+  display: inline-block;
+  color: var(--black);
+  font-size: var(--font-14);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* 반응형 */
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1200px) {
+}
