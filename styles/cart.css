@@ -16,7 +16,7 @@ body
   -moz-appearance: auto;
 }
 
-/* common.css의 .page-title 가운데정렬 → 장바구니에서는 왼쪽정렬 */
+/* .page-title 가운데정렬 → 장바구니에서는 왼쪽정렬 */
 .cart-header .page-title {
   justify-self: start;
 }
@@ -28,18 +28,18 @@ body
 .cart-container {
   min-height: calc(100vh - 120px);
   background-color: var(--white);
-  padding: 20px;
+  /* padding: 20px;  */
 }
 
 @media (min-width: 768px) {
   .cart-container {
-    padding: 30px;
+    padding: 24px 0 56px;
   }
 }
 
 @media (min-width: 1200px) {
   .cart-container {
-    padding: 40px;
+    padding:64px 0;
   }
 }
 
@@ -726,7 +726,7 @@ body
 
 @media (max-width: 767px) {
   .cart-container {
-    padding-bottom: 200px;
+    padding: 16px 0 40px;
   }
 
   .cart-summary {
@@ -769,9 +769,6 @@ body
 }
 
 @media (min-width: 768px) {
-  .cart-container {
-    padding-bottom: 20px;
-  }
 
   .cart-summary {
     position: static;
