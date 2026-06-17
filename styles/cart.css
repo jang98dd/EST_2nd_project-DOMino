@@ -256,7 +256,7 @@ body {
   margin-bottom: 20px;
 }
 
-.empty-cart .empty-cart-link {
+.empty-cart{
   display: inline-block;
   padding: 12px 30px;
   background-color: var(--primary);
@@ -267,7 +267,7 @@ body {
   transition: all 0.3s ease;
 }
 
-.empty-cart .empty-cart-link:hover { background-color: #054fa6; }
+.empty-cart:hover { background-color: #054fa6; }
 
 /* ========================================
    결제 정보 사이드바
@@ -440,7 +440,7 @@ body {
 
   .empty-cart { padding: 80px 40px; }
   .empty-cart p { font-size: 18px; }
-  .empty-cart .empty-cart-link { padding: 14px 40px; }
+  .empty-cart { padding: 14px 40px; }
 
   .cart-summary { position: static; }
 
@@ -493,17 +493,4 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
-/* ========================================
-   인쇄 스타일
-   ======================================== */
 
-@media print {
-  .cart-header-controls,
-  .delete-all-btn,
-  .product-remove,
-  .continue-shopping-btn {
-    display: none !important;
-  }
-
-  .checkout-btn { page-break-before: always; }
-}
