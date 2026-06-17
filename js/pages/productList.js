@@ -243,8 +243,7 @@ function createProductCard(product) {
       
       <a href="../product-detail.html?id=${product.id}" 
          class="product-card__main-link" 
-         aria-label="${product.title} 상세 페이지로 이동"
-         style="position: absolute; inset: 0; z-index: 1;">
+         aria-label="${product.title} 상세 페이지로 이동">
       </a>
 
       <div class="product-card__thumb">
@@ -252,14 +251,12 @@ function createProductCard(product) {
 
         <button class="btn-like btn--utility-sm"
           aria-pressed="false"
-          aria-label="찜하기"
-          style="z-index: 2;">
+          aria-label="찜하기">
           <span class="material-icons">favorite_border</span>
         </button>
 
         <a href="../fitting-and-analysis.html?id=${product.id}" 
-           class="btn-fit btn--utility-sm" 
-           style="z-index: 2;">
+           class="btn-fit btn--utility-sm" data-id="${product.id}">
           착용하기
         </a>
       </div>
@@ -635,3 +632,11 @@ console.log("SAMPLE PRODUCT:", state.products?.[0]);
 console.log(Object.keys(state.products?.[0] ?? {}));
 console.log(state.products.filter(p => !p.size));
 console.log("SAMPLE PRODUCT FULL:", state.products[0]);
+
+productCards.addEventListener('click', (e) => {
+  if (e.target.classList.contains('btn-fit')) {
+    const glassesId = e.target.dataset.id; 
+    localStorage.setItem('selectedGlasses', glassesId);
+    window.location.href = '../fitting-and-analysis.html'; 
+  }
+});
