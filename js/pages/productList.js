@@ -234,25 +234,39 @@ function renderProducts(list) {
 }
 
 function createProductCard(product) {
+  const formattedPrice = typeof product.price === 'number' 
+    ? `${product.price.toLocaleString()}원` 
+    : product.price;
+
   return `
-    <article class="product-card">
+    <article class="product-card" style="position: relative;">
+      
+      <a href="../product-detail.html?id=${product.id}" 
+         class="product-card__main-link" 
+         aria-label="${product.title} 상세 페이지로 이동"
+         style="position: absolute; inset: 0; z-index: 1;">
+      </a>
+
       <div class="product-card__thumb">
         <img src="${product.thumbnail}" alt="${product.title}" />
 
         <button class="btn-like btn--utility-sm"
           aria-pressed="false"
-          aria-label="찜하기">
+          aria-label="찜하기"
+          style="z-index: 2;">
           <span class="material-icons">favorite_border</span>
         </button>
 
-        <a href="/fit/${product.id}" class="btn-fit btn--utility-sm">
+        <a href="../fitting-and-analysis.html?id=${product.id}" 
+           class="btn-fit btn--utility-sm" 
+           style="z-index: 2;">
           착용하기
         </a>
       </div>
 
       <p>${product.brand}</p>
       <h3>${product.title}</h3>
-      <p>${product.price}</p>
+      <p class="price">${formattedPrice}</p>
     </article>
   `;
 }

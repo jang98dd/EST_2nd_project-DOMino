@@ -67,12 +67,12 @@
   flex-wrap: wrap;
   gap: 16px;
 }
-.color-grid button:nth-child(1) { background: #072369; }
-.color-grid button:nth-child(2) { background: #1c1c1c; }
-.color-grid button:nth-child(3) { background: #a09bee; }
-.color-grid button:nth-child(4) { background: #d9d9d9; }
-.color-grid button:nth-child(5) { background: #535762; }
-.color-grid button:last-child { background: #f2b705; }
+.color-grid button:nth-child(1) { background: var(--primary); }
+.color-grid button:nth-child(2) { background: var(--black); }
+.color-grid button:nth-child(3) { background: var(--purple); }
+.color-grid button:nth-child(4) { background: var(--white); }
+.color-grid button:nth-child(5) { background: var(--superGray); }
+.color-grid button:last-child { background: var(--secondary); }
 
 .color-dot {
   border-radius: 50%;
@@ -195,8 +195,6 @@
 .btn--filter.is-active {
   display: block;
 }
-/* SORT DROPDOWN\ */
-
 .sort-dropdown {
   position: relative;
   display: inline-block;
@@ -226,8 +224,6 @@
 .sort-menu li:hover {
   background: var(--white);
 }
-/* BOTTOM SHEET */
-
 .bottom-sheet {
   position: fixed;
   inset: 0;
@@ -244,7 +240,6 @@
   opacity: 1;
 }
 
-/* backdrop */
 .bottom-sheet__backdrop {
   position: absolute;
   inset: 0;
@@ -281,8 +276,6 @@
 .filter-footer {
   bottom: 0;
 }
-
-/* panel */
 .bottom-sheet__panel {
   position: absolute;
   bottom: 0;
@@ -303,7 +296,6 @@ body.is-sheet-open {
   cursor: not-allowed;
   pointer-events: none;
 }
-/* handle */
 .handle {
   width: 40px;
   height: 4px;
@@ -498,6 +490,10 @@ body.is-sheet-open {
   .product-layout {
     display: flex;
     gap: 20px;
+  }
+  .color-grid {
+    display: flex;
+    flex-direction: column;
   }
 .top-border {
   display: block;
