@@ -5,6 +5,10 @@
   --radius: 10px;
 }
 
+body
+{
+  font-family: "Pretendard", sans-serif;
+}
 /* reset.css가 모든 input에 appearance:none을 적용 → 장바구니 체크박스 복원 */
 .cart-container input[type="checkbox"] {
   appearance: auto;
@@ -307,7 +311,7 @@
   }
 }
 
-.product-card .product-name {
+.product-card{
   font-size: var(--font-body-md);
   font-weight: 600;
   color: var(--black);
@@ -327,7 +331,7 @@
   line-height: 1.4;
 }
 
-.product-card .product-price-row {
+.product-card {
   display: grid;
   grid-template-columns: auto;
   align-items: center;
