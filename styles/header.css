@@ -3,38 +3,61 @@
 ========================== */
 
 .header {
+
   height: 70px;
 
-  background: #1a1a1a;
+  background: #171717;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
-  padding: 0 16px;
+  padding: 0 24px;
 }
 
 .logo {
-  color: #fff;
 
-  font-size: 32px;
+  margin: 0;
+}
+
+.logo a {
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 24px;
   font-weight: 700;
+
+  letter-spacing: -.5px;
 }
 
-.gnb {
-  display: none;
-}
+.header__right {
 
-.header-icons {
   display: flex;
-  gap: 16px;
+  align-items: center;
+
+  gap: 20px;
 }
 
-.header-icons button {
-  color: #fff;
-  border: none;
-  background: none;
+.icon-btn,
+.menu-btn {
+
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 30px;
+
+  transition: .2s;
 }
+
+.icon-btn:hover,
+.menu-btn:hover {
+
+  opacity: .7;
+}
+
 
 /* ==========================
    TABLET
@@ -43,11 +66,26 @@
 @media (min-width:768px) {
 
   .header {
+
     height: 80px;
-    padding: 0 32px;
+
+    padding: 0 40px;
+  }
+
+  .logo a {
+
+    font-size: 28px;
+  }
+
+  .icon-btn,
+  .menu-btn {
+
+    font-size: 32px;
   }
 
 }
+
+
 /* ==========================
    DESKTOP
 ========================== */
@@ -56,21 +94,25 @@
 
   .header {
 
-    height: 88px;
-    padding: 0 48px;
+    height: 72px;
+
+    padding: 0 64px;
   }
 
-  .gnb {
+  .logo a {
 
-    display: flex;
-    gap: 40px;
+    font-size: 22px;
   }
 
-  .gnb a {
+  .header__right {
 
-    color: #fff;
-    text-decoration: none;
-    font-size: 14px;
+    gap: 24px;
+  }
+
+  .icon-btn,
+  .menu-btn {
+
+    font-size: 26px;
   }
 
 }
