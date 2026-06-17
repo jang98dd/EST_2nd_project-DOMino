@@ -1,24 +1,18 @@
-/* ==========================
-   HEADER
-========================== */
-
 .header {
   height: 70px;
-
-  background: #1a1a1a;
+  background: #171717;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
-  padding: 0 16px;
+  padding: 0 20px;
 }
 
 .logo {
   color: #fff;
-
-  font-size: 32px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
 }
 
 .gnb {
@@ -26,51 +20,35 @@
 }
 
 .header-icons {
+
   display: flex;
-  gap: 16px;
-}
+  gap: 20px;
 
-.header-icons button {
   color: #fff;
-  border: none;
-  background: none;
 }
 
-/* ==========================
-   TABLET
-========================== */
-
-@media (min-width:768px) {
-
-  .header {
-    height: 80px;
-    padding: 0 32px;
-  }
-
+.material-symbols-outlined {
+  font-size: 24px;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: pointer;
 }
-/* ==========================
-   DESKTOP
-========================== */
 
-@media (min-width:1200px) {
+@media(min-width:1200px) {
 
   .header {
-
     height: 88px;
     padding: 0 48px;
   }
 
   .gnb {
-
     display: flex;
     gap: 40px;
   }
 
   .gnb a {
-
     color: #fff;
     text-decoration: none;
     font-size: 14px;
   }
-
 }
