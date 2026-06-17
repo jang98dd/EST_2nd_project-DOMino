@@ -1,20 +1,21 @@
-const passwordButtons =
+const toggleButtons =
 document.querySelectorAll(
-  ".input-password button"
+".toggle-password"
 );
 
-passwordButtons.forEach(button => {
+toggleButtons.forEach(btn => {
 
-  button.addEventListener("click", () => {
+btn.addEventListener("click", () => {
 
-    const input =
-    button.previousElementSibling;
+const input =
+  btn.previousElementSibling;
 
-    input.type =
-      input.type === "password"
-      ? "text"
-      : "password";
+input.type =
+  input.type === "password"
+    ? "text"
+    : "password";
 
-  });
+
+});
 
 });
