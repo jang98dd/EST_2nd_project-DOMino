@@ -74,8 +74,8 @@
             <!-- 결제 버튼 영역 (우측) -->
             <div class="summary-actions">
               <button class="checkout-btn" id="checkout-btn">구매하기</button>
-              <button class="continue-shopping-btn">쇼핑 계속하기</button>
-            </div>
+              <a href="product-list.html" class="continue-shopping-btn" target="_blank">쇼핑 계속하기</a>
+              </div>
           </div>
         </aside>
       </div>
@@ -83,7 +83,12 @@
   </main>
   <footer class="footer">
   </footer>
-
+  <script type="module">
+      import { renderHeader } from "./js/modules/header.js";
+      import { renderFooter } from "./js/modules/footer.js";
+      renderHeader();
+      renderFooter();
+    </script>
   <script type="module" src="js/pages/cart.js"></script>
 </body>
 </html>

@@ -14,12 +14,14 @@ body {
 }
 
 .login-title h2 {
-  font-size: 32px;
+  font-size: 56px;
   line-height: 1.1;
-  margin-bottom: 12px;
+  font-weight:400;
+  margin-bottom: 16px;
 }
 
 .login-title p {
+  font-size: 16px;
   color: #555;
   margin-bottom: 40px;
 }
@@ -31,7 +33,8 @@ body {
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .form-group input {
@@ -40,6 +43,12 @@ body {
   padding: 0 16px;
   border: 1px solid #ddd;
   border-radius: 10px;
+  font-size: 16px;
+}
+
+.form-group input::placeholder {
+  font-size: 16px;
+  color: #999;
 }
 
 .password-wrap {
@@ -67,11 +76,13 @@ body {
   display: flex;
   gap: 8px;
   color: #666;
+  font-size:14px;
 }
 
 .login-option a {
   color: #666;
   text-decoration: none;
+  font-size: 14px;
 }
 
 .login-btn {
@@ -81,7 +92,8 @@ body {
   border-radius: 10px;
   background: #171717;
   color: #fff;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .divider {
@@ -115,6 +127,9 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
+
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .social img {
@@ -131,6 +146,12 @@ body {
 .signup-link {
   text-align: center;
   margin-top: 40px;
+  font-size: 18px;
+}
+
+.signup-link a {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 @media(min-width:768px) {
