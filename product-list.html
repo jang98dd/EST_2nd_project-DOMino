@@ -55,15 +55,14 @@
       <main class="page page--product-list" role="main">
         <div class="page__inner">
           <nav class="page-header" aria-label="페이지 위치">
-            <button
-              type="button"
+            <a href="/index.html"
               class="back-btn"
               aria-label="이전 페이지로 이동"
             >
               <span class="material-icons" aria-hidden="true"
                 >chevron_left</span
               >
-            </button>
+            </a>
 
             <h2 class="page-title">EYEGLASSES</h2>
 
@@ -279,7 +278,7 @@
                       hidden
                       data-role="all"
                     />
-                    <button class="color-dot">전체</button>
+                    <button type="button" class="custom-btn" aria-label="전체">전체</button>
                   </label>
 
                   <label>
@@ -289,7 +288,7 @@
                       value="black"
                       hidden
                     />
-                    <button class="color-dot" aria-label="검정색"></button>
+                    <button class="color-dot" class="custom-btn" aria-label="검정색"></button>
                   </label>
 
                   <label>
@@ -299,7 +298,7 @@
                       value="white"
                       hidden
                     />
-                    <button class="color-dot" aria-label="흰색"></button>
+                    <button class="color-dot custom-btn" aria-label="흰색"></button>
                   </label>
 
                   <label>
@@ -309,7 +308,7 @@
                       value="primary"
                       hidden
                     />
-                    <button class="color-dot" aria-label="프라이머리"></button>
+                    <button class="color-dot custom-btn" aria-label="프라이머리"></button>
                   </label>
 
                   <label>
@@ -318,7 +317,7 @@
                       data-filter-type="color"
                       value="secondary"
                     />
-                    <button class="color-dot" aria-label="세컨더리"></button>
+                    <button class="color-dot custom-btn" aria-label="세컨더리"></button>
                   </label>
                 </div>
               </section>
@@ -328,16 +327,16 @@
                 <div class="price-filter">
                   <div class="price-current" aria-live="polite">
                     <span>₩0</span>
-                    <span>₩500,000</span>
+                    <span>₩</span>
                   </div>
                   <label for="priceMax" class="sr-only"></label>
                   <input
                     type="range"
                     id="priceMax"
                     min="0"
-                    max="500000"
+                    max=""
                     step="10000"
-                    value="500000"
+                    value=""
                     aria-label="최대 가격 선택"
                   />
                 </div>
@@ -438,16 +437,6 @@
           <span class="material-icons" aria-hidden="true">filter_alt</span>
           필터 (<span class="filter-count">0</span>)
         </button>
-
-        <button
-          class="btn btn--action btn--filter"
-          type="button"
-          id="openFrameRecommend"
-          aria-label="함께 보면 좋은 프레임 보기"
-        >
-          <img src="assets/icons/frame_round.svg" alt="" aria-hidden="true" />
-          함께 보면 좋은 프레임
-        </button>
       </div>
       <div
         class="bottom-sheet"
@@ -486,7 +475,8 @@
                     data-filter-type="shape"
                     data-filter-value="round"
                   >
-                    라운드
+                  <img src="./assets/icons/frame_round.svg" alt="라운드 프레임">
+                    <span class="btn-label">라운드</span>
                   </button>
                 </li>
                 <li>
@@ -495,7 +485,8 @@
                     data-filter-type="shape"
                     data-filter-value="square"
                   >
-                    라운드
+                    <img src="./assets/icons/frame_square.svg" alt="스퀘어 프레임">
+                    <span class="btn-label">스퀘어</span>
                   </button>
                 </li>
                 <li>
@@ -504,7 +495,8 @@
                     data-filter-type="shape"
                     data-filter-value="avaitor"
                   >
-                    하금테
+                  <img src="./assets/icons/frame_aviator.svg" alt="하금테 프레임">
+                    <span class="btn-label">하금테</span>
                   </button>
                 </li>
                 <li>
@@ -513,7 +505,8 @@
                     data-filter-type="shape"
                     data-filter-value="browine"
                   >
-                    보잉
+                  <img src="./assets/icons/frame_browline.svg" alt="보잉 프레임">
+                    <span class="btn-label">보잉</span>
                   </button>
                 </li>
                 <li>
@@ -522,7 +515,8 @@
                     data-filter-type="shape"
                     data-filter-value="goggle"
                   >
-                    고글
+                  <img src="./assets/icons/frame_goggle.svg" alt="고글 프레임">
+                    <span class="btn-label">고글</span>
                   </button>
                 </li>
                 <li>
@@ -531,7 +525,8 @@
                     data-filter-type="shape"
                     data-filter-value="cat-eye"
                   >
-                    캣아이
+                  <img src="./assets/icons/frame_cat-eye.svg" alt="캣아이 프레임">
+                    <span class="btn-label">캣아이</span>
                   </button>
                 </li>
                 <li>
@@ -540,7 +535,8 @@
                     data-filter-type="shape"
                     data-filter-value="mix"
                   >
-                    믹스
+                  <img src="./assets/icons/frame_mix.svg" alt="믹스 프레임">
+                    <span class="btn-label">믹스</span>
                   </button>
                 </li>
                 <li>
@@ -549,7 +545,8 @@
                     data-filter-type="shape"
                     data-filter-value="other"
                   >
-                    기타
+                  <img src="./assets/icons/frame_other.svg" alt="기타 프레임">
+                    <span class="btn-label">기타</span>
                   </button>
                 </li>
               </ul>
@@ -654,16 +651,16 @@
               <div class="price-filter">
                 <div class="price-current" aria-live="polite">
                   <span>₩0</span>
-                  <span>₩500,000</span>
+                  <span>₩100,000,000</span>
                 </div>
                 <label for="priceMax" class="sr-only"></label>
                 <input
                   type="range"
                   id="priceMax"
                   min="0"
-                  max="500000"
+                  max="10000000000"
                   step="10000"
-                  value="500000"
+                  value="10000000000"
                   aria-label="최대 가격 선택"
                 />
               </div>

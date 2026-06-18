@@ -39,62 +39,148 @@ const backdrop = document.querySelector(".bottom-sheet__backdrop");
 const productCards = document.querySelector(".product-cards");
 const sortTrigger = document.querySelector(".sort-trigger");
 const sortMenu = document.querySelector(".sort-menu");
+if (sortTrigger && sortMenu) {
+  sortTrigger.addEventListener("click", () => {
+    const open = sortMenu.classList.toggle("is-open");
+    sortTrigger.setAttribute("aria-expanded", open);
+  });
+}
 
-sortTrigger.addEventListener("click", () => {
-  const open = sortMenu.classList.toggle("is-open");
-  sortTrigger.setAttribute("aria-expanded", open);
-});
 document.querySelectorAll("[data-sort]").forEach((el) => {
   el.addEventListener("click", () => {
     state.sortType = el.dataset.sort;
     state.page = 1;
 
-    sortMenu.classList.remove("is-open");
-    sortTrigger.setAttribute("aria-expanded", "false");
+    if (sortMenu) sortMenu.classList.remove("is-open");
+    if (sortTrigger) sortTrigger.setAttribute("aria-expanded", "false");
 
     updateView();
   });
 });
+function bindEvents() {
+  const openRecommendBtn = document.getElementById('openFrameRecommend');
+  const recommendSheet = document.getElementById('recommendSheet');
+  const closeRecommendElements = document.querySelectorAll('[data-close="recommend"]');
+
+  if (openRecommendBtn && recommendSheet) {
+    openRecommendBtn.addEventListener('click', () => {
+      recommendSheet.removeAttribute('hidden');
+    });
+  }
+
+  closeRecommendElements.forEach((element) => {
+    element.addEventListener('click', () => {
+      recommendSheet.setAttribute('hidden', '');
+    });
+  });
+}
 async function init() {
-  const data = await fetchProducts();
+  bindUI();
+  initBottomSheet();
+  bindEvents();
+  initFilters();   
+  initSort();
+  initProductCardClicks();
+  bindChipEvents();
+  bindBottomSheetFilters();
+  bindSidebarFilters();
   state.isLoading = true;
   updateView();
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  state.isLoading = false;
-  updateView();
+  
+  try {
+    const data = await fetchProducts();
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    if (data && data.products) {
+      state.products = data.products.map(p => {
+        const cleanedPrice = typeof p.price === 'number' 
+          ? p.price 
+          : Number(String(p.price || 0).replace(/[^0-9]/g, ''));
 
-state.products = (data.products || []).map(p => ({
-  ...p,
-  shape: (p.category || "").toLowerCase(),
-  color: (p.color || "").toLowerCase(),
-  size: (p.size || "m").toLowerCase(),
-  gender: (p.gender || "all").toLowerCase()
-}));
+        return {
+          ...p,
+          price: cleanedPrice, 
+          shape: (p.category || "").toLowerCase(),
+          color: (p.color || "").toLowerCase(),
+          size: (p.size || "m").toLowerCase(),
+          gender: (p.gender || "all").toLowerCase()
+        };
+      });
+    }
 
-  state.baseProducts = [...state.products];
+    state.baseProducts = [...state.products];
 
-  bindUI();
-  initFilters();
-  initSort();
-  initLikeButton();
-  bindChipEvents();
-  initBottomSheet();
+    const prices = state.baseProducts.map(p => p.price);
+    const maxPrice = prices.length > 0 ? Math.max(...prices) : 500000; 
 
-  updateView();
+    const priceInput = document.querySelector("#priceMax");
+    if (priceInput) {
+      priceInput.max = maxPrice;
+      priceInput.value = maxPrice;
+    }
+    await loadRecommendations();
+    
+  } catch (error) {
+    console.error("데이터를 불러오는 중 에러가 발생했습니다:", error);
+  } finally {
+    state.isLoading = false;
+    updateView();
+  }
+}
+init();
+async function loadRecommendations() {
+  try {
+    const track = document.querySelector('.recommend-track');
+    if (!track) return; 
+
+    const response = await fetch('/data/products.json'); 
+    if (!response.ok) throw new Error('데이터를 불러오는데 실패했습니다.');
+    
+    const data = await response.json();
+    const recommendations = data.recommendations || data.products || (Array.isArray(data) ? data : null);
+    
+    if (!recommendations) throw new Error('상품 배열을 찾을 수 없습니다.');
+    
+    renderRecommendations(recommendations); 
+  } catch (error) {
+    console.error('추천 상품 에러 발생:', error);
+  }
 }
 
-init();
+function renderRecommendations(products) {
+  const track = document.querySelector('.recommend-track');
+  if (!track) return;
+
+  track.style.display = 'flex';
+  track.style.overflowX = 'auto';
+  track.style.gap = '16px';
+  track.style.scrollSnapType = 'x mandatory';
+  track.style.paddingBottom = '8px'; 
+  track.innerHTML = products.map(product => `
+    <article class="recommend-card" style="flex-shrink: 0; width: 160px; scroll-snap-align: start;">
+      <a href="../product-detail.html?id=${product.id}" style="text-decoration: none; color: inherit; display: block;">
+        <img src="${product.image || product.thumbnail || ''}" alt="${product.name || product.title}" style="display:block; width:100%; border-radius: 8px;" />
+        <h4 style="margin: 8px 0 4px 0; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${product.name || product.title}</h4>
+        <p style="margin: 0; font-size: 13px; font-weight: bold;">₩${(product.price || 0).toLocaleString()}</p>
+      </a>
+    </article>
+  `).join('');
+}
+
 function updateView() {
-  const skeletonList = document.querySelector(".skeleton-list");
   if (state.isLoading) {
-    productCards.innerHTML = Array.from({ length: 12 })
-      .map(() => createSkeletonCard())
-      .join("");
+    if (productCards) {
+      productCards.innerHTML = Array.from({ length: 12 })
+        .map(() => createSkeletonCard())
+        .join("");
+    }
     return;
   }
+  
   const products = applySort(applyFilters([...state.baseProducts]));
   state.filteredProducts = products;
   const paginated = applyPagination(products);
+  
   renderProducts(paginated);
   renderPagination();
   renderProductCount();
@@ -104,6 +190,7 @@ function updateView() {
   renderActiveFilterChips();
   updateFilterCountUI();
 }
+
 function initSort() {
   document.querySelectorAll("[data-sort]").forEach((el) => {
     el.addEventListener("click", () => {
@@ -116,32 +203,23 @@ function initSort() {
 
 function applySort(products) {
   const sorted = [...products];
-
   switch (state.sortType) {
     case "popular":
       return sorted.sort((a, b) => (b.popular ?? 0) - (a.popular ?? 0));
-
     case "newest":
       return sorted.sort((a, b) => (b.id ?? 0) - (a.id ?? 0));
-
     case "priceLow":
       return sorted.sort((a, b) => a.price - b.price);
-
     case "priceHigh":
       return sorted.sort((a, b) => b.price - a.price);
-
     case "sales":
       return sorted.sort((a, b) => (b.sales ?? 0) - (a.sales ?? 0));
-
     default:
       return sorted;
   }
 }
+
 const DEFAULT_PRICE = Infinity;
-function safeIncludes(filterArr, value) {
-  if (!filterArr.length) return true;
-  return filterArr.includes(value ?? "");
-}
 
 function applyFilters(products) {
   const f = state.filters;
@@ -152,31 +230,26 @@ function applyFilters(products) {
       (f.size.length === 0 || f.size.includes(p.size)) &&
       (f.color.length === 0 || f.color.includes(p.color)) &&
       (f.gender === "all" || p.gender === f.gender) &&
-      (p.price <= f.price);
-
-    if (!ok) {
-      console.log("DROP:", {
-        p,
-        f
-      });
-    }
+      (f.price === Infinity || p.price <= f.price);
 
     return ok;
   });
 }
+
 function toggleFilter(type, value) {
   const arr = state.filters[type];
+  const normalizedValue = String(value).toLowerCase();
 
-  const idx = arr.indexOf(value);
-  if (idx === -1) arr.push(value);
+  const idx = arr.indexOf(normalizedValue);
+  if (idx === -1) arr.push(normalizedValue);
   else arr.splice(idx, 1);
 
   state.page = 1;
-
   updateView(); 
 }
+
 function setGender(value) {
-  state.filters.gender = value;
+  state.filters.gender = String(value).toLowerCase();
   state.page = 1;
   updateFilterUI();
   updateView();
@@ -204,69 +277,116 @@ function resetFilters() {
 
 function initFilters() {
   const inputs = document.querySelectorAll('input[data-filter-type]');
-  const buttons = document.querySelectorAll('button[data-filter-type], button[data-gender]');
 
   inputs.forEach(el => el.addEventListener('change', (e) => {
-    if(e.target.dataset.filterType === 'shape') {
-        toggleFilter(e.target.dataset.filterType, e.target.value);
+    const type = e.target.dataset.filterType;
+    if (e.target.dataset.role === 'all') {
+      if (e.target.checked) {
+        state.filters[type] = []; 
+        document.querySelectorAll(`input[data-filter-type="${type}"]:not([data-role="all"])`)
+          .forEach(cb => cb.checked = false);
+      }
+      state.page = 1;
+      updateView();
+    } else {
+      handleNormalCheckbox(type, e.target);
     }
   }));
 
-  buttons.forEach(el => el.addEventListener('click', (e) => {
-      if(el.dataset.filterType) toggleFilter(el.dataset.filterType, el.dataset.filterValue);
-      if(el.dataset.gender) setGender(el.dataset.gender);
-  }));
+  const priceInput = document.querySelector("#priceMax");
+  if (priceInput) {
+    priceInput.addEventListener("input", (e) => {
+      const value = Number(e.target.value);
+      const max = Number(e.target.max);
+      state.filters.price = (value === max) ? Infinity : value;
+      state.page = 1;
+      updateView();
+    });
+  }
 }
 
 function updateFilterUI() {
-  document.querySelectorAll("[data-filter-type]").forEach((btn) => {
-    const type = btn.dataset.filterType;
-    const value = btn.dataset.filterValue;
+  document.querySelectorAll("[data-filter-type]").forEach((el) => {
+    const type = el.dataset.filterType;
+    if (type === 'price' || type === 'gender') return; 
 
+    const rawValue = el.dataset.filterValue || el.value; 
+    const value = String(rawValue || "").toLowerCase();
     const active = state.filters[type].includes(value);
 
-    btn.setAttribute("aria-pressed", String(active));
-    btn.classList.toggle("is-active", active);
+    el.setAttribute("aria-pressed", String(active));
+    el.classList.toggle("is-active", active);
+    
+    if (el.tagName === "INPUT" && el.dataset.role !== "all") {
+      el.checked = active;
+    }
   });
-}
-function renderProducts(list) {
-  productCards.innerHTML = list.map(createProductCard).join("");
+
+  document.querySelectorAll('input[data-role="all"]').forEach((allInput) => {
+    const type = allInput.dataset.filterType;
+    allInput.checked = state.filters[type].length === 0;
+  });
+
+  document.querySelectorAll("[data-gender], input[name='gender']").forEach((el) => {
+    const val = String(el.dataset.gender || el.value).toLowerCase();
+    const isActive = state.filters.gender === val;
+
+    el.classList.toggle("is-active", isActive);
+    el.setAttribute("aria-pressed", String(isActive));
+    
+    if (el.tagName === "INPUT" && el.type === "radio") {
+      el.checked = isActive;
+    }
+  });
+
+  const priceInput = document.querySelector("#priceMax");
+  if (priceInput) {
+    const isFilterOff = state.filters.price === Infinity;
+    priceInput.value = isFilterOff ? priceInput.max : state.filters.price;
+    
+    const maxPriceText = document.querySelector(".price-current span:last-child");
+    if (maxPriceText) {
+      const displayPrice = isFilterOff ? priceInput.max : state.filters.price;
+      maxPriceText.textContent = `₩${Number(displayPrice).toLocaleString()}`;
+    }
+  }
 }
 
+function renderProducts(list) {
+  if (productCards) {
+    productCards.innerHTML = list.map(createProductCard).join("");
+  }
+}
 function createProductCard(product) {
-  const formattedPrice = typeof product.price === 'number' 
+  const formattedPrice = typeof product.price === 'number'
     ? `${product.price.toLocaleString()}원` 
     : product.price;
 
   return `
-    <article class="product-card" style="position: relative;">
-      
+    <article class="product-card" style="position: relative; cursor: pointer;">
       <a href="../product-detail.html?id=${product.id}" 
          class="product-card__main-link" 
-         aria-label="${product.title} 상세 페이지로 이동">
+         aria-label="${product.title} 상세 페이지로 이동" style="display:none;">
       </a>
-
       <div class="product-card__thumb">
         <img src="${product.thumbnail}" alt="${product.title}" />
-
         <button class="btn-like btn--utility-sm"
           aria-pressed="false"
           aria-label="찜하기">
           <span class="material-icons">favorite_border</span>
         </button>
-
         <a href="../fitting-and-analysis.html?id=${product.id}" 
            class="btn-fit btn--utility-sm" data-id="${product.id}">
           착용하기
         </a>
       </div>
-
       <p>${product.brand}</p>
       <h3>${product.title}</h3>
       <p class="price">${formattedPrice}</p>
     </article>
   `;
 }
+
 function createSkeletonCard() {
   return `
     <article class="product-card skeleton-card">
@@ -280,20 +400,46 @@ function createSkeletonCard() {
 
 function renderProductCount() {
   const total = state.baseProducts.length; 
-
-  const visible = Math.min(
-    state.page * state.limit,
-    state.filteredProducts.length
-  );
-
-  document.querySelector(".product-count").textContent =
-    `${visible} / ${total}`;
+  const visible = Math.min(state.page * state.limit, state.filteredProducts.length);
+  const countEl = document.querySelector(".product-count");
+  if (countEl) countEl.textContent = `${visible} / ${total}`;
 }
+function initProductCardClicks() {
+  if (!productCards) return;
+
+  productCards.addEventListener("click", (e) => {
+    const likeBtn = e.target.closest(".btn-like");
+    if (likeBtn) {
+      const icon = likeBtn.querySelector(".material-icons");
+      const isLiked = likeBtn.getAttribute("aria-pressed") === "true";
+      likeBtn.setAttribute("aria-pressed", String(!isLiked));
+      if (icon) icon.textContent = isLiked ? "favorite_border" : "favorite";
+      return; 
+    }
+    const fitBtn = e.target.closest(".btn-fit");
+    if (fitBtn) {
+      e.preventDefault();
+      const glassesId = fitBtn.dataset.id; 
+      localStorage.setItem('selectedGlasses', glassesId);
+      window.location.href = fitBtn.href || `../fitting-and-analysis.html?id=${glassesId}`; 
+      return; 
+    }
+    const card = e.target.closest(".product-card");
+    if (card && !card.classList.contains("skeleton-card")) {
+      const mainLink = card.querySelector(".product-card__main-link");
+      if (mainLink) {
+        window.location.href = mainLink.href;
+      }
+    }
+  });
+}
+
 function applyPagination(products) {
   const start = (state.page - 1) * state.limit;
   const end = start + state.limit;
   return products.slice(start, end);
 }
+
 function renderPagination() {
   const container = document.querySelector(".pagination");
   if (!container) return; 
@@ -315,61 +461,45 @@ function renderPagination() {
     container.appendChild(btn);
   }
 }
+
 function handleLoadMore() {
   state.page++;
   updateView();
 }
+
 function updateLoadMoreButton() {
   const btn = document.querySelector(".btn-more");
   if (!btn) return;
 
   const total = state.filteredProducts.length;
   const loaded = state.page * state.limit;
-
   const isEnd = loaded >= total;
 
   btn.disabled = isEnd;
   if (isEnd) {
-  btn.innerHTML = `
-    <span class="material-icons">check</span>
-    마지막 상품입니다
-  `;
+    btn.innerHTML = `<span class="material-icons">check</span> 마지막 상품입니다`;
   } else {
-    btn.innerHTML = `더 보기 <span class="material-icons">chevron_right</span>`
+    btn.innerHTML = `더 보기 <span class="material-icons">chevron_right</span>`;
   }
 }
 
-function initLikeButton() {
-  productCards.addEventListener("click", (e) => {
-    const btn = e.target.closest(".btn-like");
-    if (!btn) return;
-
-    const icon = btn.querySelector(".material-icons");
-    const isLiked = btn.getAttribute("aria-pressed") === "true";
-
-    btn.setAttribute("aria-pressed", String(!isLiked));
-    icon.textContent = isLiked ? "favorite_border" : "favorite";
-  });
-}
 function bindUI() {
-  document.querySelector(".btn-more")
-    ?.addEventListener("click", handleLoadMore);
+  document.querySelector(".btn-more")?.addEventListener("click", handleLoadMore);
+  document.querySelectorAll(".btn--filter").forEach(btn => {
+    if (btn.id === "openFrameRecommend") return; 
+    
+    btn.addEventListener("click", openSheet);
+  });
 
-  document.querySelectorAll(".btn--filter")
-    .forEach(btn => btn.addEventListener("click", openSheet));
+  document.querySelector(".close-btn")?.addEventListener("click", closeSheet);
 
-  document.querySelector(".close-btn")
-    ?.addEventListener("click", closeSheet);
+  document.querySelector(".btn-apply")?.addEventListener("click", () => {
+    state.page = 1;
+    updateView();
+    closeSheet();
+  });
 
-  document.querySelector(".btn-apply")
-    ?.addEventListener("click", () => {
-      state.page = 1;
-      updateView();
-      closeSheet();
-    });
-
-  document.querySelector(".btn-reset")
-    ?.addEventListener("click", resetFilters);
+  document.querySelector(".btn-reset")?.addEventListener("click", resetFilters);
 }
 
 function initBottomSheet() {
@@ -380,6 +510,7 @@ function initBottomSheet() {
 }
 
 function openSheet() {
+  if (!sheet) return;
   sheet.hidden = false;
   sheet.classList.add("is-open");
   setSheet(window.innerHeight * 0.4, true);
@@ -387,14 +518,16 @@ function openSheet() {
 
 function closeSheet() {
   setSheet(window.innerHeight, true);
-
   setTimeout(() => {
-    sheet.classList.remove("is-open");
-    sheet.hidden = true;
+    if (sheet) {
+      sheet.classList.remove("is-open");
+      sheet.hidden = true;
+    }
   }, 250);
 }
 
 function setSheet(y, animate = false) {
+  if (!panel) return;
   currentY = Math.max(0, Math.min(window.innerHeight, y));
   panel.style.transition = animate
     ? "transform 0.35s cubic-bezier(0.2, 0.9, 0.2, 1)"
@@ -402,32 +535,53 @@ function setSheet(y, animate = false) {
 
   panel.style.transform = `translateY(${currentY}px)`;
 }
+
+function snapTo(key) {
+  const targetY = SNAP[key];
+  setSheet(targetY, true); 
+  
+  if (key === "closed") {
+    setTimeout(() => {
+      if (sheet) {
+        sheet.classList.remove("is-open");
+        sheet.hidden = true;
+      }
+    }, 250);
+  }
+}
+
 function bindBottomSheetFilters() {
-  document.querySelectorAll(".bottom-sheet [data-filter-type]")
-    .forEach(btn => {
-      btn.addEventListener("click", () => {
-        toggleFilter(btn.dataset.filterType, btn.dataset.filterValue);
-      });
+  document.querySelectorAll(".bottom-sheet [data-filter-type]").forEach(btn => {
+    if (btn.tagName === "INPUT") return; 
+    btn.addEventListener("click", () => {
+      toggleFilter(btn.dataset.filterType, btn.dataset.filterValue);
     });
-
-  document.querySelectorAll(".bottom-sheet [data-gender]")
-    .forEach(btn => {
-      btn.addEventListener("click", () => {
-        setGender(btn.dataset.gender);
-      });
+  });
+  document.querySelectorAll(".bottom-sheet [data-gender]").forEach(el => {
+    const eventType = el.tagName === "INPUT" ? "change" : "click";
+    el.addEventListener(eventType, () => {
+      const value = el.dataset.gender || el.value;
+      setGender(value);
     });
+  });
 
-  document.querySelector("#priceMax")
-    ?.addEventListener("input", (e) => setPrice(e.target.value));
+  const priceInput = document.querySelector("#priceMax");
+  if (priceInput) {
+    priceInput.addEventListener("input", (e) => setPrice(e.target.value));
+    priceInput.addEventListener("pointerdown", (e) => {
+      e.stopPropagation();
+    });
+    priceInput.addEventListener("mousedown", (e) => {
+      e.stopPropagation();
+    });
+  }
 }
 function bindSidebarFilters() {
   const root = document.querySelector(".filter-sidebar");
-  if (!root) {
-    console.warn("sidebar 없음");
-    return;
-  }
-
+  if (!root) return;
   root.querySelectorAll("[data-filter-type]").forEach(btn => {
+    if (btn.tagName === "INPUT") return; 
+
     btn.addEventListener("click", () => {
       const type = btn.dataset.filterType;
       const value = btn.dataset.filterValue;
@@ -436,19 +590,23 @@ function bindSidebarFilters() {
         handleSelectAll(type);
         return;
       }
-
       handleNormal(type, value, btn);
+    });
+  });
+  root.querySelectorAll("[data-gender]").forEach(el => {
+    const eventType = el.tagName === "INPUT" ? "change" : "click";
+    el.addEventListener(eventType, () => {
+      const value = el.dataset.gender || el.value;
+      setGender(value);
     });
   });
 }
 function handleSelectAll(type) {
   state.filters[type] = [];
-
   const root = document.querySelector(".filter-sidebar");
-  const items = root.querySelectorAll(
-    `[data-filter-type="${type}"]:not([data-role="all"])`
-  );
+  if (!root) return;
 
+  const items = root.querySelectorAll(`[data-filter-type="${type}"]:not([data-role="all"])`);
   items.forEach(btn => {
     btn.classList.remove("is-active");
     btn.setAttribute("aria-pressed", "false");
@@ -457,14 +615,18 @@ function handleSelectAll(type) {
   updateFilterUI();
   updateView();
 }
+
 function handleNormal(type, value, btn) {
   const arr = state.filters[type];
+  const normalizedValue = String(value).toLowerCase();
+  const idx = arr.indexOf(normalizedValue);
 
-  const idx = arr.indexOf(value);
-
-  if (idx === -1) arr.push(value);
+  if (idx === -1) arr.push(normalizedValue);
   else arr.splice(idx, 1);
+  
   const root = document.querySelector(".filter-sidebar");
+  if (!root) return;
+
   const allBtn = root.querySelector(`[data-role="all"][data-filter-type="${type}"]`);
 
   if (arr.length === 0) {
@@ -481,24 +643,22 @@ function handleNormal(type, value, btn) {
 
   updateView();
 }
+
 function handleNormalCheckbox(type, cb) {
   const all = document.querySelector(`[data-role="all"][data-filter-type="${type}"]`);
-
   if (all) all.checked = false;
 
+  const val = String(cb.dataset.filterValue || cb.value).toLowerCase();
   const arr = state.filters[type];
-
-  const idx = arr.indexOf(cb.value);
+  const idx = arr.indexOf(val);
 
   if (cb.checked) {
-    if (idx === -1) arr.push(cb.value);
+    if (idx === -1) arr.push(val);
   } else {
     if (idx !== -1) arr.splice(idx, 1);
   }
-  const group = document.querySelectorAll(
-    `[data-filter-type="${type}"]:not([data-role="all"])`
-  );
-
+  
+  const group = document.querySelectorAll(`[data-filter-type="${type}"]:not([data-role="all"])`);
   const noneChecked = [...group].every(x => !x.checked);
 
   if (noneChecked && all) {
@@ -509,6 +669,7 @@ function handleNormalCheckbox(type, cb) {
   state.page = 1;
   updateView();
 }
+
 function bindChipEvents() {
   const wrap = document.querySelector(".active-filters");
   if (!wrap) return;
@@ -518,7 +679,7 @@ function bindChipEvents() {
     if (!chip) return;
 
     const type = chip.dataset.type;
-    const value = chip.dataset.value;
+    const value = String(chip.dataset.value).toLowerCase();
 
     if (type === "gender") state.filters.gender = "all";
     else if (type === "price") state.filters.price = DEFAULT_PRICE;
@@ -545,13 +706,8 @@ function renderActiveFilterChips() {
   f.size.forEach(v => chips.push({ type: "size", value: v }));
   f.color.forEach(v => chips.push({ type: "color", value: v }));
 
-  if (f.gender !== "all") {
-    chips.push({ type: "gender", value: f.gender });
-  }
-
-  if (f.price < DEFAULT_PRICE) {
-    chips.push({ type: "price", value: `₩${f.price}` });
-  }
+  if (f.gender !== "all") chips.push({ type: "gender", value: f.gender });
+  if (f.price < DEFAULT_PRICE) chips.push({ type: "price", value: `₩${f.price}` });
 
   wrap.innerHTML = chips.map(c => `
     <button class="chip" data-type="${c.type}" data-value="${c.value}">
@@ -562,11 +718,7 @@ function renderActiveFilterChips() {
 
 function getActiveFilterCount() {
   const f = state.filters;
-
-  let count = 0;
-  count += f.shape.length;
-  count += f.size.length;
-  count += f.color.length;
+  let count = f.shape.length + f.size.length + f.color.length;
 
   if (f.gender !== "all") count += 1;
   if (f.price !== DEFAULT_PRICE) count += 1;
@@ -576,32 +728,29 @@ function getActiveFilterCount() {
 
 function updateFilterCountUI() {
   const el = document.querySelector(".filter-count");
-  if (!el) return;
-
-  el.textContent = getActiveFilterCount();
+  if (el) el.textContent = getActiveFilterCount();
 }
+
 function onPointerDown(e) {
   isDragging = true;
-
   startY = e.clientY;
   startSheetY = currentY;
-
   lastY = e.clientY;
   lastTime = performance.now();
 
-  panel.style.transition = "none";
-  panel.setPointerCapture?.(e.pointerId);
+  if (panel) {
+    panel.style.transition = "none";
+    panel.setPointerCapture?.(e.pointerId);
+  }
 }
 
 function onPointerMove(e) {
   if (!isDragging) return;
-
   const dy = e.clientY - startY;
   setSheet(startSheetY + dy);
 
   const now = performance.now();
   velocity = (e.clientY - lastY) / (now - lastTime);
-
   lastY = e.clientY;
   lastTime = now;
 }
@@ -625,18 +774,3 @@ function onPointerUp() {
 
   snapTo(closest.key);
 }
-console.log(document.querySelector("#sortMenu"));
-console.log(document.querySelector(".bottom-sheet"));
-console.log(document.querySelector(".handle"));
-console.log("SAMPLE PRODUCT:", state.products?.[0]);
-console.log(Object.keys(state.products?.[0] ?? {}));
-console.log(state.products.filter(p => !p.size));
-console.log("SAMPLE PRODUCT FULL:", state.products[0]);
-
-productCards.addEventListener('click', (e) => {
-  if (e.target.classList.contains('btn-fit')) {
-    const glassesId = e.target.dataset.id; 
-    localStorage.setItem('selectedGlasses', glassesId);
-    window.location.href = '../fitting-and-analysis.html'; 
-  }
-});
