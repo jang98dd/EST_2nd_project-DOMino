@@ -74,6 +74,9 @@
 .collection .collection__scrollbar,
 .more-collection .more-collection__scrollbar {
   position: relative;
+  width: auto; /* swiper 기본 width:calc(100%-2%) 무력화 → margin이 폭을 정하게(우측 잘림 방지) */
+  left: 0; /* swiper 기본 left:1% 무력화 → 우측 쏠림 방지 */
+  bottom: auto; /* swiper 기본 bottom:4px 무력화 → 위로 뜨는 것 방지 */
   margin: 11px 0 0; /* 카드 → 스크롤바 */
   height: 2px;
   background: var(--gray);
@@ -83,6 +86,11 @@
 .collection .collection__scrollbar .swiper-scrollbar-drag,
 .more-collection .more-collection__scrollbar .swiper-scrollbar-drag {
   background: var(--black);
+}
+
+/* 제니(모바일) — 카드↔바 여백을 바↔버튼과 동일하게 16 (태블릿/데스크탑은 아래 미디어쿼리가 덮어씀) */
+.collection .collection__scrollbar {
+  margin-top: 16px;
 }
 
 /* 상품 캐러셀 슬라이드 */
@@ -305,6 +313,7 @@
   transform: translate(-50%, -50%);
   height: 100%;
   width: auto;
+  max-width: none; /* reset.css의 iframe max-width:100% 무력화 → 좌우 넘쳐서 cover */
   aspect-ratio: 16 / 9;
   border: 0;
   pointer-events: none; /* 영상 위에서도 스와이프/컨트롤이 동작 */
@@ -612,16 +621,40 @@
   object-fit: cover;
 }
 
-/* 셀럽 이미지 캐러셀 */
-.more-collection__celebs .swiper-slide {
-  width: 272px;
+/* 셀럽 이미지 캐러셀 (Swiper 미사용 — 3슬라이드 무한 순환, JS가 DOM 재배치) */
+.more-collection__celebs .swiper-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  height: auto;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
 }
-
+.more-collection__celebs .swiper-wrapper:active {
+  cursor: grabbing;
+}
+.more-collection__celebs .swiper-slide {
+  flex: 0 0 auto;
+  width: 272px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
 .more-collection__celebs img {
   display: block;
   width: 100%;
   aspect-ratio: 272 / 376;
   object-fit: cover;
+  pointer-events: none; /* 드래그 시 이미지 고스트 방지 */
+}
+/* 슬라이드 인 동안에만 크기 전환 (드래그 중엔 전환 없음) */
+.more-collection__celebs.is-sliding .swiper-slide,
+.more-collection__celebs.is-sliding .swiper-slide img {
+  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+    height 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .collection__carousel,
@@ -650,6 +683,11 @@
   font-weight: 400;
   line-height: 1.25;
   color: var(--black);
+}
+
+/* 제니(모바일) — 바↔버튼 여백 16 (카드↔바와 동일) */
+.collection .btn-more {
+  margin-top: 16px;
 }
 
 /* 6. EVENT */
@@ -885,10 +923,9 @@
     font-size: var(--font-28);
     line-height: var(--lh-tight);
   }
-  /* 셀럽 이미지 캐러셀 */
+  /* 셀럽 이미지 캐러셀 — 칸 605 (확대 없음, 가운데정렬 회전) */
   .more-collection__celebs .swiper-slide {
     width: 605px;
-    margin-right: 16px;
   }
   .more-collection__celebs img {
     aspect-ratio: 605 / 456;
@@ -1028,24 +1065,23 @@
   .brand .brand__pagination.swiper-pagination {
     left: 360px;
     right: 360px;
-    top: 32px;
+    top: 24px;
     gap: 8px;
   }
-  /* Hero·Brand 컨트롤 */
+  /* Hero·Brand 컨트롤 — 왼쪽 하단 코너, 48px (터치 타깃) */
   .hero__controls,
   .brand__controls {
-    left: 396px; /* 카테고리 좌측과 정렬 */
-    bottom: 32px; /* 진행바가 위에서 32 떨어진 것과 대칭 */
+    left: 40px;
+    bottom: 24px;
   }
   .hero__control,
   .brand__control {
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
   }
-  /* 데스크탑 아이콘 64 */
   .hero__control .material-symbols-rounded,
   .brand__control .material-symbols-rounded {
-    font-size: 64px;
+    font-size: 48px;
   }
 
   /* 2. CATEGORY */
@@ -1225,11 +1261,6 @@
     flex-direction: column;
     gap: 24px;
   }
-  /* 절대배치 스크롤바가 카드 16 아래로 오도록 하단 여백(24 = gap16 + bottom3 + 높이5) */
-  .collection__carousel {
-    padding-bottom: 24px;
-  }
-
   /* 제니 → More 간격 */
   .collection + .more-collection {
     margin-top: 64px;
@@ -1240,46 +1271,49 @@
   .more-collection .section-bar {
     display: none;
   }
-  /* 셀럽 이미지 캐러셀 — 중앙(활성) 576×578 / 좌우(비활성) 260×426 + 흰색 오버레이 */
+  /* 셀럽 캐러셀 — 가운데(is-active) 580×578 / 양옆 250×426 + 흰색 오버레이 40%
+     안쪽 폭 1128 = 250 + 24 + 580 + 24 + 250 (= 컨테이너 1200 − 좌우 36) */
   .more-collection__celebs {
-    max-width: 1124px;
+    max-width: 1128px;
     margin: 0 auto;
+    overflow: hidden; /* 가운데+양옆 3장만 노출 (Figma 동일) */
   }
-  /* 칸 너비는 260 고정(가운데 정렬 안정) — 활성 이미지는 넘쳐 보이게 */
+  .more-collection__celebs .swiper-wrapper {
+    gap: 24px;
+  }
   .more-collection__celebs .swiper-slide {
-    width: 260px;
+    width: 250px;
     height: 578px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: visible;
-    position: relative;
   }
   .more-collection__celebs .swiper-slide img {
-    width: 260px;
+    width: 250px;
     height: 426px;
-    object-fit: cover;
-    flex-shrink: 0;
-    transition: width 0.3s, height 0.3s;
+    max-width: none; /* reset.css의 img max-width:100% 무력화 (전환 중 깎임 방지) */
   }
-  /* 활성(중앙) — 576×578로 확대 */
-  .more-collection__celebs .swiper-slide-active {
+  /* 가운데(활성) — 580×578 */
+  .more-collection__celebs .swiper-slide.is-active {
+    width: 580px;
     z-index: 2;
   }
-  .more-collection__celebs .swiper-slide-active img {
-    width: 576px;
+  .more-collection__celebs .swiper-slide.is-active img {
+    width: 580px;
     height: 578px;
   }
-  /* 비활성(좌우) — 이미지 영역(260×426)에만 흰색 오버레이 */
-  .more-collection__celebs .swiper-slide:not(.swiper-slide-active)::after {
+  /* 양옆(비활성) — 이미지 영역(250×426)에 흰색 40%, 전환 시 부드럽게 페이드 */
+  .more-collection__celebs .swiper-slide::after {
     content: "";
     position: absolute;
     top: 76px; /* (578-426)/2 */
     bottom: 76px;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.4);
+    opacity: 1;
     pointer-events: none;
+    transition: opacity 0.6s;
+  }
+  .more-collection__celebs .swiper-slide.is-active::after {
+    opacity: 0;
   }
   /* 카드 영역 1116 가운데 */
   .more-collection .page {
