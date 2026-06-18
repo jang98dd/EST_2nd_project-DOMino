@@ -93,6 +93,51 @@ Vanilla JavaScript 기반으로 SPA 구조를 모사하며
 
 ---
 
+## 📊 Milestone Plan (3-Week Structure)
+
+
+Week 1 Planning (기획 단계)
+███████████████████
+
+프로젝트 구조 설계
+페이지 정의 (Main / List / Detail / Cart / Auth / Analysis)
+기능 정의 및 데이터 흐름 설계
+컴포넌트 구조 설계 (Header / Footer / UI 재사용 전략)
+Git 브랜치 전략 수립
+
+Week 2 Design & UI Implementation
+███████████████████
+
+전체 UI 레이아웃 구현
+Header / Footer 공통 컴포넌트 제작
+페이지별 화면 구조 완성
+반응형 기본 구조 적용
+디자인 통일성 정리
+
+Week 3 Development & Integration
+███████████████████
+
+상품 리스트 / 상세 페이지 기능 구현
+장바구니 (LocalStorage) 기능 개발
+로그인 / 회원가입 흐름 구현
+분석 / 가상 피팅 페이지 구현
+페이지 간 데이터 흐름 연결
+버그 수정 및 최적화
+
+---
+
+## Project Flow Summary
+
+- Planning → 구조 설계 및 기능 정의
+- Design → UI 구현 및 사용자 경험 구성
+- Development → 기능 구현 및 시스템 통합
+
+---
+
+## Core Strategy
+
+This project was developed in a structured 3-phase workflow:
+**Planning → Design → Implementation**, ensuring scalability and maintainability.
 ## 향후 개선 방향
 
 - API 연동을 통한 데이터 구조 개선
