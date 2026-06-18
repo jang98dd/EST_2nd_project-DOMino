@@ -9,10 +9,19 @@
   <link rel="stylesheet" href="styles/normalize.css" />
   <link rel="stylesheet" href="styles/common.css" />
   <link rel="stylesheet" href="styles/home.css" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!-- 폰트 출처 preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <!-- 영상 포스터 출처 -->
+  <link rel="preconnect" href="https://i.ytimg.com" />
+  <!-- display=swap -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet" />
+  <!-- 동영상 컨트롤러 아이콘 -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@40,100,0,0&icon_names=pause_circle,play_circle,volume_off,volume_up&display=block" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" />
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <!-- 슬라이드 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
@@ -20,83 +29,17 @@
 <body data-page="home">
   <div class="app">
 
-    <!-- 공통 헤더 컴포넌트 자리 -->
+    <!-- 공통 헤더 자리 -->
 
-    <main role="main">
+    <main>
+      <!-- 임시 h1 -->
+      <h1 class="sr-only">ROUNZ</h1>
 
       <!-- 1. HERO -->
       <section class="hero" aria-label="브랜드 영상 배너">
         <div class="hero__carousel swiper" data-hero-swiper>
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="hero__video">
-                <iframe
-                  class="hero__iframe"
-                  src="https://www.youtube.com/embed/8UpMctZ0e74?enablejsapi=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;mute=1"
-                  title="LE SPECS JANUARY 24 'FAST LOVE'"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="hero__video">
-                <iframe
-                  class="hero__iframe"
-                  src="https://www.youtube.com/embed/Ph5ZnFPYeZg?enablejsapi=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;mute=1"
-                  title="CARIN X NewJeans, Can't take my eyes off you, 카린 안경"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="hero__video">
-                <iframe
-                  class="hero__iframe"
-                  src="https://www.youtube.com/embed/msfGAtyEi58?enablejsapi=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;mute=1"
-                  title="PUBLIC BEACON 2026 BUCKLE COLLECTION"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="hero__video">
-                <iframe
-                  class="hero__iframe"
-                  src="https://www.youtube.com/embed/ZqzRmbHyGHc?enablejsapi=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;mute=1"
-                  title="2026 MAIN COLLECTION 'ROMANTIC SPEED'"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="hero__video">
-                <iframe
-                  class="hero__iframe"
-                  src="https://www.youtube.com/embed/VczU0X342MI?enablejsapi=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;mute=1"
-                  title="Jennie gets the best of both worlds."
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
+            <!-- 영상 슬라이드 -->
           </div>
 
           <!-- 슬라이드 진행바 -->
@@ -105,11 +48,11 @@
 
         <!-- 커스텀 컨트롤 -->
         <div class="hero__controls" role="group" aria-label="영상 제어">
-          <button type="button" class="hero__control" data-action="play" aria-label="영상 재생">
-            <span class="material-icons" aria-hidden="true">play_arrow</span>
+          <button type="button" class="hero__control" data-action="play" aria-label="영상 일시정지">
+            <span class="material-symbols-rounded" aria-hidden="true">pause_circle</span>
           </button>
           <button type="button" class="hero__control" data-action="mute" aria-label="음소거 해제">
-            <span class="material-icons" aria-hidden="true">volume_off</span>
+            <span class="material-symbols-rounded" aria-hidden="true">volume_off</span>
           </button>
         </div>
       </section>
@@ -117,69 +60,49 @@
       <!-- 2. CATEGORY  -->
       <section class="category section" aria-labelledby="category-title">
         <div class="page">
-          <h2 class="category__title font-h1" id="category-title">Category</h2>
-          <ul class="category__grid grid grid--2">
-            <li>
-              <a class="category__item" href="product-list.html" data-shape="round">
-                <img class="category__icon" src="assets/icons/shape_1.png" alt="" />
-                <span class="category__label">라운드</span>
-              </a>
-            </li>
-            <li>
-              <a class="category__item" href="product-list.html" data-shape="square">
-                <img class="category__icon" src="assets/icons/shape_2.png" alt="" />
-                <span class="category__label">스퀘어</span>
-              </a>
-            </li>
-            <li>
-              <a class="category__item" href="product-list.html" data-shape="browline">
-                <img class="category__icon" src="assets/icons/shape_3.png" alt="" />
-                <span class="category__label">하금테</span>
-              </a>
-            </li>
-            <li>
-              <a class="category__item" href="product-list.html" data-shape="goggle">
-                <img class="category__icon" src="assets/icons/shape_4.png" alt="" />
-                <span class="category__label">고글</span>
-              </a>
-            </li>
-            <li>
-              <a class="category__item" href="product-list.html" data-shape="mix">
-                <img class="category__icon" src="assets/icons/shape_5.png" alt="" />
-                <span class="category__label">믹스</span>
-              </a>
-            </li>
-            <li>
-              <a class="category__item" href="product-list.html" data-shape="aviator">
-                <img class="category__icon" src="assets/icons/shape_6.png" alt="" />
-                <span class="category__label">보잉</span>
-              </a>
-            </li>
-            <li>
-              <a class="category__item" href="product-list.html" data-shape="cat-eye">
-                <img class="category__icon" src="assets/icons/shape_7.png" alt="" />
-                <span class="category__label">캣아이</span>
-              </a>
-            </li>
-            <li>
-              <a class="category__item" href="product-list.html" data-shape="other">
-                <img class="category__icon" src="assets/icons/shape_8.png" alt="" />
-                <span class="category__label">기타</span>
-              </a>
-            </li>
-          </ul>
+          <h2 class="category__title" id="category-title">Category</h2>
+          <p class="category__subtitle">당신의 얼굴형에 맞는 프레임을 찾아보세요.</p>
 
-          <!-- KIDS / 안경테 보기 -->
-          <div class="category__links grid grid--2">
+          <!-- 카테고리 그리드 -->
+          <div class="category__grid grid">
+            <!-- 모양 8종 -->
+            <a class="category__item" href="product-list.html" data-shape="round">
+              <img class="category__icon" src="assets/icons/shape_1.png" alt="" />
+              <span class="category__label">라운드</span>
+            </a>
+            <a class="category__item" href="product-list.html" data-shape="square">
+              <img class="category__icon" src="assets/icons/shape_2.png" alt="" />
+              <span class="category__label">스퀘어</span>
+            </a>
+            <a class="category__item" href="product-list.html" data-shape="browline">
+              <img class="category__icon" src="assets/icons/shape_3.png" alt="" />
+              <span class="category__label">하금테</span>
+            </a>
+            <a class="category__item" href="product-list.html" data-shape="goggle">
+              <img class="category__icon" src="assets/icons/shape_4.png" alt="" />
+              <span class="category__label">고글</span>
+            </a>
+            <a class="category__item" href="product-list.html" data-shape="mix">
+              <img class="category__icon" src="assets/icons/shape_5.png" alt="" />
+              <span class="category__label">믹스</span>
+            </a>
+            <a class="category__item" href="product-list.html" data-shape="aviator">
+              <img class="category__icon" src="assets/icons/shape_6.png" alt="" />
+              <span class="category__label">보잉</span>
+            </a>
+            <a class="category__item" href="product-list.html" data-shape="cat-eye">
+              <img class="category__icon" src="assets/icons/shape_7.png" alt="" />
+              <span class="category__label">캣아이</span>
+            </a>
+            <a class="category__item" href="product-list.html" data-shape="other">
+              <img class="category__icon" src="assets/icons/shape_8.png" alt="" />
+              <span class="category__label">기타</span>
+            </a>
             <a class="btn category__kids" href="#">KIDS</a>
             <a class="btn category__viewall" href="#">
               안경테 보기
               <span class="material-icons" aria-hidden="true">chevron_right</span>
             </a>
-          </div>
-
-          <!-- 얼굴형 분석 / 안경 써보기 -->
-          <div class="category__cta grid grid--2">
             <a class="btn category__cta-btn category__cta-btn--analysis" href="analysis.html">
               <img class="category__cta-icon" src="assets/icons/face.png" alt="" />
               얼굴형 분석
@@ -194,22 +117,15 @@
 
       <!-- 3. BEST PICK -->
       <section class="best-pick section" aria-labelledby="best-pick-title">
-        <h2 class="section-bar" id="best-pick-title">Best Pick</h2>
+        <div class="section-bar best-pick__header">
+          <h2 id="best-pick-title">Best Pick</h2>
+          <p class="best-pick__subtitle">셀 수 없는 선택지 중, 가장 확실한 것들만.</p>
+        </div>
         <div class="page">
 
           <!-- 탭 -->
           <div class="best-pick__tabs" role="tablist" aria-label="브랜드별 베스트">
-            <button type="button" role="tab" id="bp-tab-all" class="best-pick__tab is-active" aria-selected="true" aria-controls="bp-panel" data-brand="all">ALL</button>
-            <button type="button" role="tab" id="bp-tab-rayban" class="best-pick__tab" aria-selected="false" aria-controls="bp-panel" tabindex="-1" data-brand="RAY-BAN">RAY-BAN</button>
-            <button type="button" role="tab" id="bp-tab-fakeme" class="best-pick__tab" aria-selected="false" aria-controls="bp-panel" tabindex="-1" data-brand="FAKEME">FAKEME</button>
-            <button type="button" role="tab" id="bp-tab-nineaccord" class="best-pick__tab" aria-selected="false" aria-controls="bp-panel" tabindex="-1" data-brand="NINE ACCORD">NINE ACCORD</button>
-            <button type="button" role="tab" id="bp-tab-nishide" class="best-pick__tab" aria-selected="false" aria-controls="bp-panel" tabindex="-1" data-brand="NISHIDE KAZUO">NISHIDE KAZUO</button>
-            <button type="button" role="tab" id="bp-tab-publicbeacon" class="best-pick__tab" aria-selected="false" aria-controls="bp-panel" tabindex="-1" data-brand="PUBLIC BEACON">PUBLIC BEACON</button>
-            <button type="button" role="tab" id="bp-tab-heister" class="best-pick__tab" aria-selected="false" aria-controls="bp-panel" tabindex="-1" data-brand="HEISTER">HEISTER</button>
-            <button type="button" role="tab" id="bp-tab-bliz" class="best-pick__tab" aria-selected="false" aria-controls="bp-panel" tabindex="-1" data-brand="BLIZ">BLIZ</button>
-            <button type="button" role="tab" id="bp-tab-museum" class="best-pick__tab" aria-selected="false" aria-controls="bp-panel" tabindex="-1" data-brand="MUSEUM BY BEACON">MUSEUM BY BEACON</button>
-            <button type="button" role="tab" id="bp-tab-rudy" class="best-pick__tab" aria-selected="false" aria-controls="bp-panel" tabindex="-1" data-brand="RUDY PROJECT">RUDY PROJECT</button>
-            <button type="button" role="tab" id="bp-tab-oakley" class="best-pick__tab" aria-selected="false" aria-controls="bp-panel" tabindex="-1" data-brand="OAKLEY">OAKLEY</button>
+            <!-- 브랜드 탭 -->
           </div>
 
           <!-- 상품 패널 -->
@@ -224,14 +140,6 @@
 
               <!-- 얇은 가로 스크롤바 -->
               <div class="best-pick__scrollbar swiper-scrollbar"></div>
-            </div>
-
-            <!-- 로딩 시 스켈레톤 -->
-            <div class="best-pick__skeleton grid grid--2" aria-hidden="true">
-              <article class="skeleton-card"></article>
-              <article class="skeleton-card"></article>
-              <article class="skeleton-card"></article>
-              <article class="skeleton-card"></article>
             </div>
 
             <!-- 불러오기 실패 시 -->
@@ -266,15 +174,8 @@
               <!-- 상품 카드 -->
             </div>
 
-            <!-- 얇은 가로 스크롤바 -->
+            <!-- 스크롤바 -->
             <div class="collection__scrollbar swiper-scrollbar"></div>
-          </div>
-
-          <!-- 로딩 시 스켈레톤 -->
-          <div class="collection__skeleton grid grid--3" aria-hidden="true">
-            <article class="skeleton-card"></article>
-            <article class="skeleton-card"></article>
-            <article class="skeleton-card"></article>
           </div>
 
           <!-- 불러오기 실패 시 -->
@@ -295,7 +196,7 @@
         <h2 class="section-bar" id="more-title">More Collection</h2>
 
         <!-- 셀럽 이미지 캐러셀 -->
-        <div class="more-collection__celebs swiper" data-celeb-swiper aria-label="셀럽 컬렉션">
+        <div class="more-collection__celebs swiper" data-celeb-swiper role="group" aria-label="셀럽 컬렉션">
           <div class="swiper-wrapper">
             <div class="swiper-slide" data-celeb="gd" data-celeb-name="지드래곤">
               <img src="assets/images/celebrity_gd.jpg" alt="지드래곤 컬렉션" />
@@ -321,13 +222,6 @@
             <div class="more-collection__scrollbar swiper-scrollbar"></div>
           </div>
 
-          <!-- 로딩 시 스켈레톤 -->
-          <div class="more-collection__skeleton grid grid--3" aria-hidden="true">
-            <article class="skeleton-card"></article>
-            <article class="skeleton-card"></article>
-            <article class="skeleton-card"></article>
-          </div>
-
           <!-- 불러오기 실패 시 -->
           <div class="more-collection__error" role="alert" hidden>
             <p>상품을 불러오지 못했어요.</p>
@@ -351,16 +245,23 @@
           <img src="assets/images/event_1.jpg" alt="이벤트 다운 받을 수록 커지는 회원 혜택" />
         </div>
         <div class="page">
-          <h3 class="event__title">다운 받을 수록 커지는 회원 혜택</h3>
+          <h3 class="event__title">다운 받을 수록<br />커지는 회원 혜택</h3>
           <p class="event__desc">
-            중복 할인부터 브랜드 쿠폰까지, 다양한 혜택들이 기다리고 있어요. 
-            지금 바로 확인해보세요. 
+            중복 할인부터 브랜드 쿠폰까지,<br />
+            다양한 혜택들이 기다리고 있어요.<br />
+            지금 바로 확인해보세요.
           </p>
 
-          <a class="btn btn-more" href="#">
-            이벤트 더 보기
-            <span class="material-icons" aria-hidden="true">chevron_right</span>
-          </a>
+          <div class="event__buttons">
+            <a class="btn event__app-btn" href="#">
+              어플 다운 받기
+              <span class="material-icons" aria-hidden="true">chevron_right</span>
+            </a>
+            <a class="btn btn-more" href="#">
+              이벤트 더 보기
+              <span class="material-icons" aria-hidden="true">chevron_right</span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -376,26 +277,27 @@
 
           <!-- 플래그십 스토어 블록 -->
           <article class="store__block">
-            <h3 class="store__title">라운즈 플래그십 스토어</h3>
+            <h3 class="store__title heading-xl">라운즈 플래그십 스토어</h3>
             <p class="store__desc">
-              강남, 판교의 라운즈 플래그십 스토어를 방문해 보세요. 
-              온라인과 동일한 회원 혜택은 물론, 
-              원하는 일정에 미리 예약 방문도 
-              가능합니다. 
+              강남, 판교의 라운즈 플래그십 스토어를 방문해 보세요.<br class="br-td">
+              온라인과 동일한 회원 혜택은 물론,<br class="br-td">
+              원하는 일정에 미리 예약 방문도<br class="br-d">
+              가능합니다.
             </p>
-            <a class="store__link" href="#">라운즈 방문 예약</a>
+            <a class="store__link link" href="#">라운즈 방문 예약</a>
           </article>
 
           <!-- 파트너 안경원 블록 -->
           <article class="store__block">
-            <h3 class="store__title">라운즈 파트너 안경원</h3>
+            <h3 class="store__title heading-xl">라운즈 파트너 안경원</h3>
             <p class="store__desc">
-              시력 검사와 렌즈 맞춤이 필요하신가요? 
-              온라인 안경테라 눈치 보이진 않으셨나요, 
-              라운즈 파트너 안경원을 방문하면 검증된 안경사에게 렌즈 맞춤 및 피팅 등 
-              전문 서비스를 받을 수 있습니다. 
+              시력 검사와 렌즈 맞춤이 필요하신가요?<br class="br-td">
+              온라인 안경테라 눈치 보이진 않으셨나요,<br class="br-td">
+              라운즈 파트너 안경원을 방문하면 검증된 안경사에게<br class="br-t">
+              렌즈 맞춤 및 피팅 등<br class="br-d">
+              전문 서비스를 받을 수 있습니다.
             </p>
-            <a class="store__link" href="#">파트너 안경원 찾기</a>
+            <a class="store__link link" href="#">파트너 안경원 찾기</a>
           </article>
         </div>
       </section>
@@ -404,75 +306,7 @@
       <section class="brand section" aria-label="브랜드 영상">
         <div class="brand__carousel swiper" data-brand-swiper>
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="brand__video">
-                <iframe
-                  class="brand__iframe"
-                  src="https://www.youtube.com/embed/VSz8IfhtKFM?enablejsapi=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;mute=1"
-                  title="The New Aviator Capsule."
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="brand__video">
-                <iframe
-                  class="brand__iframe"
-                  src="https://www.youtube.com/embed/gBakazoY4d8?enablejsapi=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;mute=1"
-                  title="프로젝트 프로덕트(PROJEKT PRODUKT), PROJECT 13, Neo Nomad"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="brand__video">
-                <iframe
-                  class="brand__iframe"
-                  src="https://www.youtube.com/embed/wM7_iTWnCl0?enablejsapi=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;mute=1"
-                  title="2026 Bouquet Collection with FKA twigs"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="brand__video">
-                <iframe
-                  class="brand__iframe"
-                  src="https://www.youtube.com/embed/Jl0gN5KbK2o?enablejsapi=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;mute=1"
-                  title="LE SPECS X NO PROBLEMO"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="brand__video">
-                <iframe
-                  class="brand__iframe"
-                  src="https://www.youtube.com/embed/G6KBfKVga-s?enablejsapi=1&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;mute=1"
-                  title="Rudy Project x FCI: A New Chapter for Italian Cycling"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
+            <!-- 영상 슬라이드 -->
           </div>
 
           <!-- 슬라이드 진행바 -->
@@ -481,17 +315,17 @@
 
         <!-- 커스텀 컨트롤 -->
         <div class="brand__controls" role="group" aria-label="영상 제어">
-          <button type="button" class="brand__control" data-action="play" aria-label="영상 재생">
-            <span class="material-icons" aria-hidden="true">play_arrow</span>
+          <button type="button" class="brand__control" data-action="play" aria-label="영상 일시정지">
+            <span class="material-symbols-rounded" aria-hidden="true">pause_circle</span>
           </button>
           <button type="button" class="brand__control" data-action="mute" aria-label="음소거 해제">
-            <span class="material-icons" aria-hidden="true">volume_off</span>
+            <span class="material-symbols-rounded" aria-hidden="true">volume_off</span>
           </button>
         </div>
       </section>
     </main>
 
-    <!-- 공통 푸터 컴포넌트 자리 -->
+    <!-- 공통 푸터 자리 -->
   </div>
 
   <!-- 슬라이드 -->
