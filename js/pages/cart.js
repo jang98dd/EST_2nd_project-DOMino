@@ -1,5 +1,5 @@
 import { getFromStorage, saveToStorage, updateCartCount } from '../utils/storage.js';
-import { formatPrice } from '../utils/formatter.js';
+
 
 // ── DOM ──────────────────────────────────────────────────────────────────────
 const productsList = document.querySelector('.products-list');
