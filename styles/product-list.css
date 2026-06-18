@@ -153,15 +153,27 @@
 .product-card {
   display: flex;
   flex-direction: column;
+  gap: 8px;
   max-height: 248px;
   height: 100%;
 }
 .product-card__thumb {
   position: relative;
+  width: 160px;
+  height: 160px;
+  overflow: hidden;
+  z-index: 1;
+  transform: translateZ(0);
 }
 .product-card__thumb img {
   display: block;
   width: 100%;
+}
+.product-card__thumb .btn--utility-sm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 .btn-more {
   width: 232px;
@@ -169,27 +181,38 @@
   border: 1px solid var(--black);
 }
 .product-card .btn-like {
-  position: absolute;
+  position: absolute; 
   top: 8px;
-  left: 8px;
+  left: 8px;        
+  right: auto;         
 }
-.product-card span {
-  font-size: 12px;
-  color: var(--primary);
-  transition: color .2s ease;
+.product-card__thumb .btn-cart {
+  position: absolute;
+  bottom: 8px;       
+  left: 8px;        
+}
+.product-card__main-link {
+  display: none;
 }
 .btn-like[aria-pressed="true"]{
   color: var(--primary);
 }
 .product-card .btn-fit {
   position: absolute;
-  padding: 0 8px;
-  right: 8px;
   bottom: 8px;
+  right: 8px;         
+  width: 80px;
+  height: 32px;
+  font-size: 12px;
   display: flex;
   align-items: center;
-  border: 1px solid var(--gray);
-  color: var(--gray);
+  justify-content: center;
+  z-index: 2;
+}
+.product-card h3.body-sm{ 
+  font-weight: 400;
+  font-size: var(--font-14);
+  margin-top: 2px;
 }
 .fab-group {
   position: fixed;
@@ -231,7 +254,6 @@
   min-width: 120px;
   z-index: 10;
   padding: 0;
-  border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
 }
 
@@ -255,6 +277,7 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
+  z-index: 10000;
 }
 
 .bottom-sheet.is-open {
@@ -272,6 +295,7 @@
   pointer-events: auto;
   opacity: 0;
   transition: opacity 0.3s ease;
+  z-index: 1;
 }
 .bottom-sheet.is-open .bottom-sheet__backdrop {
   opacity: 1;
@@ -279,6 +303,8 @@
 .bottom-sheet.is-open .bottom-sheet__panel {
   transform: translateY(0);
   transition: transform 0.3s ease;
+  pointer-events: auto;
+  z-index: 2;
 }
 .filter-header {
   display: grid;
@@ -359,7 +385,7 @@ body.is-sheet-open {
   background: linear-gradient(to right, #f2f4f8, #a09bee);
   border: 1px solid var(--primary);
   
-  color: #495057;
+  color: var(--superGray);
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
@@ -414,7 +440,7 @@ body.is-sheet-open {
   flex: 0 0 auto;
   width: 140px;
   scroll-snap-align: start;
-
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -503,6 +529,10 @@ body.is-sheet-open {
   .product-card {
     min-height: 304px;
   }
+  .product-card__thumb {
+    width: 208px;
+    height: 208px;
+  }
 }
 @media (min-width: 1200px) {
   .product-layout {
@@ -517,6 +547,9 @@ body.is-sheet-open {
   }
   .page-header {
     display: none;
+  }
+  .product-content {
+    padding: 24px 0;
   }
   .filter-sidebar input[type="checkbox"],
   .filter-sidebar input[type="radio"] {
@@ -544,9 +577,6 @@ body.is-sheet-open {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: 40px;
   }
-  .filter-sidebar {
-    display: block;
-  }
   .filter-body {
     overflow-y: visible;
     height: auto;
@@ -554,11 +584,17 @@ body.is-sheet-open {
   .fab-group {
     display: none;
   }
+  .filter-group {
+    gap: 12px;
+  }
   .product-card {
     width: 100%;
   }
   .filter-sidebar {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 12px;
   }
   .filter-sidebar .chip-grid {
     display: flex;
@@ -611,9 +647,30 @@ body.is-sheet-open {
 .pagination {
     display: flex;
   }
-  .recommend-slider {
-    display: block;
-  }
+.recommend-slider {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden; 
+}
+.recommend-track {
+  display: flex;
+  gap: 16px;        
+  overflow-x: auto;   
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch; 
+  padding-bottom: 8px; 
+}
+.recommend-card {
+  flex-shrink: 0;     
+  width: 260px;     
+}
+.recommend-track::-webkit-scrollbar {
+  display: none;  
+}
+.recommend-track {
+  scrollbar-width: none;
+}
   #openFrameRecommend {
     display: none;
   }

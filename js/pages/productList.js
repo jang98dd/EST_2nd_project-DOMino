@@ -81,6 +81,27 @@ function bindEvents() {
     });
   });
 }
+function bindTopCategories() {
+  const categoryBtns = document.querySelectorAll('.btn-category');
+  if (!categoryBtns.length) return;
+
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      categoryBtns.forEach(b => b.classList.remove('is-active'));
+      e.currentTarget.classList.add('is-active');
+
+      const selectedCategory = e.currentTarget.dataset.cat;
+      console.log('클릭된 카테고리:', selectedCategory);
+      handleCategoryChange(selectedCategory);
+    });
+  });
+}
+function handleCategoryChange(category) {
+  
+  if (category === 'wishlist') {
+  } else if (category === 'all') {
+  }
+}
 async function init() {
   bindUI();
   initBottomSheet();
@@ -91,6 +112,8 @@ async function init() {
   bindChipEvents();
   bindBottomSheetFilters();
   bindSidebarFilters();
+
+  bindTopCategories()
 
   updateCartCount();
   updateWishlistCount();
@@ -179,6 +202,10 @@ function renderRecommendations(products) {
 }
 
 function updateView() {
+  const displayArea = document.querySelector(".product-display-area");
+  if (displayArea) {
+    displayArea.classList.toggle("is-loading", state.isLoading);
+  }
   if (state.isLoading) {
     if (productCards) {
       productCards.innerHTML = Array.from({ length: 12 })
@@ -380,7 +407,7 @@ function createProductCard(product) {
     <article class="product-card" style="position: relative; cursor: pointer;">
       <a href="../product-detail.html?id=${product.id}" 
          class="product-card__main-link" 
-         aria-label="${product.title} 상세 페이지로 이동" style="display:none;">
+         aria-label="${product.title} 상세 페이지로 이동">
       </a>
       <div class="product-card__thumb">
         <img src="${product.thumbnail}" alt="${product.title}" />
@@ -403,8 +430,8 @@ function createProductCard(product) {
           착용하기
         </a>
       </div>
-      <p>${product.brand}</p>
-      <h3>${product.title}</h3>
+      <p class="body-sm-bold--tight">${product.brand}</p>
+      <h3 class="body-sm">${product.title}</h3>
       <p class="price">${formattedPrice}</p>
     </article>
   `;
