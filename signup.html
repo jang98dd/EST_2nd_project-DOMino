@@ -9,9 +9,14 @@
 
   <title>회원가입</title>
 
-  <link rel="stylesheet" href="./css/header.css">
-
-  <link rel="stylesheet" href="./css/auth.css">
+  <link rel="stylesheet" href="./styles/reset.css">
+  <link rel="stylesheet" href="./styles/normalize.css">
+  <link rel="stylesheet" href="./styles/common.css">
+  
+  <link rel="stylesheet" href="./styles/header.css">
+  <link rel="stylesheet" href="./styles/auth-signup.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 </head>
 
@@ -32,17 +37,17 @@
 
     <div class="header-icons">
 
-      <button type="button">
-        검색
-      </button>
-
-      <button type="button">
-        장바구니
-      </button>
-
-      <button type="button">
-        메뉴
-      </button>
+      <span class="material-symbols-outlined">
+        search
+      </span>
+      
+      <span class="material-symbols-outlined">
+        shopping_bag
+      </span>
+      
+      <span class="material-symbols-outlined">
+        menu
+      </span>
 
     </div>
 
@@ -69,6 +74,48 @@
 
         <form class="signup-form" id="signupForm">
 
+          <div class="form-group">
+          
+            <label>회원구분 *</label>
+          
+            <div class="radio-group">
+          
+              <label>
+                <input type="radio" name="memberType" value="local">
+                개인회원
+              </label>
+          
+              <label>
+                <input type="radio" name="memberType" value="foreigner">
+                외국인회원(foreigner)
+              </label>
+          
+            </div>
+          
+          </div>
+          
+          <div class="form-group">
+          
+            <label>회원인증 *</label>
+            
+            <div class="radio-group">
+          
+              <label>
+                <input type="radio" name="verifyType" value="email">
+                이메일 인증
+              </label>
+
+            </div>
+
+            <p class="verify-desc">
+              기본정보 > 이메일 항목에 입력하신 정보로 본인인증을 진행합니다.<br>
+              회원가입 후 입력하신 이메일 주소로 인증 메일이 발송되오니,
+              확인해 주시기 바랍니다.
+            </p>
+          
+          </div>
+
+
           <div class="signup-grid">
 
             <div class="form-group">
@@ -82,19 +129,22 @@
             </div>
 
             <div class="form-group">
-
+            
               <label>
                 휴대폰 번호 *
               </label>
-
+            
               <div class="phone-group">
-
-                <input class="phone-prefix" value="010" readonly>
-
+            
+                <select class="phone-prefix">
+                  <option>010</option>
+                  <option>011</option>
+                </select>
+            
                 <input type="tel" placeholder="'-' 없이 입력해주세요">
-
+            
               </div>
-
+            
             </div>
 
             <div class="form-group">
@@ -105,9 +155,8 @@
 
               <input id="email" type="email" placeholder="이메일을 입력해주세요">
 
-              <p class="error-message">
-                이메일은 반드시 @를 포함하여 작성하시오
-              </p>
+              <p class="error-message"></p>
+              
 
             </div>
 
@@ -117,7 +166,10 @@
                 생년월일 *
               </label>
 
-              <input id="birth" type="date">
+              <input id="datepicker" 
+              class="datepicker" 
+              type="text" 
+              placeholder="YYYY.MM.DD">
 
             </div>
 
@@ -138,7 +190,7 @@
               </div>
 
               <p class="error-message">
-                사용자 이름을 포함해서 작성하지 마시오
+                
               </p>
 
             </div>
@@ -182,7 +234,6 @@
               </div>
 
               <p class="error-message">
-                위의 비밀번호와 동일하게 작성하시오
               </p>
 
             </div>
@@ -231,21 +282,14 @@
 
     </div>
 
-    <div class="auth__visual">
-
-      <picture>
-
-        <source media="(min-width:1200px)" srcset="./assets/images/desktop-bg.png">
-
-        <img src="./assets/images/tablet-bg.png" alt="안경 배경">
-
-      </picture>
-
-    </div>
 
   </main>
 
-  <script src="./js/auth.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  
+  <script src="./js/modules/auth.js"></script>
 
 </body>
 </html>

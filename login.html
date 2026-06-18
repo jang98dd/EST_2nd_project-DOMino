@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 
 <head>
@@ -8,16 +7,17 @@
 
   <title>로그인</title>
 
-  <link rel="stylesheet" href="./css/header.css">
-  <link rel="stylesheet" href="./css/auth.css">
+  <link rel="stylesheet" href="./styles/header.css">
+  <link rel="stylesheet" href="./styles/auth-login.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body>
 
   <header class="header">
-
-    <div class="logo">ROUNZ</div>
-
+  
+    <h1 class="logo">ROUNZ</h1>
+  
     <nav class="gnb">
       <a href="#">상품</a>
       <a href="#">가상피팅</a>
@@ -26,106 +26,139 @@
       <a href="#">이벤트</a>
       <a href="#">고객지원</a>
     </nav>
-
+  
     <div class="header-icons">
-      <button type="button">검색</button>
-      <button type="button">장바구니</button>
-      <button type="button">메뉴</button>
+  
+      <span class="material-symbols-outlined">
+        search
+      </span>
+  
+      <span class="material-symbols-outlined">
+        shopping_bag
+      </span>
+  
+      <span class="material-symbols-outlined">
+        menu
+      </span>
+  
     </div>
-
+  
   </header>
 
-  <main class="auth auth--login">
+  <main class="login-page">
 
-    <div class="auth__content">
+    <section class="login-content">
 
-      <section class="auth__intro">
+      <div class="login-title">
 
-        <h1>
+        <h2>
           Find the Frame<br>
           that fits your style.
-        </h1>
+        </h2>
 
         <p>
           당신에게 가장 잘 어울리는 안경을 찾아보세요.
         </p>
 
-      </section>
+      </div>
 
-      <section class="auth__form">
+      <form class="login-form">
 
-        <form class="login-form">
+        <div class="form-group">
 
-          <div class="form-group">
+          <label>이메일</label>
 
-            <label for="email">이메일</label>
+          <input type="email" placeholder="이메일을 입력해주세요">
 
-            <input id="email" type="email" placeholder="이메일을 입력해주세요">
+        </div>
 
-          </div>
+        <div class="form-group">
 
-          <div class="form-group">
+          <label>비밀번호</label>
 
-            <label for="loginPw">비밀번호</label>
+          <div class="password-wrap">
 
-            <div class="password-wrap">
+            <input id="loginPw" type="password" placeholder="비밀번호를 입력해주세요">
 
-              <input id="loginPw" type="password" placeholder="비밀번호를 입력해주세요">
+            <button type="button" class="toggle-password">
 
-              <button type="button" class="toggle-password">
-                👁
-              </button>
+              👁
 
-            </div>
+            </button>
 
           </div>
 
-          <div class="login-option">
+        </div>
 
-            <label>
-              <input type="checkbox">
-              로그인 상태 유지
-            </label>
+        <div class="login-option">
 
-            <a href="#">
-              비밀번호 찾기
-            </a>
+          <label>
 
-          </div>
+            <input type="checkbox">
 
-          <button type="submit" class="btn-black">
-            로그인
-          </button>
+            로그인 상태 유지
 
-          <p class="login-link">
+          </label>
 
-            아직 회원이 아니신가요?
+          <a href="#">
+            비밀번호 찾기
+          </a>
 
-            <a href="./signup.html">
-              회원가입
-            </a>
+        </div>
 
-          </p>
+        <button type="submit" class="login-btn">
 
-        </form>
+          로그인
 
-      </section>
+        </button>
 
-    </div>
+      </form>
 
-    <div class="auth__visual">
+      <div class="divider">
+        <span>또는</span>
+      </div>
 
-      <picture>
+      <div class="social-login">
+      
+        <button class="social kakao">
+      
+          <img src="./assets/images/kakaotalk.png" alt="카카오">
+      
+          <span>카카오로 로그인</span>
+      
+        </button>
+      
+        <button class="social naver">
+      
+          <img src="./assets/images/naver.png" alt="네이버">
+      
+          <span>네이버로 로그인</span>
+      
+        </button>
+      
+        <button class="social apple">
+      
+          <img src="./assets/images/apple.png" alt="애플">
+      
+          <span>Apple로 로그인</span>
+      
+        </button>
+      
+      </div>
 
-        <source media="(min-width:1200px)" srcset="./assets/images/desktop-bg.png">
+      <p class="signup-link">
 
-        <img src="./assets/images/tablet-bg.png" alt="안경 배경">
+        아직 회원이 아니신가요?
 
-      </picture>
+        <a href="./signup.html">
+          회원가입
+        </a>
 
-    </div>
+      </p>
 
-  </main>
+     </section>
+      
+     </main>
 
   <script src="./js/auth.js"></script>
 
