@@ -6,11 +6,11 @@ const selectAllCheckbox = document.querySelector('.select-all-checkbox');
 const checkboxLabel = document.querySelector('.checkbox-label');
 const deleteSelectedBtn = document.querySelector('#delete-selected');
 const subtotalEl = document.querySelector('#subtotal');
-// const shippingEl = document.querySelector('#shipping');
+const shippingEl = document.querySelector('#shipping');
 const totalEl = document.querySelector('#total');
 const checkoutBtn = document.querySelector('#checkout-btn');
 
-// const SHIPPING_COST = 3000;
+let SHIPPING_COST = 0;
 // const FREE_SHIPPING_THRESHOLD = 50000;
 
 let cart = getFromStorage('cart', []);
@@ -67,14 +67,18 @@ function updateSelectState() {
 
 function updateTotalAmount() {
   const subtotal = cart.reduce((acc, item) => acc + item.qty * item.price, 0);
-  // const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
-  // const total = subtotal + shipping;
-  // shippingEl.textContent = formatPrice(shipping);
-  subtotalEl.textContent = subtotal;
   
-  totalEl.textContent = subtotal;
+  if (cart.length === 0) {
+  SHIPPING_COST = 0;
+  } else {
+    SHIPPING_COST = 3000;
+  }
+  shippingEl.textContent = SHIPPING_COST;
+  subtotalEl.textContent = subtotal;
+  totalEl.textContent = subtotal+SHIPPING_COST;
+  if (checkoutBtn) {checkoutBtn.disabled = cart.length === 0;}
+  
 
-  if (checkoutBtn) checkoutBtn.disabled = cart.length === 0;
 }
 
 function saveCart() {
