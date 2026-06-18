@@ -7,65 +7,39 @@
 
   <title>로그인</title>
 
-  <link rel="stylesheet" href="../styles/reset.css">
-  <link rel="stylesheet" href="../styles/normalize.css">
-  <link rel="stylesheet" href="../styles/common.css">
-  <link rel="stylesheet" href="../styles/header.css">
-  <link rel="stylesheet" href="../styles/nav.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href="./styles/header.css">
+  <link rel="stylesheet" href="./styles/nav.css">
+  <link rel="stylesheet" href="./styles/footer.css">
+  
+  <link rel="stylesheet" href="./styles/auth-login.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 
-<body>
+<body data-page="login">
 
-  <header class="header">
-  
-    <h1 class="logo">ROUNZ</h1>
-  
-    <nav class="gnb">
-      <a href="#">상품</a>
-      <a href="#">가상피팅</a>
-      <a href="#">분석</a>
-      <a href="#">브랜드</a>
-      <a href="#">이벤트</a>
-      <a href="#">고객지원</a>
-    </nav>
-  
-    <div class="header-icons">
-  
-      <span class="material-symbols-outlined">
-        search
-      </span>
-  
-      <span class="material-symbols-outlined">
-        shopping_bag
-      </span>
-  
-      <span class="material-symbols-outlined">
-        menu
-      </span>
-  
-    </div>
-  
-  </header>
+  <div data-include="/components/header.html"></div>
 
   <main class="login-page">
-
-    <section class="login-content">
-
-      <div class="login-title">
-
-        <h2>
-          Find the Frame<br>
-          that fits your style.
-        </h2>
-
-        <p>
-          당신에게 가장 잘 어울리는 안경을 찾아보세요.
-        </p>
-
-      </div>
-
-      <form class="login-form">
+  
+    <div class="login-layout">
+  
+      <section class="login-content">
+  
+        <div class="login-title">
+  
+          <h2>
+            Find the Frame<br>
+            that fits your style.
+          </h2>
+  
+          <p>
+            당신에게 가장 잘 어울리는 안경을 찾아보세요.
+          </p>
+  
+        </div>
+  
+        <form class="login-form">
 
         <div class="form-group">
 
@@ -161,11 +135,14 @@
 
      </section>
       
+      
+      </div>
      </main>
 
- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-<script src="./js/modules/auth.js"></script>
+    <div data-include="/components/footer.html"></div>
+    
+    <script type="module" src="./js/loadComponents.js"></script>
+    <script type="module" src="./js/main.js"></script>
 
 </body>
 
