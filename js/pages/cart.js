@@ -39,7 +39,7 @@ function renderCart() {
       </div>
       <div class="product-details">
         <p class="product-description">${item.title}</p>
-        <span class="product-price">${item.price}</span>
+        <span class="product-price">${Number(item.price).toLocaleString('ko-KR')}원</span>
         <div class="quantity-controls">
           <button class="qty-btn qty-decrease" aria-label="수량 감소">−</button>
           <span class="qty-value">${item.qty}</span>

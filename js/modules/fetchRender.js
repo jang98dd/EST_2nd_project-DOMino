@@ -1,4 +1,4 @@
-const DATA_URL = '../data/products.json';
+const DATA_URL = new URL('../../data/products.json', import.meta.url).href;
 
 export async function fetchProducts() {
   try {
