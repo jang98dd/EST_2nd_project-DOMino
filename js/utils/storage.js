@@ -1,4 +1,4 @@
-const cart = "cart";
+let cart = getFromStorage("cart", []);
 
 export function getFromStorage(key, defaultValue = null) {
   try {
@@ -19,39 +19,32 @@ export function saveToStorage(key, data) {
 }
 
 export function getCartCount() {
-  const cartItems = getFromStorage(cart, []);
-  return cartItems.reduce((total, item) => total + item.qty, 0);
+  return cart.reduce((total, item) => total + item.qty, 0);
 }
 
 export function updateCartCount() {
   const cartCount = document.querySelector(".cart-count");
   if (!cartCount) return;
-
   cartCount.textContent = getCartCount();
 }
 
 export function addToCart(product, qty = 1) {
   if (!product) return;
-
-  const cartItems = getFromStorage(cart, []);
-
-  const existingItem = cartItems.find(
-    item => item.id === product.id
-  );
+  const existingItem = cart.find(item => item.id === product.id);
 
   if (existingItem) {
     existingItem.qty += qty;
   } else {
-    cartItems.push({
+    cart.push({
       id: product.id,
       name: product.name,
-      description: product.description || "",
+      description: product.description || '',
       price: product.price,
-      image: product.image || product.thumbnail || "",
+      image: product.image || product.thumbnail || '',
       qty,
     });
   }
 
-  saveToStorage(cart, cartItems);
+  saveToStorage("cart", cart);
   updateCartCount();
 }
