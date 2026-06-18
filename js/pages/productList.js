@@ -430,8 +430,6 @@ function initProductCardClicks() {
   if (!productCards) return;
 
   productCards.addEventListener("click", (e) => {
-    
-    // 1️⃣ 찜하기(하트) 버튼 클릭 시
     const likeBtn = e.target.closest(".btn-like");
     if (likeBtn) {
       e.stopPropagation(); 
@@ -446,22 +444,18 @@ function initProductCardClicks() {
       }
       return; 
     }
-
-    // 2️⃣ 장바구니 담기 버튼 클릭 시 (정식 연결)
     const cartBtn = e.target.closest(".btn-cart");
     if (cartBtn) {
-      e.stopPropagation(); // 카드 상세 페이지로 이동하는 것 방지
+      e.stopPropagation(); 
       const productId = cartBtn.dataset.id;
       const productData = state.baseProducts.find(p => String(p.id) === String(productId));
 
       if (productData) {
-        addToCart(productData, 1); // 스토리지에 수량 1개로 담기 실행
+        addToCart(productData, 1); 
         alert(`${productData.title}\n상품이 장바구니에 담겼습니다.`);
       }
       return;
     }
-
-    // 3️⃣ 착용하기 버튼 클릭 시 (원래 기능으로 원상복구 완료)
     const fitBtn = e.target.closest(".btn-fit");
     if (fitBtn) {
       e.preventDefault();
@@ -471,8 +465,6 @@ function initProductCardClicks() {
       window.location.href = fitBtn.href || `../fitting-and-analysis.html?id=${glassesId}`; 
       return; 
     }
-
-    // 4️⃣ 카드 본문(빈 곳) 클릭 시 -> 상세 페이지 이동
     const card = e.target.closest(".product-card");
     if (card && !card.classList.contains("skeleton-card")) {
       const mainLink = card.querySelector(".product-card__main-link");
