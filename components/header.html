@@ -1,261 +1,238 @@
-<!DOCTYPE html>
-<html lang="ko">
+<header class="header">
+  <h1 class="logo">
+    <a href="/">ROUNZ</a>
+  </h1>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ROUNZ</title>
+  <nav class="gnb">
+    <ul class="gnb__list">
+      <li>상품</li>
+      <li>가상피팅</li>
+      <li>분석</li>
+      <li>브랜드</li>
+      <li>이벤트</li>
+      <li>고객지원</li>
+    </ul>
+  </nav>
 
-  <link rel="stylesheet" href="./css/style.css">
+  <div class="header__right">
+    <span class="material-symbols-outlined icon-btn">
+      search
+    </span>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
+    <span class="material-symbols-outlined icon-btn">
+      shopping_bag
+    </span>
 
-<body>
+    <span class="material-symbols-outlined menu-btn">
+      menu
+    </span>
 
-  <header class="header">
+  </div>
+</header>
 
-    <h1 class="logo">
-      <a href="#">ROUNZ</a>
-    </h1>
+<!-- 모바일 메뉴 -->
 
-    <nav class="gnb">
-      <ul class="gnb__list">
-        <li>상품</li>
-        <li>가상피팅</li>
-        <li>분석</li>
-        <li>브랜드</li>
-        <li>이벤트</li>
-        <li>고객지원</li>
-      </ul>
-    </nav>
+<aside class="nav-mobile">
 
-    <div class="header__right">
+  <div class="nav-header">
+    <h2>ROUNZ</h2>
 
-      <button class="icon-btn">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
+    <span class="material-symbols-outlined nav-close">
+      close
+    </span>
 
-      <button class="icon-btn">
-        <i class="fa-solid fa-bag-shopping"></i>
-      </button>
 
-      <button class="menu-btn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
+  </div>
 
-    </div>
+  <div class="nav-search">
+    <input type="text" placeholder="검색어를 입력하세요" />
 
-  </header>
+    <span class="material-symbols-outlined">
+      search
+    </span>
 
-  <!-- ======================
-     MOBILE / TABLET MENU
+  </div>
 
-  <aside class="mobile-menu">
+  <ul class="nav-list">
 
-    <div class="mobile-menu__header">
+    <li>
+      <a href="#">
+        <span class="material-symbols-outlined">
+          home
+        </span>
+        홈
+      </a>
+    </li>
 
-      <h2>ROUNZ</h2>
+    <li class="has-sub">
 
-      <button class="close-btn">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+      <button>
 
-    </div>
+        <span class="left">
 
-    <div class="search-box">
-
-      <input type="text" placeholder="">
-
-      <i class="fa-solid fa-magnifying-glass"></i>
-
-    </div>
-
-    <ul class="mobile-nav">
-
-      <li>
-
-        <button class="accordion">
+          <span class="material-symbols-outlined">
+            shopping_bag
+          </span>
 
           상품
 
-          <span>+</span>
+        </span>
 
-        </button>
+        <span>+</span>
 
-        <div class="panel">
+      </button>
 
-          <a href="#">전체상품</a>
-          <a href="#">신상품</a>
-          <a href="#">베스트</a>
-          <a href="#">안경테</a>
-          <a href="#">선글라스</a>
+      <div class="sub-menu">
+        <a href="#">전체상품</a>
+        <a href="#">신상품</a>
+        <a href="#">베스트</a>
+      </div>
 
-        </div>
+    </li>
 
-      </li>
+    <li class="has-sub">
 
-      <li>
+      <button>
 
-        <button class="accordion">
+        <span class="left">
+
+          <span class="material-symbols-outlined">
+            eyeglasses_2
+          </span>
 
           가상피팅
 
-          <span>+</span>
+        </span>
 
-        </button>
+        <span>+</span>
 
-        <div class="panel">
+      </button>
 
-          <a href="#">얼굴형 분석</a>
-          <a href="#">가상피팅 시작</a>
+      <div class="sub-menu">
+        <a href="#">얼굴 분석</a>
+        <a href="#">가상피팅 시작하기</a>
+      </div>
 
-        </div>
+    </li>
 
-      </li>
+    <li>
+      <a href="#">
+        <span class="material-symbols-outlined">
+          bar_chart
+        </span>
+        분석
+      </a>
+    </li>
 
-      <li>
+    <li>
+      <a href="#">
+        <span class="material-symbols-outlined">
+          sell
+        </span>
+        브랜드
+      </a>
+    </li>
 
-        <button class="accordion">
+    <li>
+      <a href="#">
+        <span class="material-symbols-outlined">
+          redeem
+        </span>
+        이벤트
+      </a>
+    </li>
 
-          분석
+    <li>
+      <a href="#">
+        <span class="material-symbols-outlined">
+          headset_mic
+        </span>
+        고객지원
+      </a>
+    </li>
+    ```
 
-          <span>+</span>
+  </ul>
 
-        </button>
+  <div class="nav-login">
 
-        <div class="panel">
+    <span class="material-symbols-outlined">
+      person
+    </span>
 
-          <a href="#">얼굴 분석</a>
-          <a href="#">퍼스널 컬러</a>
+    로그인 / 회원가입
 
-        </div>
+  </div>
 
-      </li>
+</aside>
 
-      <li>
+<!-- 태블릿 메뉴 -->
 
-        <button class="accordion">
+<div class="tablet-nav">
 
-          브랜드
+  <div class="nav-header">
 
-          <span>+</span>
+    <h2>ROUNZ</h2>
 
-        </button>
+    <span class="material-symbols-outlined nav-close">
+      close
+    </span>
 
-        <div class="panel">
+  </div>
 
-          <a href="#">전체 브랜드</a>
-          <a href="#">국내 브랜드</a>
-          <a href="#">해외 브랜드</a>
+  <div class="tablet-inner">
 
-        </div>
 
-      </li>
+    <div class="tablet-left">
 
-      <li>
+      <ul>
+        <li><a href="#">상품</a></li>
+        <li><a href="#">가상피팅</a></li>
+        <li><a href="#">분석</a></li>
+        <li><a href="#">브랜드</a></li>
+        <li><a href="#">이벤트</a></li>
+        <li><a href="#">고객지원</a></li>
+      </ul>
 
-        <button class="accordion">
+    </div>
 
-          이벤트
+    <div class="tablet-right">
 
-          <span>+</span>
+      <div class="service-box">
 
-        </button>
+        <span class="material-symbols-outlined">
+          face
+        </span>
 
-        <div class="panel">
-
-          <a href="#">진행중 이벤트</a>
-          <a href="#">종료된 이벤트</a>
-
-        </div>
-
-      </li>
-
-      <li>
-
-        <button class="accordion">
-
-          고객지원
-
-          <span>+</span>
-
-        </button>
-
-        <div class="panel">
-
-          <a href="#">공지사항</a>
-          <a href="#">FAQ</a>
-
-        </div>
-
-      </li>
-
-    </ul>
-
-  </aside>
-
-  <!-- ======================
-     DESKTOP MEGA MENU
-
-  <div class="mega-menu">
-
-    <div class="mega-inner">
-
-      <div class="service-column">
-
-        <h3>추천 서비스</h3>
-
-        <div class="service-card">
+        <div>
 
           <strong>얼굴 분석</strong>
 
           <p>
-            내 얼굴형에 어울리는 안경을
-            추천받아보세요
+            내 얼굴형에 어울리는 안경을 추천받아보세요
           </p>
 
         </div>
 
-        <div class="service-card">
+      </div>
 
-          <strong>가상피팅 시작하기</strong>
+      <div class="service-box">
+
+        <span class="material-symbols-outlined">
+          view_in_air
+        </span>
+
+        <div>
+
+          <strong>
+            가상피팅 시작하기
+          </strong>
 
           <p>
-            카메라로 실시간 착용감을
-            확인해보세요
+            실시간 착용감을 확인해보세요
           </p>
 
         </div>
-
-      </div>
-
-      <div class="menu-column blue">
-
-        <a href="#">전체 상품</a>
-        <a href="#">신상품</a>
-        <a href="#">베스트</a>
-        <a href="#">안경테</a>
-        <a href="#">선글라스</a>
-        <a href="#">블루라이트 차단</a>
-        <a href="#">액세서리</a>
-
-      </div>
-
-      <div class="menu-column">
-
-        <a href="#">얼굴형 분석</a>
-        <a href="#">안경 착용 해보기</a>
-        <a href="#">퍼스널 컬러 찾기</a>
-
-      </div>
-
-      <div class="menu-column">
-
-        <a href="#">전체 브랜드</a>
-        <a href="#">인기 브랜드</a>
-        <a href="#">프리미엄 브랜드</a>
-        <a href="#">국내 브랜드</a>
 
       </div>
 
@@ -263,8 +240,94 @@
 
   </div>
 
-  <script type="module" src="./js/main.js"></script>
+</div>
 
-</body>
+<!-- 데스크탑 메가메뉴 -->
 
-</html>
+<div class="desktop-nav">
+
+  <div class="desktop-inner">
+
+    <div class="service-column">
+
+      <h3>추천 서비스</h3>
+
+      <div class="service-card">
+
+        <span class="material-symbols-outlined">
+          face
+        </span>
+
+        <div>
+
+          <strong>얼굴 분석</strong>
+
+          <p>
+            내 얼굴형에 어울리는 안경 추천
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="service-card">
+
+        <span class="material-symbols-outlined">
+          view_in_air
+        </span>
+
+        <div>
+
+          <strong>
+            가상피팅 시작하기
+          </strong>
+
+          <p>
+            실시간 착용감 확인
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="menu-column active">
+      <a href="#">전체상품</a>
+      <a href="#">신상품</a>
+      <a href="#">베스트</a>
+      <a href="#">안경테</a>
+      <a href="#">선글라스</a>
+    </div>
+
+    <div class="menu-column">
+      <a href="#">얼굴형 분석</a>
+      <a href="#">가상피팅 시작하기</a>
+      <a href="#">퍼스널 컬러</a>
+    </div>
+
+    <div class="menu-column">
+      <a href="#">전체 브랜드</a>
+      <a href="#">인기 브랜드</a>
+      <a href="#">프리미엄 브랜드</a>
+    </div>
+
+    <div class="menu-column">
+      <a href="#">진행중 이벤트</a>
+      <a href="#">종료된 이벤트</a>
+      <a href="#">쿠폰 혜택</a>
+    </div>
+
+    <div class="menu-column">
+      <a href="#">공지사항</a>
+      <a href="#">FAQ</a>
+      <a href="#">1:1 문의</a>
+    </div>
+
+    <div class="banner">
+      <img src="../assets/images/banner-face.png" alt="배너" />
+    </div>
+
+  </div>
+
+</div>

@@ -12,9 +12,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
-<body>
+<body data-page="login">
 
-  <header class="header">
+  <div id="header">
   
     <h1 class="logo">ROUNZ</h1>
   
@@ -43,26 +43,28 @@
   
     </div>
   
-  </header>
+  </div>
 
   <main class="login-page">
-
-    <section class="login-content">
-
-      <div class="login-title">
-
-        <h2>
-          Find the Frame<br>
-          that fits your style.
-        </h2>
-
-        <p>
-          당신에게 가장 잘 어울리는 안경을 찾아보세요.
-        </p>
-
-      </div>
-
-      <form class="login-form">
+  
+    <div class="login-layout">
+  
+      <section class="login-content">
+  
+        <div class="login-title">
+  
+          <h2>
+            Find the Frame<br>
+            that fits your style.
+          </h2>
+  
+          <p>
+            당신에게 가장 잘 어울리는 안경을 찾아보세요.
+          </p>
+  
+        </div>
+  
+        <form class="login-form">
 
         <div class="form-group">
 
@@ -158,9 +160,13 @@
 
      </section>
       
+      
+      </div>
      </main>
 
-  <script src="./js/auth.js"></script>
+    <div id="footer"></div>
+    
+    <script type="module" src="./js/main.js"></script>
 
 </body>
 
