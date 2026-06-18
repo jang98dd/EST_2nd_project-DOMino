@@ -1,4 +1,11 @@
 import { fetchProducts } from "../modules/fetchRender.js";
+import { 
+  addToCart, 
+  toggleWishlist, 
+  isProductLiked, 
+  updateCartCount, 
+  updateWishlistCount 
+} from "../utils/storage.js"; 
 
 const state = {
   products: [],
@@ -84,6 +91,10 @@ async function init() {
   bindChipEvents();
   bindBottomSheetFilters();
   bindSidebarFilters();
+
+  updateCartCount();
+  updateWishlistCount();
+
   state.isLoading = true;
   updateView();
   
@@ -362,6 +373,9 @@ function createProductCard(product) {
     ? `${product.price.toLocaleString()}원` 
     : product.price;
 
+  const isLiked = isProductLiked(product.id);
+  const iconText = isLiked ? "favorite" : "favorite_border";
+
   return `
     <article class="product-card" style="position: relative; cursor: pointer;">
       <a href="../product-detail.html?id=${product.id}" 
@@ -370,11 +384,20 @@ function createProductCard(product) {
       </a>
       <div class="product-card__thumb">
         <img src="${product.thumbnail}" alt="${product.title}" />
+        
         <button class="btn-like btn--utility-sm"
-          aria-pressed="false"
+          data-id="${product.id}"
+          aria-pressed="${isLiked}"
           aria-label="찜하기">
-          <span class="material-icons">favorite_border</span>
+          <span class="material-icons">${iconText}</span>
         </button>
+
+        <button class="btn-cart btn--utility-sm" 
+          data-id="${product.id}" 
+          aria-label="장바구니 담기">
+          <span class="material-icons">shopping_cart</span>
+        </button>
+
         <a href="../fitting-and-analysis.html?id=${product.id}" 
            class="btn-fit btn--utility-sm" data-id="${product.id}">
           착용하기
@@ -386,7 +409,6 @@ function createProductCard(product) {
     </article>
   `;
 }
-
 function createSkeletonCard() {
   return `
     <article class="product-card skeleton-card">
@@ -410,15 +432,34 @@ function initProductCardClicks() {
   productCards.addEventListener("click", (e) => {
     const likeBtn = e.target.closest(".btn-like");
     if (likeBtn) {
-      const icon = likeBtn.querySelector(".material-icons");
-      const isLiked = likeBtn.getAttribute("aria-pressed") === "true";
-      likeBtn.setAttribute("aria-pressed", String(!isLiked));
-      if (icon) icon.textContent = isLiked ? "favorite_border" : "favorite";
+      e.stopPropagation(); 
+      const productId = likeBtn.dataset.id; 
+      const productData = state.baseProducts.find(p => String(p.id) === String(productId));
+      
+      if (productData) {
+        const isLiked = toggleWishlist(productData); 
+        likeBtn.setAttribute("aria-pressed", String(isLiked));
+        const icon = likeBtn.querySelector(".material-icons");
+        if (icon) icon.textContent = isLiked ? "favorite" : "favorite_border";
+      }
       return; 
+    }
+    const cartBtn = e.target.closest(".btn-cart");
+    if (cartBtn) {
+      e.stopPropagation(); 
+      const productId = cartBtn.dataset.id;
+      const productData = state.baseProducts.find(p => String(p.id) === String(productId));
+
+      if (productData) {
+        addToCart(productData, 1); 
+        alert(`${productData.title}\n상품이 장바구니에 담겼습니다.`);
+      }
+      return;
     }
     const fitBtn = e.target.closest(".btn-fit");
     if (fitBtn) {
       e.preventDefault();
+      e.stopPropagation();
       const glassesId = fitBtn.dataset.id; 
       localStorage.setItem('selectedGlasses', glassesId);
       window.location.href = fitBtn.href || `../fitting-and-analysis.html?id=${glassesId}`; 

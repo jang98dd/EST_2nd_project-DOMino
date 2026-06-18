@@ -394,7 +394,9 @@
   margin: 0 0 16px;
   padding-left: 16px;
   color: var(--black);
+  font-size: var(--font-28);
   font-weight: normal;
+  line-height: var(--lh-tight);
 }
 
 /* 부제 */
@@ -688,9 +690,6 @@
 .store__title {
   margin: 0 0 8px;
   color: var(--black);
-  font-size: var(--font-28);
-  font-weight: 700;
-  line-height: var(--lh-tight);
 }
 
 .store__desc {
@@ -703,10 +702,6 @@
 .store__link {
   display: inline-block;
   color: var(--black);
-  font-size: var(--font-18);
-  font-weight: normal;
-  line-height: 1.3;
-  text-decoration: underline;
 }
 
 /* 반응형 */
@@ -750,7 +745,6 @@
     font-size: var(--font-16); /* 16 */
     font-weight: 400; /* Regular */
     line-height: 1.25; /* 125% */
-    letter-spacing: -0.025em; /* -2.5% */
   }
   .category__grid {
     grid-template-columns: repeat(4, 1fr);
@@ -769,18 +763,11 @@
     grid-column: 4;
     grid-row: 3;
   }
-  /* 라벨 / KIDS / 안경테보기 */
-  .category__label,
-  .category__kids,
-  .category__viewall {
-    letter-spacing: -0.025em;
-  }
   /* 얼굴형분석 / 안경써보기 */
   .category__cta-btn {
     font-size: var(--font-18);
     font-weight: 700;
     line-height: var(--lh-loose);
-    letter-spacing: -0.025em;
   }
 
   /* 3. BEST PICK */
@@ -797,7 +784,6 @@
     font-size: var(--font-56); /* 56 */
     font-weight: 300; /* Light */
     line-height: 1.14; /* 114% */
-    letter-spacing: -0.025em; /* -2.5% */
   }
   .best-pick__subtitle {
     display: block;
@@ -805,7 +791,6 @@
     font-size: var(--font-16); /* 16 */
     font-weight: 400; /* Regular */
     line-height: 1.25; /* 125% */
-    letter-spacing: -0.025em;
   }
 
   /* .page 패딩 제거 → 요소별로 좌우 간격 따로 지정 */
@@ -848,7 +833,6 @@
     font-size: var(--font-16);
     font-weight: 400;
     line-height: 1.25;
-    letter-spacing: -0.025em;
   }
 
   /* 더보기 → 제니 섹션 헤더 36 */
@@ -862,7 +846,6 @@
     height: 56px;
     font-size: var(--font-28);
     line-height: var(--lh-tight);
-    letter-spacing: -0.025em;
   }
   /* 대표 이미지 768×456 */
   .collection__signature img {
@@ -889,7 +872,6 @@
     font-size: var(--font-16);
     font-weight: 400;
     line-height: 1.25;
-    letter-spacing: -0.025em;
   }
   /* 더보기 → More Collection 헤더 56 */
   .collection + .more-collection {
@@ -902,7 +884,6 @@
     height: 56px;
     font-size: var(--font-28);
     line-height: var(--lh-tight);
-    letter-spacing: -0.025em;
   }
   /* 셀럽 이미지 캐러셀 */
   .more-collection__celebs .swiper-slide {
@@ -934,7 +915,6 @@
     font-size: var(--font-16);
     font-weight: 400;
     line-height: 1.25;
-    letter-spacing: -0.025em;
   }
   /* 더보기 → Event 헤더 56 */
   .more-collection + .event {
@@ -947,7 +927,6 @@
     height: 56px;
     font-size: var(--font-28);
     line-height: var(--lh-tight);
-    letter-spacing: -0.025em;
   }
   /* 배너 이미지 768×592 */
   .event__banner img {
@@ -960,11 +939,6 @@
   /* 제목 */
   .event__title {
     margin-top: 24px;
-    letter-spacing: -0.025em;
-  }
-  /* 설명 */
-  .event__desc {
-    letter-spacing: -0.025em;
   }
   /* 더 보기 */
   .event .btn-more {
@@ -974,7 +948,6 @@
     font-size: var(--font-16);
     font-weight: 400;
     line-height: 1.25;
-    letter-spacing: -0.025em;
   }
   /* 더보기 → Store 헤더 56 */
   .event + .store {
@@ -987,7 +960,6 @@
     height: 56px;
     font-size: var(--font-28);
     line-height: var(--lh-tight);
-    letter-spacing: -0.025em;
   }
   /* 매장 이미지 768×436 */
   .store__image img {
@@ -1009,17 +981,14 @@
   /* 제목 */
   .store__title {
     margin: 0 0 16px;
-    letter-spacing: -0.025em;
   }
   /* 설명 */
   .store__desc {
     margin: 0 0 16px;
-    letter-spacing: -0.025em;
   }
   /* 링크 */
   .store__link {
     line-height: 1.35;
-    letter-spacing: -0.025em;
   }
   /* 블록 사이 구분선 */
   .store__block + .store__block {
@@ -1088,7 +1057,6 @@
   /* 제목 */
   .category__title {
     margin-bottom: 4px;
-    letter-spacing: -0.025em;
   }
   /* 부제 → 그리드 22 */
   .category__subtitle {
@@ -1441,7 +1409,6 @@
   /* 제목 볼드 36 122% / 제목→설명 8 */
   .store__title {
     margin: 0 0 8px;
-    line-height: 1.22;
   }
   /* 설명 레귤러 18 155% / 설명→링크 8 */
   .store__desc {
