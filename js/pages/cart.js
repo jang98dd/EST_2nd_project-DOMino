@@ -35,10 +35,10 @@ function renderCart() {
     <div class="product-card" data-id="${item.id}">
       <input class="product-checkbox" type="checkbox" ${selectedIds.has(item.id) ? 'checked' : ''} />
       <div class="product-image">
-        <img src="${item.image}" alt="${item.name}" />
+        <img src="${item.thumbnail}" alt="${item.title}" />
       </div>
       <div class="product-details">
-        <p class="product-description">${item.name}</p>
+        <p class="product-description">${item.title}</p>
         <span class="product-price">${item.price}</span>
         <div class="quantity-controls">
           <button class="qty-btn qty-decrease" aria-label="수량 감소">−</button>
@@ -46,7 +46,7 @@ function renderCart() {
           <button class="qty-btn qty-increase" aria-label="수량 증가">+</button>
         </div>
       </div>
-      <button class="product-remove" aria-label="${item.name} 삭제">×</button>
+      <button class="product-remove" aria-label="${item.title} 삭제">×</button>
     </div>
   `,
     )
@@ -73,9 +73,9 @@ function updateTotalAmount() {
   } else {
     SHIPPING_COST = 3000;
   }
-  shippingEl.textContent = SHIPPING_COST;
-  subtotalEl.textContent = subtotal;
-  totalEl.textContent = subtotal+SHIPPING_COST;
+  shippingEl.textContent = SHIPPING_COST.toLocaleString('ko-KR') + '원';
+  subtotalEl.textContent = subtotal.toLocaleString('ko-KR') + '원';
+  totalEl.textContent = (subtotal + SHIPPING_COST).toLocaleString('ko-KR') + '원';
   if (checkoutBtn) {checkoutBtn.disabled = cart.length === 0;}
   
 
@@ -94,7 +94,7 @@ function getCheckboxes() {
 function getCheckedIds() {
   return getCheckboxes()
     .filter(cb => cb.checked)
-    .map(cb => Number(cb.closest('.product-card').dataset.id));
+    .map(cb => cb.closest('.product-card').dataset.id);
 }
 
 
@@ -102,8 +102,8 @@ function getCheckedIds() {
 productsList.addEventListener('click', e => {
   const card = e.target.closest('.product-card');
   if (!card) return;
-  const id = Number(card.dataset.id);
-  const item = cart.find(i => i.id === id);
+  const id = card.dataset.id;
+  const item = cart.find(i => String(i.id) === id);
 
   if (e.target.closest('.qty-decrease')) {
     if (item.qty > 1) {
@@ -122,7 +122,7 @@ productsList.addEventListener('click', e => {
   }
 
   if (e.target.closest('.product-remove')) {
-    cart = cart.filter(i => i.id !== id);
+    cart = cart.filter(i => String(i.id) !== id);
     selectedIds.delete(id);
     saveCart();
     renderCart();
@@ -147,7 +147,7 @@ selectAllCheckbox.addEventListener('change', e => {
 deleteSelectedBtn.addEventListener('click', () => {
   const checkedIds = getCheckedIds();
   if (checkedIds.length === 0) return;
-  cart = cart.filter(item => !checkedIds.includes(item.id));
+  cart = cart.filter(item => !checkedIds.includes(String(item.id)));
   selectedIds.clear();
   saveCart();
   renderCart();
