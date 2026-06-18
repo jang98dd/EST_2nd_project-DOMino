@@ -288,20 +288,34 @@
 .btn--filter.is-active {
   display: block;
 }
-/* TYPOGRAPHY */
-.font-body-sm {
-  font-size: var(--font-14);
-  line-height: var(--lh-normal);
-}
+/* ============================================
+   TYPOGRAPHY (Mobile First → Desktop)
+   ※ 자간 -2.5%는 페이지 전역 규칙(* letter-spacing)에서 처리
+============================================ */
+.text-base            { font-weight: 400; font-size: 1.75rem;  line-height: 1.15; } /* 28 */
 
-.font-body-lg {
-  font-size: var(--font-18);
-  line-height: var(--lh-normal);
-}
+.heading-xl           { font-weight: 700; font-size: 1.75rem;  line-height: 1.15; } /* 28 */
+.heading-md           { font-weight: 700; font-size: 1.125rem; line-height: 1.5; }  /* 18 */
 
-.font-h1 {
-  font-size: var(--font-28);
-  line-height: var(--lh-tight);
+.body-lg              { font-weight: 400; font-size: 1.125rem; line-height: 1.35; } /* 18 */
+.body-md              { font-weight: 400; font-size: 1rem;     line-height: 1.25; } /* 16 */
+.body-sm              { font-weight: 400; font-size: 0.875rem; line-height: 1.15; } /* 14 */
+.body-sm-bold         { font-weight: 700; font-size: 0.875rem; line-height: 1.4; }  /* 14 */
+.body-sm-bold--tight  { font-weight: 700; font-size: 0.875rem; line-height: 1; }    /* 14 */
+
+.caption              { font-weight: 700; font-size: 0.75rem;  line-height: 1.35; } /* 12 */
+
+.link                 { font-weight: 400; font-size: 1.125rem; line-height: 1.35; text-decoration: underline; } /* 18 */
+
+@media (min-width: 1200px) {
+  .display            { font-weight: 300; font-size: 3.5rem;   line-height: 1.14; } /* 56 */
+  .heading-xl         { font-weight: 700; font-size: 2.25rem;  line-height: 1.22; } /* 36 */
+  .heading-lg         { font-weight: 700; font-size: 1.75rem;  line-height: 1.28; } /* 28 */
+  .heading-md         { font-weight: 700; font-size: 1.25rem;  line-height: 1.4; }  /* 20 */
+  .body-lg            { font-weight: 400; font-size: 1.125rem; line-height: 1.55; } /* 18 */
+  .body-lg-bold       { font-weight: 700; font-size: 1rem;     line-height: 1.5; }  /* 16 */
+  .body-md            { font-weight: 400; font-size: 1rem;     line-height: 1.5; }  /* 16 */
+  .link               { font-weight: 400; font-size: 1.125rem; line-height: 1.55; text-decoration: underline; } /* 18 */
 }
 
 /* BUTTON SYSTEM */

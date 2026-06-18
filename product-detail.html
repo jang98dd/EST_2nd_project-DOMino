@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ROUNZ - Product Detail</title>
-
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/normalize.css" />
     <link rel="stylesheet" href="styles/common.css" />
@@ -14,7 +13,6 @@
       rel="stylesheet"
     />
   </head>
-
   <body>
     <div class="app">
       <header class="header" role="banner">
@@ -30,7 +28,11 @@
               <span class="material-icons" aria-hidden="true">search</span>
             </button>
 
-            <button type="button" class="icon-btn" aria-label="장바구니">
+            <button
+              type="button"
+              class="icon-btn"
+              aria-label="장바구니, 현재 1개 상품"
+            >
               <span class="material-icons" aria-hidden="true"
                 >shopping_bag</span
               >
@@ -62,105 +64,133 @@
               >
             </button>
 
-            <h2 class="page-title">EYEGLASSES</h2>
-            <button type="button" class="btn-like" aria-label="찜 하기">
-              <span class="material-icons" aria-hidden="true">favorite</span>
-            </button>
+            <h2 class="page-title"></h2>
+
             <div class="page-header__spacer" aria-hidden="true"></div>
           </nav>
           <section class="product-layout">
-            
             <div class="media">
-              <img id="mainImage" class="main-img" src="images/product-main.jpg" alt="상품 이미지" />
-              <div id="thumbList" class="thumb-list"></div>
+              <div class="indicator-container" id="indicatorBar">
+                <div class="indicator-bar active"></div>
+                <div class="indicator-bar"></div>
+                <div class="indicator-bar"></div>
+              </div>
+              <div class="main-img-wrapper" id="mainSlider">
+                <div class="main-img"></div>
+                <div class="main-img"></div>
+                <div class="main-img"></div>
+              </div>
+              <div class="thumb-list" id="thumbList">
+                <div class="thumb-img"></div>
+                <div class="thumb-img"></div>
+                <div class="thumb-img"></div>
+              </div>
             </div>
-            
+
             <div class="info">
               <div class="top-info">
                 <p id="brand">ROUNZ</p>
-                <h1 id="title">RZ-193 Black</h1>
+                <h1 id="title">RZ-193</h1>
+                <div class="rating-wrapper">
+                  <span class="stars">★★★★★</span>
+                  <span class="review-count">(130)</span>
+                </div>
                 <div class="price" id="price">129,000원</div>
               </div>
-              
+
               <div class="options">
                 <div class="option-block">
-                  <h4>Color</h4>
-                  <div id="colors" class="colors"></div>
-                </div>
-
-                <div class="option-block">
-                  <h4>Size</h4>
-                  <button id="sizeBtn" class="select-btn">
-                    <span id="sizeText">사이즈 선택</span>
-                    <span class="material-icons">expand_more</span>
-                  </button>
-                  <ul id="sizeList" class="size-list hidden"></ul>
-                </div>
-
-                <div class="option-block">
-                  <h4>Quantity</h4>
-                  <div class="qty">
-                    <button class="btn-qty" id="minus">-</button>
-                    <input id="qty" value="1" readonly />
-                    <button class="btn-qty" id="plus">+</button>
+                  <h4>색상 선택</h4>
+                  <div class="colors" id="colorList">
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
                   </div>
                 </div>
               </div>
 
-              <div class="total">
-                <span>총 금액</span>
-                <strong id="totalPrice">129,000원</strong>
-              </div>
-
               <div class="actions">
-                <button class="btn-like-outline"><span class="material-icons">favorite_border</span></button>
+                <button class="btn-like-outline">
+                  <span class="material-icons">favorite_border</span>
+                </button>
                 <button class="cart">장바구니 담기</button>
                 <button class="buy">바로 구매하기</button>
               </div>
             </div>
-            
-            <div class="recommend-box">
-              <h3>얼굴형 추천</h3>
-              <div class="fitting-content">
-                <div class="match-accordion">
-                  <button type="button" class="match-btn" aria-expanded="false" aria-controls="matchPanel">
-                    <span class="match-title">왜 잘 어울릴까요?</span>
+
+            <div class="fitting-recommend-box">
+              <div class="recommend-box">
+                <h4>얼굴형 추천</h4>
+
+                <div class="chip-container">
+                  <span class="face-chip" id="faceShapeChip">Loading...</span>
+                </div>
+
+                <div class="recommend-accordion">
+                  <button type="button" class="rec-acc-btn" id="recAccBtn">
+                    <span>왜 잘 어울리나요?</span>
                     <span class="material-icons arrow-icon">expand_more</span>
                   </button>
-
-                  <div id="matchPanel" class="match-panel hidden" role="region">
-                    <div class="match-content">
-                      <p class="highlight-text"></p>
-                      <p class="description">
-                      </p>
-                    </div>
+                  <div class="rec-panel" id="recPanel">
+                    <p id="recPanelText">설명을 불러오는 중입니다.</p>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            <div class="fitting-box">
-              <h3>가상 피팅</h3>
-              <p>내 얼굴에 가상으로 착용해보세요.</p>
-              <button class="btn--cta-lg">가상 피팅 시작</button>
+              <div class="fitting-box">
+                <h4>가상 피팅</h4>
+                <p>내 얼굴에 가상으로 착용해보세요</p>
+                <button class="btn--cta-lg">가상 피팅 시작</button>
+              </div>
             </div>
 
             <div class="accordion">
-              <button class="acc-btn">상세정보</button>
-              <div class="panel">디자인 설명 및 상세 스펙 영역입니다.</div>
+              <button class="acc-btn">상품 정보</button>
+              <div class="panel" id="infoPanel">내용을 불러오는 중입니다.</div>
 
-              <button class="acc-btn">리뷰</button>
-              <div class="panel hidden" id="reviews">등록된 리뷰가 없습니다.</div>
+              <button class="acc-btn">사이즈 가이드</button>
+              <div class="panel" id="sizePanel">내용을 불러오는 중입니다.</div>
 
-              <button class="acc-btn">배송/교환</button>
-              <div class="panel hidden">배송 및 교환/반품 안내 정보입니다.</div>
+              <button class="acc-btn" id="reviewTabBtn">
+                리뷰 (<span id="tabReviewCount">0</span>)
+              </button>
+              <div class="panel" id="reviewPanel">
+                내용을 불러오는 중입니다.
+              </div>
+
+              <button class="acc-btn">배송/교환/환불</button>
+              <div class="panel" id="deliveryPanel">
+                내용을 불러오는 중입니다.
+              </div>
             </div>
-
+            <div class="recommend-box-bottom">
+              <h3>이 상품을 본 고객이 함께 본 상품</h3>
+              <div class="slider-wrapper" id="recommendSlider">
+                <div class="recommend-item">
+                  <img src="" alt="" />
+                  <p>추천 상품 1</p>
+                </div>
+                <div class="recommend-item">
+                  <img src="" alt="" />
+                  <p>추천 상품 2</p>
+                </div>
+                <div class="recommend-item">
+                  <img src="" alt="" />
+                  <p>추천 상품 3</p>
+                </div>
+                <div class="recommend-item">
+                  <img src="" alt="" />
+                  <p>추천 상품 4</p>
+                </div>
+                <div class="recommend-item">
+                  <img src="" alt="" />
+                  <p>추천 상품 5</p>
+                </div>
+              </div>
+            </div>
           </section>
         </div>
       </main>
     </div>
-
-    <script src="js/product-detail.js"></script>
+    <script type="module" src="js/pages/productDetail.js"></script>
   </body>
 </html>
