@@ -164,7 +164,7 @@ async function init() {
 init();
 async function loadRecommendations() {
   try {
-    const track = document.querySelector('.recommend-track');
+    const track = document.querySelector('.frame-track');
     if (!track) return; 
 
     const response = await fetch('/data/products.json'); 
@@ -182,20 +182,14 @@ async function loadRecommendations() {
 }
 
 function renderRecommendations(products) {
-  const track = document.querySelector('.recommend-track');
+  const track = document.querySelector('.frame-track');
   if (!track) return;
-
-  track.style.display = 'flex';
-  track.style.overflowX = 'auto';
-  track.style.gap = '16px';
-  track.style.scrollSnapType = 'x mandatory';
-  track.style.paddingBottom = '8px'; 
   track.innerHTML = products.map(product => `
-    <article class="recommend-card" style="flex-shrink: 0; width: 160px; scroll-snap-align: start;">
-      <a href="../product-detail.html?id=${product.id}" style="text-decoration: none; color: inherit; display: block;">
+    <article class="frame-card product-card">
+      <a href="../product-detail.html?id=${product.id}">
         <img src="${product.image || product.thumbnail || ''}" alt="${product.name || product.title}" style="display:block; width:100%; border-radius: 8px;" />
-        <h4 style="margin: 8px 0 4px 0; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${product.name || product.title}</h4>
-        <p style="margin: 0; font-size: 13px; font-weight: bold;">₩${(product.price || 0).toLocaleString()}</p>
+        <h3 class="body-sm">${product.name || product.title}</h3>
+        <p body-sm-bold--tight>₩${(product.price || 0).toLocaleString()}</p>
       </a>
     </article>
   `).join('');

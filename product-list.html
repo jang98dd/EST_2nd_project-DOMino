@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="styles/normalize.css" />
     <link rel="stylesheet" href="styles/common.css" />
     <link rel="stylesheet" href="styles/product-list.css" />
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/footer.css">
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
@@ -17,41 +19,7 @@
 
   <body>
     <div class="app">
-      <header class="header" role="banner">
-        <div class="header__left">
-          <h1 class="header__logo">
-            <a href="/index.html" aria-label="ROUNZ 홈">ROUNZ</a>
-          </h1>
-        </div>
-
-        <div class="header__right">
-          <div class="header__actions">
-            <button type="button" class="icon-btn" aria-label="검색 열기">
-              <span class="material-icons" aria-hidden="true">search</span>
-            </button>
-
-            <button
-              type="button"
-              class="icon-btn"
-              aria-label="장바구니, 현재 1개 상품"
-            >
-              <span class="material-icons" aria-hidden="true"
-                >shopping_bag</span
-              >
-              <span class="cart-badge" aria-hidden="true">1</span>
-            </button>
-
-            <button
-              type="button"
-              class="icon-btn"
-              aria-label="전체 메뉴 열기"
-              aria-expanded="false"
-            >
-              <span class="material-icons" aria-hidden="true">menu</span>
-            </button>
-          </div>
-        </div>
-      </header>
+      <div id="header-root"></div>
       <main class="page page--product-list" role="main">
         <div class="page__inner">
           <nav class="page-header" aria-label="페이지 위치">
@@ -417,19 +385,19 @@
             </div>
           </div>
         </div>
-        <section class="recommend-slider" aria-label="추천 상품">
+        <section class="frame-slider" aria-label="추천 상품">
           <div class="top-border">
-            <div class="recommend-header">
-              <div class="recommend-header__title">
-                <h3 class="recommend-title">함께 보면 좋은 프레임</h3>
+            <div class="frame-header">
+              <div class="frame-header__title">
+                <h3 class="frame-title">함께 보면 좋은 프레임</h3>
               </div>
             </div>
-            <div class="recommend-track">
-              <article class="recommend-card"></article>
+            <div class="frame-track">
+              <article class="frame-card"></article>
 
-              <article class="recommend-card"></article>
-              <article class="recommend-card"></article>
-              <article class="recommend-card"></article>
+              <article class="frame-card"></article>
+              <article class="frame-card"></article>
+              <article class="frame-card"></article>
             </div>
           </div>
         </section>
@@ -695,13 +663,14 @@
               </div>
             </section>
           </div>
-          <footer class="filter-footer">
+          <div class="filter-footer">
             <button class="btn btn--action btn-reset">초기화</button>
             <button class="btn btn--action btn-apply">필터 적용</button>
-          </footer>
+          </div>
         </div>
       </div>
     </div>
     <script type="module" src="./js/pages/productList.js"></script>
+    <script type="module" src="./js/modules/header.js"></script>
   </body>
 </html>
