@@ -1,4 +1,11 @@
 import { fetchProducts } from "../modules/fetchRender.js";
+import { 
+  addToCart, 
+  toggleWishlist, 
+  isProductLiked, 
+  updateCartCount, 
+  updateWishlistCount 
+} from "../utils/storage.js"; 
 
 const state = {
   products: [],
@@ -74,6 +81,27 @@ function bindEvents() {
     });
   });
 }
+function bindTopCategories() {
+  const categoryBtns = document.querySelectorAll('.btn-category');
+  if (!categoryBtns.length) return;
+
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      categoryBtns.forEach(b => b.classList.remove('is-active'));
+      e.currentTarget.classList.add('is-active');
+
+      const selectedCategory = e.currentTarget.dataset.cat;
+      console.log('클릭된 카테고리:', selectedCategory);
+      handleCategoryChange(selectedCategory);
+    });
+  });
+}
+function handleCategoryChange(category) {
+  
+  if (category === 'wishlist') {
+  } else if (category === 'all') {
+  }
+}
 async function init() {
   bindUI();
   initBottomSheet();
@@ -84,6 +112,12 @@ async function init() {
   bindChipEvents();
   bindBottomSheetFilters();
   bindSidebarFilters();
+
+  bindTopCategories()
+
+  updateCartCount();
+  updateWishlistCount();
+
   state.isLoading = true;
   updateView();
   
@@ -130,7 +164,7 @@ async function init() {
 init();
 async function loadRecommendations() {
   try {
-    const track = document.querySelector('.recommend-track');
+    const track = document.querySelector('.frame-track');
     if (!track) return; 
 
     const response = await fetch('/data/products.json'); 
@@ -148,26 +182,24 @@ async function loadRecommendations() {
 }
 
 function renderRecommendations(products) {
-  const track = document.querySelector('.recommend-track');
+  const track = document.querySelector('.frame-track');
   if (!track) return;
-
-  track.style.display = 'flex';
-  track.style.overflowX = 'auto';
-  track.style.gap = '16px';
-  track.style.scrollSnapType = 'x mandatory';
-  track.style.paddingBottom = '8px'; 
   track.innerHTML = products.map(product => `
-    <article class="recommend-card" style="flex-shrink: 0; width: 160px; scroll-snap-align: start;">
-      <a href="../product-detail.html?id=${product.id}" style="text-decoration: none; color: inherit; display: block;">
+    <article class="frame-card product-card">
+      <a href="../product-detail.html?id=${product.id}">
         <img src="${product.image || product.thumbnail || ''}" alt="${product.name || product.title}" style="display:block; width:100%; border-radius: 8px;" />
-        <h4 style="margin: 8px 0 4px 0; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${product.name || product.title}</h4>
-        <p style="margin: 0; font-size: 13px; font-weight: bold;">₩${(product.price || 0).toLocaleString()}</p>
+        <h3 class="body-sm">${product.name || product.title}</h3>
+        <p body-sm-bold--tight>₩${(product.price || 0).toLocaleString()}</p>
       </a>
     </article>
   `).join('');
 }
 
 function updateView() {
+  const displayArea = document.querySelector(".product-display-area");
+  if (displayArea) {
+    displayArea.classList.toggle("is-loading", state.isLoading);
+  }
   if (state.isLoading) {
     if (productCards) {
       productCards.innerHTML = Array.from({ length: 12 })
@@ -362,31 +394,42 @@ function createProductCard(product) {
     ? `${product.price.toLocaleString()}원` 
     : product.price;
 
+  const isLiked = isProductLiked(product.id);
+  const iconText = isLiked ? "favorite" : "favorite_border";
+
   return `
     <article class="product-card" style="position: relative; cursor: pointer;">
       <a href="../product-detail.html?id=${product.id}" 
          class="product-card__main-link" 
-         aria-label="${product.title} 상세 페이지로 이동" style="display:none;">
+         aria-label="${product.title} 상세 페이지로 이동">
       </a>
       <div class="product-card__thumb">
         <img src="${product.thumbnail}" alt="${product.title}" />
+        
         <button class="btn-like btn--utility-sm"
-          aria-pressed="false"
+          data-id="${product.id}"
+          aria-pressed="${isLiked}"
           aria-label="찜하기">
-          <span class="material-icons">favorite_border</span>
+          <span class="material-icons">${iconText}</span>
         </button>
+
+        <button class="btn-cart btn--utility-sm" 
+          data-id="${product.id}" 
+          aria-label="장바구니 담기">
+          <span class="material-icons">shopping_cart</span>
+        </button>
+
         <a href="../fitting-and-analysis.html?id=${product.id}" 
            class="btn-fit btn--utility-sm" data-id="${product.id}">
           착용하기
         </a>
       </div>
-      <p>${product.brand}</p>
-      <h3>${product.title}</h3>
+      <p class="body-sm-bold--tight">${product.brand}</p>
+      <h3 class="body-sm">${product.title}</h3>
       <p class="price">${formattedPrice}</p>
     </article>
   `;
 }
-
 function createSkeletonCard() {
   return `
     <article class="product-card skeleton-card">
@@ -410,15 +453,34 @@ function initProductCardClicks() {
   productCards.addEventListener("click", (e) => {
     const likeBtn = e.target.closest(".btn-like");
     if (likeBtn) {
-      const icon = likeBtn.querySelector(".material-icons");
-      const isLiked = likeBtn.getAttribute("aria-pressed") === "true";
-      likeBtn.setAttribute("aria-pressed", String(!isLiked));
-      if (icon) icon.textContent = isLiked ? "favorite_border" : "favorite";
+      e.stopPropagation(); 
+      const productId = likeBtn.dataset.id; 
+      const productData = state.baseProducts.find(p => String(p.id) === String(productId));
+      
+      if (productData) {
+        const isLiked = toggleWishlist(productData); 
+        likeBtn.setAttribute("aria-pressed", String(isLiked));
+        const icon = likeBtn.querySelector(".material-icons");
+        if (icon) icon.textContent = isLiked ? "favorite" : "favorite_border";
+      }
       return; 
+    }
+    const cartBtn = e.target.closest(".btn-cart");
+    if (cartBtn) {
+      e.stopPropagation(); 
+      const productId = cartBtn.dataset.id;
+      const productData = state.baseProducts.find(p => String(p.id) === String(productId));
+
+      if (productData) {
+        addToCart(productData, 1); 
+        alert(`${productData.title}\n상품이 장바구니에 담겼습니다.`);
+      }
+      return;
     }
     const fitBtn = e.target.closest(".btn-fit");
     if (fitBtn) {
       e.preventDefault();
+      e.stopPropagation();
       const glassesId = fitBtn.dataset.id; 
       localStorage.setItem('selectedGlasses', glassesId);
       window.location.href = fitBtn.href || `../fitting-and-analysis.html?id=${glassesId}`; 

@@ -1,19 +1,29 @@
 import { fetchProducts } from "../modules/fetchRender.js";
+import { 
+  addToCart, 
+  toggleWishlist, 
+  isProductLiked, 
+  updateCartCount, 
+  updateWishlistCount 
+} from "../utils/storage.js";
 
 async function init() {
   const data = await fetchProducts();
 
   const params = new URLSearchParams(location.search);
-  const productId = Number(params.get('id'));
+  const productId = Number(params.get('id')) || 1;
 
   const products = data.products || [];
   const product = products.find(item => item.id === productId);
   
-  if (!product) {
-    console.error("상품 데이터를 불러오지 못했습니다.");
-    return;
-  }
-
+  if (!productId) {
+  alert("올바르지 않은 접근입니다. 상품 목록으로 이동합니다.");
+  window.location.href = "./product-list.html"; 
+  return;
+}
+  updateCartCount();
+  updateWishlistCount();
+  
   renderProductDetail(product);
   renderRecommendations(products, productId);
   
@@ -195,33 +205,40 @@ function initActions(product) {
   const likeBtn = document.querySelector('.btn-like-outline');
   const cartBtn = document.querySelector('.actions .cart');
   const buyBtn = document.querySelector('.actions .buy');
-  const cartBadge = document.querySelector('.cart-badge');
   
   const productTitle = product.title || product.name || '선택 상품';
   if (likeBtn) {
-    likeBtn.addEventListener('click', () => {
-      const icon = likeBtn.querySelector('.material-icons');
-      if (!icon) return;
+    const icon = likeBtn.querySelector('.material-icons');
+    const isLiked = isProductLiked(product.id);
+    if (isLiked) {
+      likeBtn.classList.add('liked');
+      if (icon) icon.textContent = 'favorite';
+    }
 
-      const isLiked = likeBtn.classList.contains('liked');
+    // [클릭 이벤트]
+    likeBtn.addEventListener('click', () => {
+      if (!icon) return;
+      const currentLikedState = toggleWishlist(product); 
       
-      if (isLiked) {
+      if (currentLikedState) {
+        likeBtn.classList.add('liked');
+        icon.textContent = 'favorite';
+        alert('❤️ 상품을 찜 리스트에 추가했습니다!');
+      } else {
         likeBtn.classList.remove('liked');
         icon.textContent = 'favorite_border';
         alert('❤️ 찜한 상품에서 제외했습니다.');
-      } else {
-        likeBtn.classList.add('liked');
-        icon.textContent = 'favorite'; 
-        alert('❤️ 상품을 찜 리스트에 추가했습니다!');
       }
+      
+      updateWishlistCount();
     });
   }
+
   if (cartBtn) {
     cartBtn.addEventListener('click', () => {
-      if (cartBadge) {
-        let currentCount = parseInt(cartBadge.textContent) || 0;
-        cartBadge.textContent = currentCount + 1;
-      }
+      addToCart(product, 1);
+      updateCartCount();
+      
       alert(`🛒 [${productTitle}] 상품이 장바구니에 담겼습니다.`);
     });
   }
@@ -235,7 +252,6 @@ function initActions(product) {
     });
   }
 }
-
 function renderRecommendations(products, currentProductId) {
   const recommendSlider = document.getElementById('recommendSlider');
   if (!recommendSlider) return;
@@ -258,7 +274,7 @@ function renderRecommendations(products, currentProductId) {
   recommendSlider.innerHTML = itemsHtml;
   recommendSlider.addEventListener('click', (e) => {
     const moreItem = e.target.closest('.recommend-item--more');
-    if (moreItem) { window.location.href = './index.html'; return; }
+    if (moreItem) { window.location.href = './product-list.html'; return; }
     const item = e.target.closest('.recommend-item');
     if (item && item.dataset.id) { window.location.search = `?id=${item.dataset.id}`; }
   });
@@ -316,7 +332,7 @@ function initAccordionTabs() {
 
 function initNavigation(product) {
   const fittingBtn = document.querySelector('.fitting-box .btn--cta-lg');
-  if (fittingBtn) fittingBtn.addEventListener('click', () => { window.location.href = `./fitting.html?id=${product.id}`; });
+  if (fittingBtn) fittingBtn.addEventListener('click', () => { window.location.href = `./fitting-and-analysis.html?id=${product.id}`; });
 }
 
 function initRecommendBox() {
