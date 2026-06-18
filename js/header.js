@@ -1,9 +1,3 @@
-const searchBtn =
-document.querySelectorAll(".icon-btn")[0];
-
-const cartBtn =
-document.querySelectorAll(".icon-btn")[1];
-
 const menuBtn =
 document.querySelector(".menu-btn");
 
@@ -13,53 +7,59 @@ document.querySelector(".nav-mobile");
 const tabletNav =
 document.querySelector(".tablet-nav");
 
-
-menuBtn?.addEventListener("click", () => {
-
-  console.log("메뉴 열기");
-
-});
+const closeBtns =
+document.querySelectorAll(".nav-close");
 
 
-searchBtn?.addEventListener("click", () => {
-
-  console.log("검색");
-
-});
-
-
-cartBtn?.addEventListener("click", () => {
-
-  console.log("장바구니");
-
-});
-
-menuBtn.addEventListener("click",()=>{
+menuBtn?.addEventListener("click",()=>{
 
   if(window.innerWidth < 768){
 
-    mobileNav.classList.add("active");
+    mobileNav?.classList.add("active");
 
   }else if(window.innerWidth < 1200){
 
-    tabletNav.classList.add("active");
+    tabletNav?.classList.add("active");
 
   }
 
 });
 
-document
-.querySelectorAll(".nav-close")
-.forEach(btn=>{
+closeBtns.forEach(btn => {
 
   btn.addEventListener("click",()=>{
 
     mobileNav?.classList.remove("active");
+
     tabletNav?.classList.remove("active");
 
   });
 
 });
+
+
+document
+.querySelectorAll(".has-sub button")
+.forEach(btn=>{
+
+  btn.addEventListener("click",()=>{
+
+    const subMenu =
+      btn.nextElementSibling;
+
+    if(!subMenu) return;
+
+    subMenu.style.display =
+      subMenu.style.display === "block"
+      ? "none"
+      : "block";
+
+  });
+
+});
+
+const header =
+document.querySelector(".header");
 
 const desktopNav =
 document.querySelector(".desktop-nav");
@@ -67,13 +67,14 @@ document.querySelector(".desktop-nav");
 const gnbItems =
 document.querySelectorAll(".gnb__list li");
 
+
 gnbItems.forEach(item=>{
 
   item.addEventListener("mouseenter",()=>{
 
     if(window.innerWidth >= 1200){
 
-      desktopNav.classList.add("active");
+      desktopNav?.classList.add("active");
 
     }
 
@@ -81,8 +82,34 @@ gnbItems.forEach(item=>{
 
 });
 
-desktopNav.addEventListener("mouseleave",()=>{
+header?.addEventListener("mouseenter",()=>{
+
+  if(window.innerWidth >= 1200){
+
+    desktopNav?.classList.add("active");
+
+  }
+
+});
+
+desktopNav?.addEventListener("mouseenter",()=>{
+
+  desktopNav.classList.add("active");
+
+});
+
+desktopNav?.addEventListener("mouseleave",()=>{
 
   desktopNav.classList.remove("active");
+
+});
+
+header?.addEventListener("mouseleave",()=>{
+
+  if(desktopNav && !desktopNav.matches(":hover")){
+
+    desktopNav?.classList.remove("active");
+
+  }
 
 });
