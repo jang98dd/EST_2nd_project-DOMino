@@ -1,63 +1,295 @@
-<main class="auth auth--signup">
+<!DOCTYPE html>
 
-  <section class="auth__intro">
-    ...
-  </section>
+<html lang="ko">
 
-  <section class="auth__form">
+<head>
 
-    <form id="signupForm">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <div class="form-group">
+  <title>회원가입</title>
 
-        <label>이름 *</label>
+  <link rel="stylesheet" href="./styles/reset.css">
+  <link rel="stylesheet" href="./styles/normalize.css">
+  <link rel="stylesheet" href="./styles/common.css">
+  
+  <link rel="stylesheet" href="./styles/header.css">
+  <link rel="stylesheet" href="./styles/auth-signup.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-        <input type="text">
+</head>
 
-      </div>
+<body>
 
-      <div class="form-group">
+  <header class="header">
 
-        <label>이메일 *</label>
+    <div class="logo">ROUNZ</div>
 
-        <input id="email">
+    <nav class="gnb">
+      <a href="#">상품</a>
+      <a href="#">가상피팅</a>
+      <a href="#">분석</a>
+      <a href="#">브랜드</a>
+      <a href="#">이벤트</a>
+      <a href="#">고객지원</a>
+    </nav>
 
-        <p class="error-message">
-          이메일은 반드시 @를 포함하여 작성하시오
+    <div class="header-icons">
+
+      <span class="material-symbols-outlined">
+        search
+      </span>
+      
+      <span class="material-symbols-outlined">
+        shopping_bag
+      </span>
+      
+      <span class="material-symbols-outlined">
+        menu
+      </span>
+
+    </div>
+
+  </header>
+
+  <main class="auth auth--signup">
+
+    <div class="auth__content">
+
+      <section class="auth__intro">
+
+        <h1>
+          Find the Frame<br>
+          that fits your style.
+        </h1>
+
+        <p>
+          당신에게 가장 잘 어울리는 안경을 찾아보세요.
         </p>
 
-      </div>
+      </section>
 
-      <div class="form-group">
+      <section class="auth__form">
 
-        <label>비밀번호 *</label>
+        <form class="signup-form" id="signupForm">
 
-        <input id="password">
+          <div class="form-group">
+          
+            <label>회원구분 *</label>
+          
+            <div class="radio-group">
+          
+              <label>
+                <input type="radio" name="memberType" value="local">
+                개인회원
+              </label>
+          
+              <label>
+                <input type="radio" name="memberType" value="foreigner">
+                외국인회원(foreigner)
+              </label>
+          
+            </div>
+          
+          </div>
+          
+          <div class="form-group">
+          
+            <label>회원인증 *</label>
+            
+            <div class="radio-group">
+          
+              <label>
+                <input type="radio" name="verifyType" value="email">
+                이메일 인증
+              </label>
 
-        <p class="error-message">
-          사용자 이름을 포함해서 작성하지 마시오
-        </p>
+            </div>
 
-      </div>
+            <p class="verify-desc">
+              기본정보 > 이메일 항목에 입력하신 정보로 본인인증을 진행합니다.<br>
+              회원가입 후 입력하신 이메일 주소로 인증 메일이 발송되오니,
+              확인해 주시기 바랍니다.
+            </p>
+          
+          </div>
 
-      <div class="form-group">
 
-        <label>비밀번호 확인 *</label>
+          <div class="signup-grid">
 
-        <input id="passwordCheck">
+            <div class="form-group">
 
-        <p class="error-message">
-          위의 비밀번호와 동일하게 작성하시오
-        </p>
+              <label for="name">
+                이름 *
+              </label>
 
-      </div>
+              <input id="name" type="text" placeholder="이름을 입력해주세요">
 
-      <button class="btn-black">
-        회원가입
-      </button>
+            </div>
 
-    </form>
+            <div class="form-group">
+            
+              <label>
+                휴대폰 번호 *
+              </label>
+            
+              <div class="phone-group">
+            
+                <select class="phone-prefix">
+                  <option>010</option>
+                  <option>011</option>
+                </select>
+            
+                <input type="tel" placeholder="'-' 없이 입력해주세요">
+            
+              </div>
+            
+            </div>
 
-  </section>
+            <div class="form-group">
 
-</main>
+              <label for="email">
+                이메일 *
+              </label>
+
+              <input id="email" type="email" placeholder="이메일을 입력해주세요">
+
+              <p class="error-message"></p>
+              
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="birth">
+                생년월일 *
+              </label>
+
+              <input id="datepicker" 
+              class="datepicker" 
+              type="text" 
+              placeholder="YYYY.MM.DD">
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="password">
+                비밀번호 *
+              </label>
+
+              <div class="password-wrap">
+
+                <input id="password" type="password" placeholder="영문, 숫자, 특수문자 8자 이상">
+
+                <button type="button" class="toggle-password">
+                  👁
+                </button>
+
+              </div>
+
+              <p class="error-message">
+                
+              </p>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>
+                성별 *
+              </label>
+
+              <div class="radio-group">
+
+                <label>
+                  <input type="radio" name="gender">
+                  남성
+                </label>
+
+                <label>
+                  <input type="radio" name="gender">
+                  여성
+                </label>
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="passwordCheck">
+                비밀번호 확인 *
+              </label>
+
+              <div class="password-wrap">
+
+                <input id="passwordCheck" type="password" placeholder="비밀번호를 다시 입력해주세요">
+
+                <button type="button" class="toggle-password">
+                  👁
+                </button>
+
+              </div>
+
+              <p class="error-message">
+              </p>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>
+                마케팅 정보 수신 동의 (선택)
+              </label>
+
+              <div class="check-group">
+
+                <label>
+                  <input type="checkbox">
+                  이벤트 및 혜택 정보 수신 동의
+                </label>
+
+                <label>
+                  <input type="checkbox">
+                  개인정보 수집 및 이용 동의(필수)
+                </label>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <button type="submit" class="btn-black">
+            회원가입
+          </button>
+
+          <p class="login-link">
+
+            이미 계정이 있으신가요?
+
+            <a href="./login.html">
+              로그인
+            </a>
+
+          </p>
+
+        </form>
+
+      </section>
+
+    </div>
+
+
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  
+  <script src="./js/modules/auth.js"></script>
+
+</body>
+</html>
