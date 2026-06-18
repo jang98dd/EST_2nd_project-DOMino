@@ -83,7 +83,12 @@
   </main>
   <footer class="footer">
   </footer>
-
+  <script type="module">
+      import { renderHeader } from "./js/modules/header.js";
+      import { renderFooter } from "./js/modules/footer.js";
+      renderHeader();
+      renderFooter();
+    </script>
   <script type="module" src="js/pages/cart.js"></script>
 </body>
 </html>
