@@ -46,7 +46,6 @@
               class="icon-btn"
               aria-label="전체 메뉴 열기"
               aria-expanded="false"
-              aria-controls="global-nav"
             >
               <span class="material-icons" aria-hidden="true">menu</span>
             </button>
@@ -56,15 +55,14 @@
       <main class="page page--product-list" role="main">
         <div class="page__inner">
           <nav class="page-header" aria-label="페이지 위치">
-            <button
-              type="button"
+            <a href="/index.html"
               class="back-btn"
               aria-label="이전 페이지로 이동"
             >
               <span class="material-icons" aria-hidden="true"
                 >chevron_left</span
               >
-            </button>
+            </a>
 
             <h2 class="page-title">EYEGLASSES</h2>
 
@@ -72,14 +70,255 @@
           </nav>
           <div class="product-layout">
             <aside class="filter-sidebar right-border">
+              <section class="filter-group" aria-label="모양 필터">
+                <h3>모양</h3>
+
+                <ul class="chip-grid" role="group">
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="shape"
+                        value="all"
+                        data-role="all"
+                      />
+                      전체
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="shape"
+                        value="round"
+                      />
+                      라운드
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="shape"
+                        value="square"
+                      />
+                      사각
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="shape"
+                        value="aviator"
+                      />
+                      하금테
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="shape"
+                        value="boeing"
+                      />
+                      보잉
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="shape"
+                        value="goggle"
+                      />
+                      고글
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="shape"
+                        value="cat-eye"
+                      />
+                      캣아이
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="shape"
+                        value="mix"
+                      />
+                      믹스
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="shape"
+                        value="other"
+                      />
+                      기타
+                    </label>
+                  </li>
+                </ul>
+              </section>
+              <section class="filter-group" aria-label="성별 필터">
+                <h3>성별</h3>
+
+                <ul class="chip-grid" role="group">
+                  <li>
+                    <label>
+                      <input
+                        type="radio"
+                        name="gender"
+                        data-gender
+                        value="all"
+                        checked
+                      />
+                      공용
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="radio"
+                        name="gender"
+                        data-gender
+                        value="male"
+                      />
+                      남성
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="radio"
+                        name="gender"
+                        data-gender
+                        value="female"
+                      />
+                      여성
+                    </label>
+                  </li>
+                </ul>
+              </section>
+              <section class="filter-group" aria-label="프레임 크기">
+                <h3>프레임 크기</h3>
+
+                <ul class="chip-grid" role="group">
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="size"
+                        value="all"
+                      />
+                      전체
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="size"
+                        value="S"
+                      />
+                      S
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="size"
+                        value="M"
+                      />
+                      M
+                    </label>
+                  </li>
+
+                  <li>
+                    <label>
+                      <input
+                        type="checkbox"
+                        data-filter-type="size"
+                        value="L"
+                      />
+                      L
+                    </label>
+                  </li>
+                </ul>
+              </section>
               <section class="filter-group" aria-label="색상 필터">
                 <h3>색상</h3>
 
                 <div class="color-grid">
-                  <button class="color-dot" aria-label="검정색 선택"></button>
-                  <button class="color-dot" aria-label="갈색 선택"></button>
-                  <button class="color-dot" aria-label="투명 선택"></button>
-                  <button class="color-dot" aria-label="금색 선택"></button>
+                  <label>
+                    <input
+                      type="checkbox"
+                      data-filter-type="color"
+                      value="all"
+                      hidden
+                      data-role="all"
+                    />
+                    <button type="button" class="custom-btn" aria-label="전체">전체</button>
+                  </label>
+
+                  <label>
+                    <input
+                      type="checkbox"
+                      data-filter-type="color"
+                      value="black"
+                      hidden
+                    />
+                    <button class="color-dot" class="custom-btn" aria-label="검정색"></button>
+                  </label>
+
+                  <label>
+                    <input
+                      type="checkbox"
+                      data-filter-type="color"
+                      value="white"
+                      hidden
+                    />
+                    <button class="color-dot custom-btn" aria-label="흰색"></button>
+                  </label>
+
+                  <label>
+                    <input
+                      type="checkbox"
+                      data-filter-type="color"
+                      value="primary"
+                      hidden
+                    />
+                    <button class="color-dot custom-btn" aria-label="프라이머리"></button>
+                  </label>
+
+                  <label>
+                    <input
+                      type="checkbox"
+                      data-filter-type="color"
+                      value="secondary"
+                    />
+                    <button class="color-dot custom-btn" aria-label="세컨더리"></button>
+                  </label>
                 </div>
               </section>
               <section class="filter-group" aria-label="가격 필터">
@@ -88,15 +327,16 @@
                 <div class="price-filter">
                   <div class="price-current" aria-live="polite">
                     <span>₩0</span>
-                    <span>₩500,000</span>
+                    <span>₩</span>
                   </div>
-
+                  <label for="priceMax" class="sr-only"></label>
                   <input
                     type="range"
+                    id="priceMax"
                     min="0"
-                    max="500000"
+                    max=""
                     step="10000"
-                    value="500000"
+                    value=""
                     aria-label="최대 가격 선택"
                   />
                 </div>
@@ -126,18 +366,10 @@
                     role="listbox"
                     aria-labelledby="sortTrigger"
                   >
-                    <li role="option" tabindex="0" data-sort="popular">
-                      인기순
-                    </li>
-                    <li role="option" tabindex="0" data-sort="newest">
-                      최신순
-                    </li>
-                    <li role="option" tabindex="0" data-sort="priceLow">
-                      낮은가격순
-                    </li>
-                    <li role="option" tabindex="0" data-sort="priceHigh">
-                      높은가격순
-                    </li>
+                    <li role="option" data-sort="popular">인기순</li>
+                    <li role="option" data-sort="newest">최신순</li>
+                    <li role="option" data-sort="priceLow">낮은가격순</li>
+                    <li role="option" data-sort="priceHigh">높은가격순</li>
                   </ul>
                 </div>
 
@@ -145,20 +377,17 @@
                   <span class="sr-only">전체 상품 수</span>
                 </p>
               </section>
+              <div class="active-filters"></div>
               <section class="product-list" aria-label="상품 목록">
                 <h2 class="sr-only">상품 목록</h2>
 
-                <div class="skeleton-list" aria-hidden="true">
-                  <article class="skeleton-card"></article>
-                  <article class="skeleton-card"></article>
-                  <article class="skeleton-card"></article>
-                  <article class="skeleton-card"></article>
+                <div class="product-display-area">
+                  <div
+                    class="product-cards grid grid--2"
+                    aria-live="polite"
+                  ></div>
+                  <div class="pagination"></div>
                 </div>
-
-                <div
-                  class="product-cards grid grid--2"
-                  aria-live="polite"
-                ></div>
               </section>
               <nav class="pagination"></nav>
               <button
@@ -179,16 +408,16 @@
                 <h3 class="recommend-title">함께 보면 좋은 프레임</h3>
                 <p>현재 프레임과 어울리는 추천</p>
               </div>
-              <button class="btn btn--action btn-more btn-more--desktop" aria-label="더 많은 상품 불러오기"
+              <button
+                class="btn btn--action btn-more btn-more--desktop"
+                aria-label="더 많은 상품 불러오기"
               >
                 더 보기
                 <span class="material-icons">chevron_right</span>
               </button>
             </div>
-              <div class="recommend-track">
-              <article class="recommend-card">
-                <img src="..." alt="" />
-              </article>
+            <div class="recommend-track">
+              <article class="recommend-card"></article>
 
               <article class="recommend-card"></article>
               <article class="recommend-card"></article>
@@ -206,17 +435,7 @@
           aria-expanded="false"
         >
           <span class="material-icons" aria-hidden="true">filter_alt</span>
-          필터 (0)
-        </button>
-
-        <button
-          class="btn btn--action btn--filter"
-          type="button"
-          id="openFrameRecommend"
-          aria-label="함께 보면 좋은 프레임 보기"
-        >
-          <img src="assets/icons/frame_round.svg" alt="" aria-hidden="true" />
-          함께 보면 좋은 프레임
+          필터 (<span class="filter-count">0</span>)
         </button>
       </div>
       <div
@@ -224,7 +443,7 @@
         id="filterSheet"
         role="dialog"
         aria-modal="true"
-        aria-hidden="true"
+        hidden
         aria-labelledby="filterTitle"
       >
         <div class="bottom-sheet__backdrop" data-close="filter"></div>
@@ -251,36 +470,84 @@
 
               <ul class="chip-grid" role="group">
                 <li>
-                  <button class="btn-utility" aria-pressed="false">
-                    라운드
+                  <button
+                    class="btn-utility"
+                    data-filter-type="shape"
+                    data-filter-value="round"
+                  >
+                  <img src="./assets/icons/frame_round.svg" alt="라운드 프레임">
+                    <span class="btn-label">라운드</span>
                   </button>
                 </li>
                 <li>
-                  <button class="btn-utility" aria-pressed="false">
-                    스퀘어
+                  <button
+                    class="btn-utility"
+                    data-filter-type="shape"
+                    data-filter-value="square"
+                  >
+                    <img src="./assets/icons/frame_square.svg" alt="스퀘어 프레임">
+                    <span class="btn-label">스퀘어</span>
                   </button>
                 </li>
                 <li>
-                  <button class="btn-utility" aria-pressed="false">보잉</button>
-                </li>
-                <li>
-                  <button class="btn-utility" aria-pressed="false">
-                    하금테
+                  <button
+                    class="btn-utility"
+                    data-filter-type="shape"
+                    data-filter-value="avaitor"
+                  >
+                  <img src="./assets/icons/frame_aviator.svg" alt="하금테 프레임">
+                    <span class="btn-label">하금테</span>
                   </button>
                 </li>
                 <li>
-                  <button class="btn-utility" aria-pressed="false">
-                    캣아이
+                  <button
+                    class="btn-utility"
+                    data-filter-type="shape"
+                    data-filter-value="browine"
+                  >
+                  <img src="./assets/icons/frame_browline.svg" alt="보잉 프레임">
+                    <span class="btn-label">보잉</span>
                   </button>
                 </li>
                 <li>
-                  <button class="btn-utility" aria-pressed="false">고글</button>
+                  <button
+                    class="btn-utility"
+                    data-filter-type="shape"
+                    data-filter-value="goggle"
+                  >
+                  <img src="./assets/icons/frame_goggle.svg" alt="고글 프레임">
+                    <span class="btn-label">고글</span>
+                  </button>
                 </li>
                 <li>
-                  <button class="btn-utility" aria-pressed="false">믹스</button>
+                  <button
+                    class="btn-utility"
+                    data-filter-type="shape"
+                    data-filter-value="cat-eye"
+                  >
+                  <img src="./assets/icons/frame_cat-eye.svg" alt="캣아이 프레임">
+                    <span class="btn-label">캣아이</span>
+                  </button>
                 </li>
                 <li>
-                  <button class="btn-utility" aria-pressed="false">기타</button>
+                  <button
+                    class="btn-utility"
+                    data-filter-type="shape"
+                    data-filter-value="mix"
+                  >
+                  <img src="./assets/icons/frame_mix.svg" alt="믹스 프레임">
+                    <span class="btn-label">믹스</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="btn-utility"
+                    data-filter-type="shape"
+                    data-filter-value="other"
+                  >
+                  <img src="./assets/icons/frame_other.svg" alt="기타 프레임">
+                    <span class="btn-label">기타</span>
+                  </button>
                 </li>
               </ul>
             </section>
@@ -288,32 +555,94 @@
               <h3>성별</h3>
               <ul class="chip-grid" role="group">
                 <li>
-                  <button class="btn-utility" aria-pressed="true">공용</button>
+                  <button
+                    class="btn-utility"
+                    data-gender="all"
+                    aria-pressed="true"
+                  >
+                    공용
+                  </button>
                 </li>
                 <li>
-                  <button class="btn-utility" aria-pressed="false">남성</button>
+                  <button
+                    class="btn-utility"
+                    data-gender="male"
+                    aria-pressed="false"
+                  >
+                    남성
+                  </button>
                 </li>
                 <li>
-                  <button class="btn-utility" aria-pressed="false">여성</button>
+                  <button
+                    class="btn-utility"
+                    data-gender="female"
+                    aria-pressed="false"
+                  >
+                    여성
+                  </button>
                 </li>
               </ul>
             </section>
             <section class="filter-group" aria-label="프레임 크기">
               <h3>프레임 크기</h3>
               <ul class="chip-grid" role="group">
-                <li><button class="btn-utility">S</button></li>
-                <li><button class="btn-utility">M</button></li>
-                <li><button class="btn-utility">L</button></li>
+                <li>
+                  <button
+                    class="btn-utility"
+                    data-filter-type="size"
+                    data-filter-value="S"
+                  >
+                    S
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="btn-utility"
+                    data-filter-type="size"
+                    data-filter-value="M"
+                  >
+                    M
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="btn-utility"
+                    data-filter-type="size"
+                    data-filter-value="L"
+                  >
+                    L
+                  </button>
+                </li>
               </ul>
             </section>
             <section class="filter-group" aria-label="색상 필터">
               <h3>색상</h3>
 
               <div class="color-grid">
-                <button class="color-dot" aria-label="검정색 선택"></button>
-                <button class="color-dot" aria-label="갈색 선택"></button>
-                <button class="color-dot" aria-label="투명 선택"></button>
-                <button class="color-dot" aria-label="금색 선택"></button>
+                <button
+                  class="color-dot"
+                  data-filter-type="color"
+                  data-filter-value="primary"
+                  aria-label="프라이머리색 선택"
+                ></button>
+                <button
+                  class="color-dot"
+                  data-filter-type="color"
+                  data-filter-value="black"
+                  aria-label="검정색 선택"
+                ></button>
+                <button
+                  class="color-dot"
+                  data-filter-type="color"
+                  data-filter-value="secondary"
+                  aria-label="세컨더리색 선택"
+                ></button>
+                <button
+                  class="color-dot"
+                  data-filter-type="color"
+                  data-filter-value="white"
+                  aria-label="흰색 선택"
+                ></button>
               </div>
             </section>
             <section class="filter-group" aria-label="가격 필터">
@@ -322,14 +651,16 @@
               <div class="price-filter">
                 <div class="price-current" aria-live="polite">
                   <span>₩0</span>
-                  <span>₩500,000</span>
+                  <span>₩100,000,000</span>
                 </div>
+                <label for="priceMax" class="sr-only"></label>
                 <input
                   type="range"
+                  id="priceMax"
                   min="0"
-                  max="500000"
+                  max="10000000000"
                   step="10000"
-                  value="500000"
+                  value="10000000000"
                   aria-label="최대 가격 선택"
                 />
               </div>
@@ -342,6 +673,6 @@
         </div>
       </div>
     </div>
+    <script type="module" src="./js/pages/productList.js"></script>
   </body>
-  <script type="module" src="./js/pages/productList.js"></script>
 </html>
