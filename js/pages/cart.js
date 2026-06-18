@@ -1,6 +1,5 @@
 import { getFromStorage, saveToStorage, updateCartCount } from '../utils/storage.js';
 
-
 // ── DOM ──────────────────────────────────────────────────────────────────────
 const productsList = document.querySelector('.products-list');
 const selectAllCheckbox = document.querySelector('.select-all-checkbox');
@@ -40,7 +39,7 @@ function renderCart() {
       </div>
       <div class="product-details">
         <p class="product-description">${item.name}</p>
-        <span class="product-price">${formatPrice(item.price)}</span>
+        <span class="product-price">${item.price}</span>
         <div class="quantity-controls">
           <button class="qty-btn qty-decrease" aria-label="수량 감소">−</button>
           <span class="qty-value">${item.qty}</span>
@@ -71,9 +70,9 @@ function updateTotalAmount() {
   // const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
   // const total = subtotal + shipping;
   // shippingEl.textContent = formatPrice(shipping);
-  subtotalEl.textContent = formatPrice(subtotal);
+  subtotalEl.textContent = subtotal;
   
-  totalEl.textContent = formatPrice(subtotal);
+  totalEl.textContent = subtotal;
 
   if (checkoutBtn) checkoutBtn.disabled = cart.length === 0;
 }
@@ -157,9 +156,8 @@ checkoutBtn?.addEventListener('click', () => {
     return;
   }
   const subtotal = cart.reduce((acc, item) => acc + item.qty * item.price, 0);
-  alert(`총 ${formatPrice(subtotal)}의 구매를 진행합니다.\n(결제 기능 준비 중)`);
+  alert(`총 ${subtotal}개 의 구매를 진행합니다.\n(결제 기능 준비 중)`);
 });
-
 // ── 초기화 ────────────────────────────────────────────────────────────────────
 updateCartCount();
 renderCart();
