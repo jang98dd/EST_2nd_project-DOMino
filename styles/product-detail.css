@@ -525,6 +525,8 @@
   flex: 1;
   height: 52px;
   font-weight: 600;
+  background: var(--white);
+  border: 1px solid var(--primary);
 }
 
 .buy {
