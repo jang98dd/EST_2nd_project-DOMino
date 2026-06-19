@@ -19,8 +19,8 @@
   
   <link rel="stylesheet" href="./styles/auth-signup.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
 </head>
 
@@ -47,6 +47,8 @@
       </section>
 
       <section class="auth__form">
+
+        <h2 class="sr-only">회원가입 폼</h2>
 
         <form class="signup-form" id="signupForm">
 
@@ -106,7 +108,7 @@
 
             <div class="form-group">
             
-              <label>
+              <label for="phone">
                 휴대폰 번호 *
               </label>
             
@@ -117,7 +119,7 @@
                   <option>011</option>
                 </select>
             
-                <input type="tel" placeholder="'-' 없이 입력해주세요">
+                <input id="phone" type="tel" placeholder="'-' 없이 입력해주세요">
             
               </div>
             
@@ -138,7 +140,7 @@
 
             <div class="form-group">
 
-              <label for="birth">
+              <label for="datepicker">
                 생년월일 *
               </label>
 

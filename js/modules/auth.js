@@ -1,4 +1,3 @@
-console.log("auth.js 실행됨");
 document
   .querySelectorAll(".toggle-password")
   .forEach(button => {
