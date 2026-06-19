@@ -6,7 +6,9 @@
   min-width: 0;
   overflow-x: hidden;
 }
-
+.page {
+  margin-top: 88px;
+}
 .product-layout {
   display: grid;
   gap: 24px;
@@ -46,11 +48,6 @@
   width: 0%; 
 }
 
-/* ==========================================================================
-   🎯 상품 상세 페이지 동적 엘리먼트 스타일 (JS 연동 클래스)
-   ========================================================================== */
-
-/* 1. 정밀 별점 시스템 */
 .rating-stars-outer {
   position: relative;
   display: inline-block;
@@ -290,6 +287,9 @@
       "accordion accordion"
       "bottom bottom";
   }
+  .product-layout {
+    margin-top: 88px;
+  }
   .thumb-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -320,7 +320,9 @@
       "accordion accordion accordion"
       "bottom bottom bottom";
   }
-
+  .product-layout {
+    margin-top: 88px;
+  }
   .thumb-list {
     grid-template-columns: repeat(5, 1fr);
   }
@@ -525,8 +527,6 @@
   flex: 1;
   height: 52px;
   font-weight: 600;
-  background: var(--white);
-  border: 1px solid var(--primary);
 }
 
 .buy {
@@ -612,6 +612,7 @@
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
   }
   .product-layout {
+    margin-top: 88px;
     padding-bottom: 90px;
   }
   .indicator-container {
