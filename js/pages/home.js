@@ -36,21 +36,30 @@ async function initHome() {
   initVideoSection("brand", BRAND_VIDEOS);
   renderTabs(); // Best Pick 브랜드 탭 주입
   bindBestPickTabs(); // 탭 클릭 바인딩 — 미리 해서 이후 코드 에러와 무관하게 동작
+  bindBestPickLoadMore(); // 더보기 버튼 바인딩
 
-  const data = await fetchProducts();
-  // 노이즈 제거
-  allProducts = (data.products || []).filter(
-    (p) => p && p.thumbnail && Number(p.price) >= 10000
-  );
+  // 비동기 로딩: try/catch/finally
+  try {
+    const data = await fetchProducts();
+    // 노이즈 제거
+    allProducts = (data.products || []).filter(
+      (p) => p && p.thumbnail && Number(p.price) >= 10000
+    );
 
-  if (allProducts.length === 0) {
+    if (allProducts.length === 0) {
+      showErrors();
+      return;
+    }
+
+    renderBestPick("all");
+    renderJennies();
+    initCelebSwiper(); // 셀럽 캐러셀 + 첫 셀럽 상품 렌더
+  } catch (err) {
+    console.error(err);
     showErrors();
-    return;
+  } finally {
+    // 성공·실패 공통 정리 지점 (로딩 표시를 추가하면 여기서 해제)
   }
-
-  renderBestPick("all");
-  renderJennies();
-  initCelebSwiper(); // 셀럽 캐러셀 + 첫 셀럽 상품 렌더
 }
 
 /* ---------- 공통 ---------- */
@@ -380,40 +389,125 @@ function finishLoading(sectionSelector) {
 }
 
 /* ---------- Best Pick ---------- */
+/* 더보기 상태: 현재 탭의 상품 목록 + 표시 개수 */
+const bestPick = { list: [], shown: 0 };
+const BEST_PICK_INITIAL = 16; /* 16개 = 8열 */
+const LOAD_MORE_STEP = 10; /* 더보기 클릭당 추가 개수 */
+
+/* 무한 순환으로 count개 카드 추출(소진 시 처음부터 반복) */
+function bestPickCards(start, count) {
+  const { list } = bestPick;
+  const out = [];
+  for (let i = 0; i < count; i++) out.push(list[(start + i) % list.length]);
+  return out;
+}
+
 /* 카드 2장을 세로로 묶어 슬라이드 1개 = 2행 가로 스크롤 */
-function renderBestPickGrid(products) {
-  const wrapper = document.querySelector(".best-pick__carousel .swiper-wrapper");
-  if (!wrapper) return;
+function bestPickPairSlides(products) {
   let html = "";
   for (let i = 0; i < products.length; i += 2) {
     const pair = products.slice(i, i + 2).map(productCardHtml).join("");
     html += `<div class="swiper-slide">${pair}</div>`;
   }
-  wrapper.innerHTML = html;
+  return html;
+}
+
+function renderBestPickGrid(products) {
+  const wrapper = document.querySelector(".best-pick__carousel .swiper-wrapper");
+  if (!wrapper) return;
+  wrapper.innerHTML = bestPickPairSlides(products);
 }
 
 function renderBestPick(brand) {
   const list =
     brand === "all" ? allProducts : allProducts.filter((p) => p.brand === brand);
 
-  renderBestPickGrid(list.slice(0, 16)); /* 16개 = 8열 */
+  bestPick.list = list;
+  // 2행 그리드 빈칸 방지를 위해 카드 수를 짝수로 맞춤(홀수면 순환으로 1장 더)
+  let count = Math.min(BEST_PICK_INITIAL, list.length);
+  if (count % 2 === 1) count += 1;
+  bestPick.shown = count;
+  renderBestPickGrid(count ? bestPickCards(0, count) : []);
   initSwiper("bestpick", ".best-pick__carousel", ".best-pick__scrollbar");
   finishLoading(".best-pick");
 }
 
+/* 더보기: 10개 추가(소진 시 처음부터 무한 순환), 스크롤바 갱신 */
+function loadMoreBestPick() {
+  const { list, shown } = bestPick;
+  if (!list.length) return;
+
+  const next = bestPickCards(shown, LOAD_MORE_STEP); // 무한 순환
+  bestPick.shown = shown + LOAD_MORE_STEP;
+
+  // 추가분도 2장씩 묶어 슬라이드로
+  const slides = [];
+  for (let i = 0; i < next.length; i += 2) {
+    const pair = next.slice(i, i + 2).map(productCardHtml).join("");
+    slides.push(`<div class="swiper-slide">${pair}</div>`);
+  }
+
+  const sw = swipers.bestpick;
+  if (!sw || !sw.appendSlide) return;
+  sw.appendSlide(slides); // 끝에 추가 → 현재 스크롤 위치 유지
+  sw.update(); // 스크롤바 너비 반영
+}
+
+function bindBestPickLoadMore() {
+  document
+    .querySelector('.best-pick [data-action="load-more"]')
+    ?.addEventListener("click", loadMoreBestPick);
+}
+
 function bindBestPickTabs() {
   const tabs = [...document.querySelectorAll(".best-pick__tab")];
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      tabs.forEach((t) => {
-        t.classList.remove("is-active");
-        t.setAttribute("aria-selected", "false");
-        t.tabIndex = -1;
-      });
-      tab.classList.add("is-active");
-      tab.setAttribute("aria-selected", "true");
-      tab.tabIndex = 0;
-      renderBestPick(tab.dataset.brand);
+
+  // 탭 활성화(선택) — 클릭 / Enter / Space(버튼 기본 동작)
+  const activate = (tab) => {
+    tabs.forEach((t) => {
+      t.classList.remove("is-active");
+      t.setAttribute("aria-selected", "false");
+      t.tabIndex = -1;
+    });
+    tab.classList.add("is-active");
+    tab.setAttribute("aria-selected", "true");
+    tab.tabIndex = 0;
+    renderBestPick(tab.dataset.brand);
+  };
+
+  // 포커스만 이동(수동 활성화) — 로빙 tabindex
+  const moveFocus = (index) => {
+    const t = tabs[index];
+    if (!t) return;
+    tabs.forEach((x) => (x.tabIndex = -1));
+    t.tabIndex = 0;
+    t.focus();
+  };
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => activate(tab));
+
+    // ←/→ 탭 포커스 이동(순환), Home/End 처음/마지막. 선택은 Enter/Space(버튼 기본 클릭)
+    tab.addEventListener("keydown", (e) => {
+      let target;
+      switch (e.key) {
+        case "ArrowRight":
+          target = (i + 1) % tabs.length;
+          break;
+        case "ArrowLeft":
+          target = (i - 1 + tabs.length) % tabs.length;
+          break;
+        case "Home":
+          target = 0;
+          break;
+        case "End":
+          target = tabs.length - 1;
+          break;
+        default:
+          return;
+      }
+      e.preventDefault();
+      moveFocus(target);
     });
   });
 }
@@ -439,38 +533,152 @@ function renderJennies() {
   finishLoading(".collection");
 }
 
-/* ---------- More Collection ---------- */
+/* ---------- More Collection : 셀럽 캐러셀 ---------- */
+/* Swiper 미사용 — 3슬라이드 무한 순환 (DOM 재배치 + translateX 슬라이드 인).
+   가운데(is-active) 크게 / 양옆(is-prev·is-next) 작게. 드래그·클릭으로 이동. */
 function initCelebSwiper() {
-  const celebEl = document.querySelector(".more-collection__celebs");
-  if (!celebEl) return;
+  const root = document.querySelector(".more-collection__celebs");
+  const track = root?.querySelector(".swiper-wrapper");
+  if (!root || !track || track.children.length !== 3) return;
 
-  swipers.celeb = new Swiper(celebEl, {
-    slidesPerView: "auto",
-    centeredSlides: true,
-    spaceBetween: 16,
-    loop: true, // 1>2>3>1>2>3 무한 반복
-    breakpoints: {
-      // 데스크탑: 칸 260 + 간격 182 → 활성(576)·비활성(260) 사이 시각상 24
-      1200: { spaceBetween: 182 },
-    },
-    on: { init: syncCeleb, slideChange: syncCeleb },
+  const DURATION = 600; // ms — CSS 전환 시간과 동일
+  let isAnimating = false;
+
+  // 슬라이드 역할 부여: roles[i] = "is-prev" | "is-active" | "is-next"
+  function setRoles(roles) {
+    [...track.children].forEach((el, i) => {
+      el.classList.remove("is-prev", "is-active", "is-next");
+      el.classList.add(roles[i]);
+    });
+  }
+
+  // 가운데(children[1]) 셀럽으로 라벨·상품 동기화
+  function sync() {
+    const active = track.children[1];
+    if (!active) return;
+    document
+      .querySelectorAll("[data-celeb-label]")
+      .forEach((el) => (el.textContent = active.dataset.celebName || ""));
+    renderMore(active.dataset.celeb);
+  }
+
+  // 양옆 칸 너비 + gap (현재 브레이크포인트에서 동적 측정)
+  function stepSize() {
+    const side =
+      track.querySelector(".is-prev") || track.querySelector(".is-next");
+    const w = side ? side.offsetWidth : track.children[0].offsetWidth;
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    return w + gap;
+  }
+
+  // direction: "next" | "prev"
+  function rotate(direction, dragOffset = 0) {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    const step = stepSize();
+
+    // 1) 전환 끄고 DOM 재배치 + 시작 위치 보정 + 직전 화면 유지(PRE 역할)
+    root.classList.remove("is-sliding");
+    track.style.transition = "none";
+    if (direction === "next") {
+      track.appendChild(track.firstElementChild); // 맨 앞 → 맨 뒤
+      track.style.transform = `translateX(${step + dragOffset}px)`;
+      setRoles(["is-active", "is-next", "is-prev"]); // 옛 가운데를 그대로 가운데처럼
+    } else {
+      track.insertBefore(track.lastElementChild, track.firstElementChild); // 맨 뒤 → 맨 앞
+      track.style.transform = `translateX(${-step + dragOffset}px)`;
+      setRoles(["is-next", "is-prev", "is-active"]);
+    }
+
+    // 2) 강제 리플로우 — 시작 상태 확정
+    void track.offsetHeight;
+
+    // 3) 가운데로 슬라이드 인 (transform·크기 동시 전환)
+    root.classList.add("is-sliding");
+    track.style.transition = `transform ${DURATION}ms cubic-bezier(0.25, 1, 0.5, 1)`;
+    track.style.transform = "translateX(0px)";
+    setRoles(["is-prev", "is-active", "is-next"]); // 새 가운데 확정
+    sync();
+
+    // 4) 정리
+    let safety;
+    const done = (e) => {
+      if (e && (e.target !== track || e.propertyName !== "transform")) return;
+      track.removeEventListener("transitionend", done);
+      clearTimeout(safety);
+      root.classList.remove("is-sliding");
+      isAnimating = false;
+    };
+    track.addEventListener("transitionend", done);
+    safety = setTimeout(done, DURATION + 120);
+  }
+
+  /* ---- 드래그 / 스와이프 ---- */
+  let startX = 0;
+  let dragDistance = 0;
+  let isDragging = false;
+  let dragMoved = false;
+
+  const pointX = (e) => (e.touches ? e.touches[0].clientX : e.clientX);
+
+  function onDragStart(e) {
+    if (isAnimating) return;
+    isDragging = true;
+    dragMoved = false;
+    dragDistance = 0;
+    startX = pointX(e);
+    root.classList.remove("is-sliding");
+    track.style.transition = "none";
+  }
+  function onDragMove(e) {
+    if (!isDragging || isAnimating) return;
+    dragDistance = pointX(e) - startX;
+    if (Math.abs(dragDistance) > 5) dragMoved = true;
+    if (e.cancelable && e.touches && Math.abs(dragDistance) > 10) e.preventDefault();
+    track.style.transform = `translateX(${dragDistance}px)`;
+  }
+  function onDragEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    const threshold = 60;
+    if (dragDistance < -threshold) {
+      const off = dragDistance;
+      dragDistance = 0;
+      rotate("next", off);
+    } else if (dragDistance > threshold) {
+      const off = dragDistance;
+      dragDistance = 0;
+      rotate("prev", off);
+    } else {
+      // 임계값 미만 → 원위치
+      track.style.transition = "transform 250ms cubic-bezier(0.25, 1, 0.5, 1)";
+      track.style.transform = "translateX(0px)";
+      dragDistance = 0;
+    }
+  }
+
+  track.addEventListener("mousedown", onDragStart);
+  window.addEventListener("mousemove", onDragMove);
+  window.addEventListener("mouseup", onDragEnd);
+  track.addEventListener("touchstart", onDragStart, { passive: true });
+  window.addEventListener("touchmove", onDragMove, { passive: false });
+  window.addEventListener("touchend", onDragEnd);
+  track.addEventListener("dragstart", (e) => e.preventDefault()); // 이미지 기본 드래그 방지
+
+  // 양옆 클릭으로 이동 (드래그가 아니었을 때만)
+  track.addEventListener("click", (e) => {
+    if (dragMoved) return;
+    const slide = e.target.closest(".swiper-slide");
+    if (!slide) return;
+    if (slide.classList.contains("is-next")) rotate("next");
+    else if (slide.classList.contains("is-prev")) rotate("prev");
   });
-}
 
-/* 셀럽 순서 */
-const CELEBS = [
-  { celeb: "gd", name: "지드래곤" },
-  { celeb: "nayoung", name: "나영" },
-  { celeb: "dex", name: "덱스" },
-];
-
-function syncCeleb(swiper) {
-  const c = CELEBS[swiper.realIndex];
-  if (!c) return;
-  document
-    .querySelectorAll("[data-celeb-label]")
-    .forEach((el) => (el.textContent = c.name));
-  renderMore(c.celeb);
+  // 초기 배치: [덱스(prev), GD(active), 나영(next)] — 소스 [GD,나영,덱스]에서 덱스를 맨 앞으로
+  track.insertBefore(track.lastElementChild, track.firstElementChild);
+  setRoles(["is-prev", "is-active", "is-next"]);
+  sync();
 }
 
 function renderMore(celeb) {

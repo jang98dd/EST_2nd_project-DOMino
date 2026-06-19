@@ -1,363 +1,236 @@
-@media screen and (max-width:768px){
-    .footer{
-    background:#f5f5f5;
-    padding:35px 20px;
-    text-align:center;
-    border-top:1px solid #e0e0e0;
+/* ============================================
+   FOOTER  (Mobile First)
+   분기: 768(태블릿) / 1200(데스크탑)
+   폰트 공통: 12px / line-height 135% / letter-spacing -2.5%
+============================================ */
+.footer {
+  background: #f5f5f5;
+  padding: 16px 20px 24px; /* 상단 16(로고↔위 섹션) · 좌우 20 · 하단 24(SNS↔하단) */
+  font-family: "Pretendard", system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+  color: #555;
+  text-align: center;
 }
 
-.footer-wrap{
-    max-width:1200px;
-    margin:auto;
+.footer__inner {
+  max-width: 1128px;
+  margin: 0 auto;
 }
 
-.footer-logo{
-    font-size:48px;
-    font-weight:900;
-    letter-spacing:-2px;
-    color:#222;
-    margin-bottom:10px;
+/* 로고 (122×24 SVG) */
+.footer__logo {
+  margin: 0 0 16.15px; /* 로고 → 고객센터 16.15 */
+  line-height: 0; /* inline 이미지 하단 여백 제거 */
+}
+.footer__logo a {
+  display: inline-block;
+}
+.footer__logo img {
+  display: block;
+  width: 122px;
+  height: 24px;
 }
 
-.customer-info{
-    margin-bottom:18px;
+/* 고객센터 / 운영시간 (레귤러 12) */
+.footer__center a {
+  color: #333;
+  text-decoration: underline; /* 고객센터(채널톡 문의) 밑줄 */
+}
+.footer__chat {
+  margin-top: 8px; /* 고객센터 → 채널톡 8 */
+  color: #555;
+}
+.footer__store {
+  margin-top: 8px; /* 채널톡 → 안경원 8 */
+  color: #555;
+}
+.footer__pipe {
+  display: none; /* 태블릿+에서 ' | ' 로 노출 (모바일은 괄호 사용) */
 }
 
-.customer-info p{
-    font-size:12px;
-    color:#555;
-    line-height:1.8;
+/* 정책 / 서비스 링크 */
+.footer__links {
+  margin-top: 16px; /* 안경원 → 개인정보처리방침 16 */
+}
+.footer__policy,
+.footer__service {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.footer__service {
+  margin-top: 8px; /* 정책 → 서비스 8 */
+}
+.footer__policy li,
+.footer__service li {
+  display: flex;
+  align-items: center;
+}
+.footer__policy a,
+.footer__service a {
+  color: #333;
+  text-decoration: none;
+}
+.footer__policy li:first-child a {
+  font-weight: 700; /* 개인정보처리방침 볼드 */
+}
+.footer__policy a:hover,
+.footer__service a:hover {
+  text-decoration: underline;
+}
+/* 링크 사이 구분선 | */
+.footer__policy li:not(:last-child)::after,
+.footer__service li:not(:last-child)::after {
+  content: "|";
+  margin: 0 10px;
+  color: #ccc;
 }
 
-.policy-links,
-.service-links,
-.company-info{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-bottom:10px;
+/* 사업자정보 + SNS */
+.footer__bottom {
+  margin-top: 8px; /* 서비스 → 사업자정보 8 */
+}
+.footer__biz {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+}
+.footer__biz a {
+  color: #333;
+  text-decoration: none;
+}
+.footer__bar {
+  color: #ccc;
+}
+.footer__biz-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  font: inherit;
+  font-weight: 700; /* (주)라운즈 ROUNZ 사업자정보 볼드 */
+  color: #333;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.footer__biz-btn .material-icons {
+  font-size: 16px;
 }
 
-.policy-links a,
-.service-links a,
-.company-info a{
-    text-decoration:none;
-    color:#333;
-    font-size:12px;
-    transition:.3s;
+.footer__sns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px; /* SNS 버튼 간 16 */
+  margin: 24px 0 0; /* 사업자정보 → SNS 24 */
+  padding: 0;
+  list-style: none;
+}
+.footer__sns a {
+  display: inline-flex;
+  width: 32px; /* 아이콘 32×32 (3종 공통) */
+  height: 32px;
+  transition: transform 0.2s ease;
+}
+.footer__sns a:hover {
+  transform: translateY(-2px);
+}
+.footer__sns img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-.policy-links a:hover,
-.service-links a:hover,
-.company-info a:hover{
-    color:#000;
+/* ============================================
+   TABLET (>= 768px)  — 레이아웃만, 세부 수치는 추후 확정
+============================================ */
+@media (min-width: 768px) {
+  .footer {
+    padding: 24px 24px 16px; /* 상단 24(로고↔위 섹션) · 좌우24 · 하16 */
+  }
+  .footer__logo {
+    margin-bottom: 49.15px; /* 로고 → 정보블록 49.15 */
+    text-align: left; /* 좌상단 */
+  }
+  /* 운영시간 한 줄: ' | ' 노출, 줄바꿈·채팅 줄 괄호 숨김 */
+  .footer__pipe {
+    display: inline;
+  }
+  .footer__nl {
+    display: none;
+  }
+  .footer__paren {
+    display: none;
+  }
+  .footer__info {
+    text-align: center;
+  }
+  .footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 64px; /* 정보블록 → 하단줄 64 */
+  }
+  .footer__biz {
+    gap: 16px; /* 사업자정보확인 | (주)라운즈… 간격 16 */
+  }
+  .footer__sns {
+    margin: 0;
+  }
+  /* SNS 순서: KCP · 카카오 · 인스타 · 페북 · 블로그 */
+  .footer__sns li:nth-child(1) { order: 0; }
+  .footer__sns li:nth-child(5) { order: 1; }
+  .footer__sns li:nth-child(4) { order: 2; }
+  .footer__sns li:nth-child(3) { order: 3; }
+  .footer__sns li:nth-child(2) { order: 4; }
 }
 
-.policy-links span,
-.service-links span,
-.company-info span{
-    color:#bdbdbd;
-    font-size:11px;
+/* ============================================
+   DESKTOP (>= 1200px)  — 레이아웃만, 세부 수치는 추후 확정
+============================================ */
+@media (min-width: 1200px) {
+  .footer {
+    padding: 32px 0 28px;
+  }
+  .footer__inner {
+    padding: 0 24px;
+  }
+  .footer__logo {
+    margin-bottom: 28px;
+  }
+  /* 정보: 좌(고객센터) + 우(링크) + 하단 구분선 */
+  .footer__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    text-align: left;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  /* 좌측 순서: 고객센터 → 채널톡 → 안경원 (DOM 순서, base 간격 8/8 상속) */
+  .footer__customer {
+    display: flex;
+    flex-direction: column;
+  }
+  /* 우측 링크 우측 정렬 */
+  .footer__links {
+    margin-top: 0;
+  }
+  .footer__policy,
+  .footer__service {
+    justify-content: flex-end;
+  }
+  .footer__bottom {
+    margin-top: 18px;
+  }
 }
-
-.sns-wrap{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:8px;
-    margin-top:15px;
-}
-
-.sns-wrap a{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:28px;
-    height:28px;
-}
-
-.sns-wrap img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
-}
-@media screen and (max-width:1024px) and (min-width:769px){
-    
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.footer{
-    width:100%;
-    background:#f3f3f3;
-    padding:15px 20px 25px;
-    border-top:1px solid #ddd;
-}
-
-.footer-wrap{
-    position:relative;
-    max-width:1200px;
-    margin:0 auto;
-    min-height:220px;
-}
-
-.footer-logo{
-    position:absolute;
-    top:0;
-    left:0;
-
-    font-size:28px;
-    font-weight:900;
-    color:#222;
-    letter-spacing:-1px;
-}
-
-.customer-info{
-    text-align:center;
-    padding-top:18px;
-}
-
-.customer-info p:first-child{
-    font-size:12px;
-    font-weight:600;
-    margin-bottom:8px;
-}
-
-.customer-info p{
-    font-size:12px;
-    color:#444;
-    line-height:1.8;
-}
-
-.policy-links,
-.service-links{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:12px;
-
-    margin-top:12px;
-}
-
-.policy-links a,
-.service-links a{
-    text-decoration:none;
-    color:#333;
-    font-size:11px;
-}
-
-.policy-links span,
-.service-links span{
-    color:#999;
-    font-size:10px;
-}
-
-.policy-links a:hover,
-.service-links a:hover{
-    text-decoration:underline;
-}
-
-.company-info{
-    position:absolute;
-    left:0;
-    bottom:20px;
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.company-info a{
-    text-decoration:none;
-    color:#333;
-    font-size:11px;
-}
-
-.company-info a:last-child{
-    font-weight:700;
-}
-
-.company-info span{
-    color:#999;
-}
-
-.sns{
-    position:absolute;
-    right:0;
-    bottom:15px;
-
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.sns a{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    width:32px;
-    height:32px;
-
-    transition:0.3s;
-}
-
-.sns a:hover{
-    transform:translateY(-2px);
-}
-
-.sns img{
-    width:32px;
-    height:32px;
-    object-fit:contain;
-}
-}
-@media screen and (min-width:1025px){
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-.footer{
-    width:100%;
-    background:#f3f3f3;
-    border-top:1px solid #dcdcdc;
-    padding:18px 0;
-}
-
-.footer-wrap{
-    max-width:1200px;
-    margin:0 auto;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-}
-
-.footer-left{
-    width:45%;
-}
-
-.footer-logo{
-    font-size:22px;
-    font-weight:900;
-    color:#222;
-    margin-bottom:12px;
-}
-
-.customer-info{
-    font-size:10px;
-    color:#666;
-    line-height:1.8;
-}
-
-.customer-info p:first-child{
-    color:#333;
-    font-weight:600;
-}
-
-.footer-right{
-    width:55%;
-    text-align:right;
-}
-
-.policy-links,
-.service-links{
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    gap:10px;
-}
-
-.policy-links{
-    margin-bottom:8px;
-}
-
-.service-links{
-    margin-bottom:18px;
-}
-
-.policy-links a,
-.service-links a{
-    text-decoration:none;
-    color:#444;
-    font-size:10px;
-}
-
-.policy-links a:hover,
-.service-links a:hover{
-    color:#000;
-}
-
-.policy-links span,
-.service-links span{
-    color:#aaa;
-    font-size:9px;
-}
-
-.company-info{
-    display:flex;
-    justify-content:flex-start;
-    align-items:center;
-
-    margin-top:30px;
-
-    font-size:10px;
-    color:#444;
-}
-
-.company-info a{
-    text-decoration:none;
-    color:#444;
-}
-
-.company-info a:last-child{
-    font-weight:700;
-}
-
-.company-info span{
-    margin:0 10px;
-    color:#999;
-}
-
-.sns{
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-
-    gap:8px;
-    margin-top:12px;
-}
-
-.sns a{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    width:22px;
-    height:22px;
-
-    transition:.2s ease;
-}
-
-.sns a:hover{
-    transform:translateY(-2px);
-}
-
-.sns img{
-    width:22px;
-    height:22px;
-    object-fit:contain;
-}
-    }

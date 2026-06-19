@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="styles/common.css" />
     <link rel="stylesheet" href="styles/fitting-and-anaylsis.css" />
     <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/footer.css">
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
   </head>
-
   <body>
     <div class="app">
-      <div class="header-root"></div>
+      <div id="header-root"></div>
       <main class="service-container" aria-label="가상 피팅 및 얼굴 분석">
         <div class="page__inner">
           <nav class="page-header mobile-tabs" aria-label="페이지 위치">
@@ -46,7 +46,7 @@
                 <div class="preview-column">
                   <div class="preview-box">
                     <div class="image-frame">
-                      <img id="uploadedImage" src="..." alt="피팅 이미지" />
+                      <img id="uploadedImage" alt="피팅 이미지" />
                       <div class="glasses-overlay" id="glassesOverlay"></div>
                     </div>
                     <div class="upload-placeholder" id="uploadPlaceholder">
@@ -294,8 +294,10 @@
           </div>
         </div>
       </main>
+      <div data-include="/components/footer.html"></div>
     </div>
     <script type="module" src="js/pages/fitting-and-analysis.js"></script>
+    <script type="module" src="js/loadComponents.js"></script>
     <script type="module" src="js/modules/header.js"></script>
   </body>
 </html>

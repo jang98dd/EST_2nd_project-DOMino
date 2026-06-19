@@ -81,6 +81,27 @@ function bindEvents() {
     });
   });
 }
+function bindTopCategories() {
+  const categoryBtns = document.querySelectorAll('.btn-category');
+  if (!categoryBtns.length) return;
+
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      categoryBtns.forEach(b => b.classList.remove('is-active'));
+      e.currentTarget.classList.add('is-active');
+
+      const selectedCategory = e.currentTarget.dataset.cat;
+      console.log('클릭된 카테고리:', selectedCategory);
+      handleCategoryChange(selectedCategory);
+    });
+  });
+}
+function handleCategoryChange(category) {
+  
+  if (category === 'wishlist') {
+  } else if (category === 'all') {
+  }
+}
 async function init() {
   bindUI();
   initBottomSheet();
@@ -91,6 +112,8 @@ async function init() {
   bindChipEvents();
   bindBottomSheetFilters();
   bindSidebarFilters();
+
+  bindTopCategories()
 
   updateCartCount();
   updateWishlistCount();
@@ -141,7 +164,7 @@ async function init() {
 init();
 async function loadRecommendations() {
   try {
-    const track = document.querySelector('.recommend-track');
+    const track = document.querySelector('.frame-track');
     if (!track) return; 
 
     const response = await fetch('/data/products.json'); 
@@ -159,26 +182,24 @@ async function loadRecommendations() {
 }
 
 function renderRecommendations(products) {
-  const track = document.querySelector('.recommend-track');
+  const track = document.querySelector('.frame-track');
   if (!track) return;
-
-  track.style.display = 'flex';
-  track.style.overflowX = 'auto';
-  track.style.gap = '16px';
-  track.style.scrollSnapType = 'x mandatory';
-  track.style.paddingBottom = '8px'; 
   track.innerHTML = products.map(product => `
-    <article class="recommend-card" style="flex-shrink: 0; width: 160px; scroll-snap-align: start;">
-      <a href="../product-detail.html?id=${product.id}" style="text-decoration: none; color: inherit; display: block;">
+    <article class="frame-card product-card">
+      <a href="../product-detail.html?id=${product.id}">
         <img src="${product.image || product.thumbnail || ''}" alt="${product.name || product.title}" style="display:block; width:100%; border-radius: 8px;" />
-        <h4 style="margin: 8px 0 4px 0; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${product.name || product.title}</h4>
-        <p style="margin: 0; font-size: 13px; font-weight: bold;">₩${(product.price || 0).toLocaleString()}</p>
+        <h3 class="body-sm">${product.name || product.title}</h3>
+        <p body-sm-bold--tight>₩${(product.price || 0).toLocaleString()}</p>
       </a>
     </article>
   `).join('');
 }
 
 function updateView() {
+  const displayArea = document.querySelector(".product-display-area");
+  if (displayArea) {
+    displayArea.classList.toggle("is-loading", state.isLoading);
+  }
   if (state.isLoading) {
     if (productCards) {
       productCards.innerHTML = Array.from({ length: 12 })
@@ -380,7 +401,7 @@ function createProductCard(product) {
     <article class="product-card" style="position: relative; cursor: pointer;">
       <a href="../product-detail.html?id=${product.id}" 
          class="product-card__main-link" 
-         aria-label="${product.title} 상세 페이지로 이동" style="display:none;">
+         aria-label="${product.title} 상세 페이지로 이동">
       </a>
       <div class="product-card__thumb">
         <img src="${product.thumbnail}" alt="${product.title}" />
@@ -403,8 +424,8 @@ function createProductCard(product) {
           착용하기
         </a>
       </div>
-      <p>${product.brand}</p>
-      <h3>${product.title}</h3>
+      <p class="body-sm-bold--tight">${product.brand}</p>
+      <h3 class="body-sm">${product.title}</h3>
       <p class="price">${formattedPrice}</p>
     </article>
   `;

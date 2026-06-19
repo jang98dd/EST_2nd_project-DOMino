@@ -16,23 +16,30 @@ document
 
   });
 
+if (window.jQuery && document.querySelector("#datepicker")) {
 
-$(function () {
+  $(function () {
 
-  $("#datepicker").datepicker({
+    $("#datepicker").datepicker({
 
-    dateFormat: "yy.mm.dd",
+      dateFormat: "yy.mm.dd",
 
-    changeMonth: true,
+      changeMonth: true,
 
-    changeYear: true,
+      changeYear: true,
 
-    yearRange: "1950:2026"
+      yearRange: "1950:2026"
+
+    });
 
   });
 
-});
+}
 
+const signupForm =
+  document.querySelector("#signupForm");
+
+if (signupForm) {
 
 const email =
   document.querySelector("#email");
@@ -136,8 +143,7 @@ passwordCheck.addEventListener("input", () => {
 
 });
 
-document.querySelector("#signupForm")
-  .addEventListener("submit", (e) => {
+signupForm.addEventListener("submit", (e) => {
 
     e.preventDefault();
 
@@ -146,3 +152,5 @@ document.querySelector("#signupForm")
     passwordCheck.dispatchEvent(new Event("blur"));
 
   });
+
+}
