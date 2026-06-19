@@ -1,1 +1,34 @@
-<link rel="stylesheet" href="./css/account.css">
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ROUNZ - 마이페이지</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/normalize.css" />
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/header.css" />
+    <link rel="stylesheet" href="styles/footer.css" />
+    <!-- 페이지 전용 스타일 (담당자 작성 예정) -->
+    <link rel="stylesheet" href="./css/account.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="app">
+      <!-- 공통 헤더 — header.js가 #header-root에 주입 -->
+      <div id="header-root"></div>
+
+      <main class="page">
+        <!-- 본문 (담당자 작성 예정) -->
+      </main>
+
+      <!-- 공통 푸터 — loadComponents.js가 components/footer.html을 주입 -->
+      <div data-include="/components/footer.html"></div>
+    </div>
+
+    <script type="module" src="js/loadComponents.js"></script>
+    <script type="module" src="js/modules/header.js"></script>
+  </body>
+</html>

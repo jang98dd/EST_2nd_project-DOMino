@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="styles/normalize.css" />
     <link rel="stylesheet" href="styles/common.css" />
     <link rel="stylesheet" href="styles/fitting.css" />
+    <link rel="stylesheet" href="styles/header.css" />
+    <link rel="stylesheet" href="styles/footer.css" />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
@@ -15,42 +17,8 @@
   </head>
   <body>
     <div class="app">
-      <header class="header" role="banner">
-        <div class="header__left">
-          <h1 class="header__logo">
-            <a href="/" aria-label="ROUNZ 홈">ROUNZ</a>
-          </h1>
-        </div>
-
-        <div class="header__right">
-          <div class="header__actions">
-            <button type="button" class="icon-btn" aria-label="검색 열기">
-              <span class="material-icons" aria-hidden="true">search</span>
-            </button>
-
-            <button
-              type="button"
-              class="icon-btn"
-              aria-label="장바구니, 현재 1개 상품"
-            >
-              <span class="material-icons" aria-hidden="true"
-                >shopping_bag</span
-              >
-              <span class="cart-badge" aria-hidden="true">1</span>
-            </button>
-
-            <button
-              type="button"
-              class="icon-btn"
-              aria-label="전체 메뉴 열기"
-              aria-expanded="false"
-              aria-controls="global-nav"
-            >
-              <span class="material-icons" aria-hidden="true">menu</span>
-            </button>
-          </div>
-        </div>
-      </header>
+      <!-- 공통 헤더 — header.js가 #header-root에 주입 -->
+      <div id="header-root"></div>
       <main class="page page--product-list" role="main">
         <div class="page__inner">
           <nav class="page-header" aria-label="페이지 위치">
@@ -116,6 +84,11 @@
 
         <button id="doneBtn" class="btn btn--success hidden">피팅 완료</button>
       </div>
+
+      <!-- 공통 푸터 — loadComponents.js가 components/footer.html을 주입 -->
+      <div data-include="/components/footer.html"></div>
     </div>
+    <script type="module" src="js/loadComponents.js"></script>
+    <script type="module" src="js/modules/header.js"></script>
   </body>
 </html>

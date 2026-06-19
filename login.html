@@ -7,18 +7,23 @@
 
   <title>로그인</title>
 
+  <link rel="stylesheet" href="./styles/reset.css">
+  <link rel="stylesheet" href="./styles/normalize.css">
+  <link rel="stylesheet" href="./styles/common.css">
+
   <link rel="stylesheet" href="./styles/header.css">
-  <link rel="stylesheet" href="./styles/nav.css">
   <link rel="stylesheet" href="./styles/footer.css">
   
   <link rel="stylesheet" href="./styles/auth-login.css">
   
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 </head>
 
 <body data-page="login">
 
-  <div data-include="/components/header.html"></div>
+  <!-- 공통 헤더 — header.js가 #header-root에 주입 -->
+  <div id="header-root"></div>
 
   <main class="login-page">
   
@@ -142,6 +147,7 @@
     <div data-include="/components/footer.html"></div>
     
     <script type="module" src="./js/loadComponents.js"></script>
+    <script type="module" src="./js/modules/header.js"></script>
     <script type="module" src="./js/main.js"></script>
 
 </body>
