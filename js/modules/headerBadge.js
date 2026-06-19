@@ -21,7 +21,7 @@ export function initHeaderBadge(headerRoot) {
 
   if (wishlistBtn) {
     wishlistBtn.onclick = () => {
-      window.location.href = "/wishlist.html";
+      window.location.href = "/cart.html";
     };
     if (!wishlistBtn.querySelector(".wishlist-count")) {
       const badge = document.createElement("span");

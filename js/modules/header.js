@@ -2,18 +2,21 @@ import { initHeaderSearch } from "../modules/headerSearch.js";
 import { initHeaderMenu } from "../modules/headerMenu.js";
 import { initHeaderMega } from "../modules/headerMega.js";
 import { initHeaderBadge } from "../modules/headerBadge.js";
+import { initHeaderScroll } from "../modules/headerScroll.js";
+
 
 export function initGlobalHeader() {
   const headerRoot = document.getElementById("header-root");
-
+  
   if (!headerRoot) return;
-
+  
   headerRoot.innerHTML = headerMarkup;
-
+  
   initHeaderSearch(headerRoot);
   initHeaderMenu(headerRoot);
   initHeaderMega(headerRoot);
   initHeaderBadge(headerRoot);
+  initHeaderScroll(headerRoot);
 }
 const headerMarkup = `
 <header class="site-header">
@@ -42,7 +45,10 @@ const headerMarkup = `
         <span class="material-icons">shopping_cart</span>
       </button>
       
-      <button class="icon-btn wishlist-btn desktop-only" aria-label="찜하기">
+      <a href="/login.html" class="icon-btn login desktop-only" aria-label="로그인">
+        <span class="material-icons">login</span>
+      </a>
+      <button class="icon-btn wishlist-btn desktop-only" aria-label="로그인">
         <span class="material-icons">favorite_border</span>
       </button>
       
@@ -224,7 +230,7 @@ const headerMarkup = `
       </nav>
 
       <div class="mobile-nav-footer">
-        <a href="#" class="login-link"><span class="menu-icon material-icons">person</span> 로그인 / 회원가입</a>
+        <a href="/login.html" class="login-link"><span class="menu-icon material-icons">person</span> 로그인 / 회원가입</a>
       </div>
     </div>
   </div>
