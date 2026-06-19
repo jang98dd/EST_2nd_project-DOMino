@@ -1,6 +1,6 @@
 .service-container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: var(--header-height) auto 0; /* 고정 헤더(88px)가 본문을 가리지 않도록 */
   padding: 0 20px 50px;
 }
 .section-title {

@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="styles/footer.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- 고정 헤더(88px)가 본문을 가리지 않도록 -->
+    <style>
+      main.page {
+        margin-top: var(--header-height);
+      }
+    </style>
   </head>
 
   <body>
