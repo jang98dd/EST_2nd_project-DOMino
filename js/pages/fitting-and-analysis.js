@@ -1,4 +1,7 @@
 import { fetchProducts } from "../modules/fetchRender.js";
+import { initTabs } from "../components/tabs.js";
+
+initTabs();
 
 const FACE_PRESETS = {
   balance:  [90, 35, 45, 55, 70], 
