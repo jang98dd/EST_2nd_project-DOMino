@@ -61,7 +61,7 @@
         </div>
       </section>
 
-      <!-- 2. CATEGORY  -->
+      <!-- 2. CATEGORY -->
       <section class="category section" aria-labelledby="category-title">
         <div class="page">
           <h2 class="category__title" id="category-title">Category</h2>
@@ -199,17 +199,20 @@
       <section class="more-collection section" aria-labelledby="more-title" data-collection="more">
         <h2 class="section-bar" id="more-title">More Collection</h2>
 
-        <!-- 셀럽 이미지 캐러셀 -->
+        <!-- 셀럽 이미지 캐러셀 (가운데 활성 사진에 이름 캡션) -->
         <div class="more-collection__celebs swiper" data-celeb-swiper role="group" aria-label="셀럽 컬렉션">
           <div class="swiper-wrapper">
             <div class="swiper-slide" data-celeb="gd" data-celeb-name="지드래곤">
               <img src="assets/images/celebrity_gd.jpg" alt="지드래곤 컬렉션" />
+              <span class="more-collection__celeb-cap">지드래곤's Collection</span>
             </div>
             <div class="swiper-slide" data-celeb="nayoung" data-celeb-name="나영">
               <img src="assets/images/celebrity_nayoung.jpg" alt="나영 컬렉션" />
+              <span class="more-collection__celeb-cap">나영's Collection</span>
             </div>
             <div class="swiper-slide" data-celeb="dex" data-celeb-name="덱스">
               <img src="assets/images/celebrity_dex.jpg" alt="덱스 컬렉션" />
+              <span class="more-collection__celeb-cap">덱스's Collection</span>
             </div>
           </div>
         </div>
@@ -237,6 +240,46 @@
             <span data-celeb-label>지드래곤</span> 컬렉션 더 보기
             <span class="material-icons" aria-hidden="true">chevron_right</span>
           </a>
+        </div>
+      </section>
+
+      <!-- 5-1. AI · AR 기술 체험 (Experience) -->
+      <section class="techlab" aria-labelledby="techlab-title">
+        <h2 class="section-bar" id="techlab-title">Experience</h2>
+        <div class="techlab__bg" aria-hidden="true"></div>
+        <div class="techlab__dim" aria-hidden="true"></div>
+
+        <div class="page techlab__inner">
+          <p class="techlab__subtitle">라운즈의 기술</p>
+          <h3 class="techlab__title">뭘 사야할지 고민될 때,</h3>
+
+          <div class="techlab__panels">
+            <!-- 좌 : 얼굴형 분석 -->
+            <article class="techlab-panel techlab-panel--ai">
+              <img class="techlab-panel__reveal" src="assets/images/ai-analyze.png" alt="" aria-hidden="true" />
+              <div class="techlab-panel__content">
+                <h4 class="techlab-panel__title">얼굴형 분석하기</h4>
+                <p class="techlab-panel__desc">나의 얼굴형을 알아보고 가장 잘 어울리는 프레임을 확인해보세요.</p>
+                <a class="btn category__cta-btn category__cta-btn--analysis" href="analysis.html">
+                  <img class="category__cta-icon" src="assets/icons/face.png" alt="" />
+                  얼굴형 분석
+                </a>
+              </div>
+            </article>
+
+            <!-- 우 : 안경 써보기 -->
+            <article class="techlab-panel techlab-panel--ar">
+              <img class="techlab-panel__reveal" src="assets/images/ar-fit.png" alt="" aria-hidden="true" />
+              <div class="techlab-panel__content">
+                <h4 class="techlab-panel__title">지금 안경 써보기</h4>
+                <p class="techlab-panel__desc">매장에 방문하지 않아도 핸드폰과 컴퓨터 카메라만 있다면 지금 바로 착용해보고 결정하세요.</p>
+                <a class="btn category__cta-btn category__cta-btn--fitting" href="fitting.html">
+                  <img class="category__cta-icon" src="assets/icons/wear.png" alt="" />
+                  안경 써보기
+                </a>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
