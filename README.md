@@ -5,7 +5,7 @@
 ---
 
 ## Live Demo
-https://https://github.com/jang98dd/EST_2nd_project-DOMino
+https://github.com/jang98dd/EST_2nd_project-DOMino
 
 ---
 
