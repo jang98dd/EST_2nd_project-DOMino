@@ -247,7 +247,7 @@ function initActions(product) {
     buyBtn.addEventListener('click', () => {
       const confirmBuy = confirm(`🛍️ [${productTitle}]\n이 상품을 바로 구매하시겠습니까?`);
       if (confirmBuy) {
-        window.location.href = '/cart.html';
+        window.location.href = 'cart.html';
       }
     });
   }
