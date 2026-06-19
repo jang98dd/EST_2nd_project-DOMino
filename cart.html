@@ -9,10 +9,12 @@
   <link rel="stylesheet" href="styles/common.css" />
   <link rel="stylesheet" href="styles/cart.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" href="styles/header.css" />
+  <link rel="stylesheet" href="styles/nav.css" />
+  <link rel="stylesheet" href="styles/footer.css" />
 </head>
 <body>
-  <header class="header">
-  </header>
+  <div data-include="/components/header.html"></div>
 
   <main class="page cart-container">
     <div class="cart-content-wrapper">
@@ -81,14 +83,9 @@
       </div>
     </div>
   </main>
-  <footer class="footer">
-  </footer>
-  <script type="module">
-      import { renderHeader } from "./js/modules/header.js";
-      import { renderFooter } from "./js/modules/footer.js";
-      renderHeader();
-      renderFooter();
-    </script>
+  <div data-include="/components/footer.html"></div>
+  
   <script type="module" src="js/pages/cart.js"></script>
+  <script type="module" src="./js/loadComponents.js"></script>
 </body>
 </html>
