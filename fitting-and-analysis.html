@@ -18,7 +18,7 @@
   <body>
     <div class="app">
       <div class="header-root"></div>
-      <main class="service-container">
+      <main class="service-container" aria-label="가상 피팅 및 얼굴 분석">
         <div class="page__inner">
           <nav class="page-header mobile-tabs" aria-label="페이지 위치">
             <button
@@ -41,12 +41,12 @@
 
           <div class="content-wrapper">
             <section id="fitting" class="section-panel active">
-              <h2 class="section-title">VIRTUAL FITTING</h2>
+              <h2 class="section-title sr-only">가상 피팅</h2>
               <div class="fitting-grid">
                 <div class="preview-column">
                   <div class="preview-box">
                     <div class="image-frame">
-                      <img id="uploadedImage" src="" alt="피팅 이미지" />
+                      <img id="uploadedImage" src="..." alt="피팅 이미지" />
                       <div class="glasses-overlay" id="glassesOverlay"></div>
                     </div>
                     <div class="upload-placeholder" id="uploadPlaceholder">
@@ -141,7 +141,7 @@
             </section>
 
             <section id="analysis" class="section-panel">
-              <h2 class="section-title">FACE ANALYSIS</h2>
+              <h2 class="section-title">얼굴형 분석</h2>
 
               <div
                 id="loadingOverlay"
