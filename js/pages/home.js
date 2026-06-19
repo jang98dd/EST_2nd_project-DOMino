@@ -7,15 +7,15 @@ const swipers = {}; // 섹션별 Swiper 인스턴스 보관
 
 /* 영상 데이터 */
 const HERO_VIDEOS = [
-  { id: "8UpMctZ0e74", title: "LE SPECS JANUARY 24 'FAST LOVE'" },
   { id: "Ph5ZnFPYeZg", title: "CARIN X NewJeans, Can't take my eyes off you, 카린 안경" },
   { id: "msfGAtyEi58", title: "PUBLIC BEACON 2026 BUCKLE COLLECTION" },
+  { id: "8UpMctZ0e74", title: "LE SPECS JANUARY 24 'FAST LOVE'" },
   { id: "ZqzRmbHyGHc", title: "2026 MAIN COLLECTION 'ROMANTIC SPEED'" },
   { id: "VczU0X342MI", title: "Jennie gets the best of both worlds." },
 ];
 const BRAND_VIDEOS = [
-  { id: "VSz8IfhtKFM", title: "The New Aviator Capsule." },
   { id: "gBakazoY4d8", title: "프로젝트 프로덕트(PROJEKT PRODUKT), PROJECT 13, Neo Nomad" },
+  { id: "VSz8IfhtKFM", title: "The New Aviator Capsule." },
   { id: "wM7_iTWnCl0", title: "2026 Bouquet Collection with FKA twigs" },
   { id: "Jl0gN5KbK2o", title: "LE SPECS X NO PROBLEMO" },
   { id: "G6KBfKVga-s", title: "Rudy Project x FCI: A New Chapter for Italian Cycling" },
@@ -36,6 +36,7 @@ async function initHome() {
   initVideoSection("brand", BRAND_VIDEOS);
   renderTabs(); // Best Pick 브랜드 탭 주입
   bindBestPickTabs(); // 탭 클릭 바인딩 — 미리 해서 이후 코드 에러와 무관하게 동작
+  initTabDragScroll(); // 데스크탑: 탭 마우스 드래그 가로 스크롤
   bindBestPickLoadMore(); // 더보기 버튼 바인딩
 
   // 비동기 로딩: try/catch/finally
@@ -391,7 +392,7 @@ function finishLoading(sectionSelector) {
 /* ---------- Best Pick ---------- */
 /* 더보기 상태: 현재 탭의 상품 목록 + 표시 개수 */
 const bestPick = { list: [], shown: 0 };
-const BEST_PICK_INITIAL = 16; /* 16개 = 8열 */
+const BEST_PICK_INITIAL = 24; /* 24개 = 12열, 가로 행을 가득 채움 */
 const LOAD_MORE_STEP = 10; /* 더보기 클릭당 추가 개수 */
 
 /* 무한 순환으로 count개 카드 추출(소진 시 처음부터 반복) */
@@ -423,8 +424,9 @@ function renderBestPick(brand) {
     brand === "all" ? allProducts : allProducts.filter((p) => p.brand === brand);
 
   bestPick.list = list;
+  // 상품이 적은 브랜드도 순환 반복으로 가로 행을 가득 채움(빈 목록만 0개)
+  let count = list.length ? BEST_PICK_INITIAL : 0;
   // 2행 그리드 빈칸 방지를 위해 카드 수를 짝수로 맞춤(홀수면 순환으로 1장 더)
-  let count = Math.min(BEST_PICK_INITIAL, list.length);
   if (count % 2 === 1) count += 1;
   bestPick.shown = count;
   renderBestPickGrid(count ? bestPickCards(0, count) : []);
@@ -432,7 +434,7 @@ function renderBestPick(brand) {
   finishLoading(".best-pick");
 }
 
-/* 더보기: 10개 추가(소진 시 처음부터 무한 순환), 스크롤바 갱신 */
+/* 더보기: 10개 추가(소진 시 처음부터 무한 순환) + 추가된 상품으로 캐러셀 이동 */
 function loadMoreBestPick() {
   const { list, shown } = bestPick;
   if (!list.length) return;
@@ -449,8 +451,12 @@ function loadMoreBestPick() {
 
   const sw = swipers.bestpick;
   if (!sw || !sw.appendSlide) return;
-  sw.appendSlide(slides); // 끝에 추가 → 현재 스크롤 위치 유지
+  const firstNewIndex = sw.slides.length; // 추가 전 슬라이드 수 = 새 첫 슬라이드 인덱스
+  sw.appendSlide(slides); // 끝에 추가
   sw.update(); // 스크롤바 너비 반영
+  // 추가된 상품이 보이도록 캐러셀을 새 슬라이드 위치로 부드럽게 이동(다음 프레임에)
+  const target = Math.min(firstNewIndex, sw.slides.length - 1);
+  requestAnimationFrame(() => sw.slideTo(target, 600));
 }
 
 function bindBestPickLoadMore() {
@@ -510,6 +516,56 @@ function bindBestPickTabs() {
       moveFocus(target);
     });
   });
+}
+
+/* ---------- 탭 마우스 드래그 가로 스크롤(데스크탑) ----------
+   .best-pick__tabs는 overflow-x:auto라 휠/트랙패드 스크롤은 되지만
+   마우스 클릭-드래그로는 안 밀렸음 → 포인터 드래그로 scrollLeft 제어.
+   터치는 네이티브 스크롤을 그대로 쓰고, 드래그가 발생한 클릭은 탭 전환을 막음. */
+function initTabDragScroll() {
+  const tabs = document.querySelector(".best-pick__tabs");
+  if (!tabs) return;
+
+  let isDown = false;
+  let moved = false;
+  let startX = 0;
+  let startScroll = 0;
+
+  tabs.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "touch") return; // 터치는 네이티브 스크롤 유지
+    isDown = true;
+    moved = false;
+    startX = e.clientX;
+    startScroll = tabs.scrollLeft;
+    tabs.classList.add("is-dragging");
+  });
+
+  window.addEventListener("pointermove", (e) => {
+    if (!isDown) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 3) moved = true; // 3px 이상이면 드래그로 간주
+    tabs.scrollLeft = startScroll - dx;
+  });
+
+  const end = () => {
+    if (!isDown) return;
+    isDown = false;
+    tabs.classList.remove("is-dragging");
+  };
+  window.addEventListener("pointerup", end);
+  window.addEventListener("pointercancel", end);
+
+  // 드래그 직후의 클릭은 탭 활성화 막기(드래그 ≠ 탭 선택)
+  tabs.addEventListener(
+    "click",
+    (e) => {
+      if (!moved) return;
+      e.preventDefault();
+      e.stopPropagation();
+      moved = false;
+    },
+    true // capture: 탭 버튼의 click 핸들러보다 먼저 가로채기
+  );
 }
 
 /* ---------- Jennie's Collection ---------- */

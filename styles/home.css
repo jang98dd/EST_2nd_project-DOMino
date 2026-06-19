@@ -45,11 +45,17 @@
 .collection .section-bar,
 .more-collection .section-bar,
 .event .section-bar,
-.store .section-bar {
+.store .section-bar,
+.techlab .section-bar {
   height: 40px;
   font-size: var(--font-18);
   font-weight: 700;
   line-height: var(--lh-loose);
+}
+/* techlab은 풀블리드 배경/딤 위라 헤더를 위로 띄움 */
+.techlab .section-bar {
+  position: relative;
+  z-index: 2;
 }
 
 /* 공통 - 불러오기 실패 안내 */
@@ -394,6 +400,15 @@
   margin-bottom: 56px; /* 마지막 버튼 → 다음 섹션 */
 }
 
+/* More Collection → AI·AR : 위는 여백, 아래(Event)는 붙임(색으로 구분).
+   태블릿 56 / 데스크탑 64 는 각 미디어쿼리에서 덮어씀 */
+.more-collection + .techlab {
+  margin-top: 40px;
+}
+.techlab + .event {
+  margin-top: 0;
+}
+
 /* .page 좌우 패딩 제거 */
 .category .page {
   padding: 0;
@@ -544,6 +559,13 @@
   margin-top: 16px; /* 헤더 → 탭 */
   overflow-x: auto;
   scrollbar-width: none;
+  cursor: grab; /* 마우스 드래그 가로 스크롤 가능 표시 */
+}
+
+/* 드래그 중: 커서 변경 + 텍스트 선택 방지(JS가 .is-dragging 토글) */
+.best-pick__tabs.is-dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 
 .best-pick__tabs::-webkit-scrollbar {
@@ -655,6 +677,39 @@
 .more-collection__celebs.is-sliding .swiper-slide img {
   transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1),
     height 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 가운데(활성) 사진: 하단 그라데이션 + 이름 캡션 (히어로/브랜드 방식).
+   데스크탑 ::after는 양옆 흰색 오버레이 용도라, 그라데이션은 ::before 로 분리.
+   가독성 위해 진하게(하단 0.88 검정). */
+.more-collection__celebs .swiper-slide.is-active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(0, 0, 0, 0.55) 72%,
+    rgba(0, 0, 0, 0.88) 100%
+  );
+  pointer-events: none;
+}
+.more-collection__celeb-cap {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 14px;
+  z-index: 1;
+  text-align: center;
+  color: var(--white);
+  font-size: var(--font-18);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  opacity: 0; /* 비활성 슬라이드는 숨김 */
+  pointer-events: none;
+}
+.more-collection__celebs .swiper-slide.is-active .more-collection__celeb-cap {
+  opacity: 1;
 }
 
 .collection__carousel,
@@ -930,6 +985,11 @@
   .more-collection__celebs img {
     aspect-ratio: 605 / 456;
   }
+  /* 활성 사진 이름 캡션 — 큰 사진에 맞게 확대 */
+  .more-collection__celeb-cap {
+    bottom: 22px;
+    font-size: var(--font-28);
+  }
   /* .page 패딩 제거 → 요소별 좌우 간격 */
   .more-collection .page {
     padding: 0;
@@ -953,8 +1013,8 @@
     font-weight: 400;
     line-height: 1.25;
   }
-  /* 더보기 → Event 헤더 56 */
-  .more-collection + .event {
+  /* More Collection → AI·AR(techlab) 56 */
+  .more-collection + .techlab {
     margin-top: 56px;
   }
 
@@ -1267,9 +1327,10 @@
   }
 
   /* 5. MORE COLLECTION */
-  /* 헤더 없음 */
+  /* 헤더 "More Collection" 표시 — 네이비 띠를 아래 셀럽 이미지 너비(1128)에 맞춤 */
   .more-collection .section-bar {
-    display: none;
+    max-width: 1128px;
+    margin: 0 auto;
   }
   /* 셀럽 캐러셀 — 가운데(is-active) 580×578 / 양옆 250×426 + 흰색 오버레이 40%
      안쪽 폭 1128 = 250 + 24 + 580 + 24 + 250 (= 컨테이너 1200 − 좌우 36) */
@@ -1334,8 +1395,8 @@
     margin-top: 18px;
     line-height: 1.5;
   }
-  /* 더보기 → Event 64 */
-  .more-collection + .event {
+  /* More Collection → AI·AR(techlab) 64 */
+  .more-collection + .techlab {
     margin-top: 64px;
   }
 
@@ -1463,5 +1524,188 @@
   /* 이미지 → Brand */
   .store + .brand {
     margin-top: 0;
+  }
+}
+
+/* ============================================================
+   5-1. AI · AR 기술 체험
+   - ar:ai-test.png 배경 + 딤 처리
+   - 좌/우 패널 hover 시 ai-analyze / ar-fit 이미지가
+     각각 좌측 하단 / 우측 하단에서 중앙으로 슬라이드 인
+   - 버튼은 카테고리 CTA(.category__cta-btn) 재사용
+   ============================================================ */
+.techlab {
+  position: relative;
+  overflow: hidden;
+  color: var(--white);
+  background: var(--black);
+}
+/* 배경(ar:ai-test) — 콜론 포함 경로라 따옴표로 감쌈 */
+.techlab__bg {
+  position: absolute;
+  inset: 0;
+  background: url("../assets/images/ar:ai-test.png") center / cover no-repeat;
+}
+/* 딤 처리 */
+.techlab__dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 20, 0.72);
+}
+.techlab__inner {
+  position: relative; /* 배경/딤 위 */
+  z-index: 1;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.techlab__subtitle {
+  margin: 0 0 6px;
+  text-align: center;
+  color: rgba(248, 248, 248, 0.7);
+  font-size: var(--font-14);
+  font-weight: 500;
+}
+.techlab__title {
+  margin: 0 0 20px;
+  text-align: center;
+  color: var(--white);
+  font-size: var(--font-28);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+}
+
+.techlab__panels {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.techlab-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column; /* 본문(스크림)이 카드 전체 너비를 차지하도록 */
+  min-height: 250px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* 카드 이미지: 항상 보이며 평소엔 모서리 쪽으로 살짝 치우침,
+   hover 시 중앙으로 슬라이드(전 구간에서 hover 가능하면 동작) */
+.techlab-panel__reveal {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.techlab-panel--ai .techlab-panel__reveal {
+  transform: translate(-8%, 7%) scale(1.12); /* 평소: 좌측 하단으로 치우침 */
+}
+.techlab-panel--ar .techlab-panel__reveal {
+  transform: translate(8%, 7%) scale(1.12); /* 평소: 우측 하단으로 치우침 */
+}
+.techlab-panel:hover .techlab-panel__reveal {
+  transform: translate(0, 0) scale(1); /* hover: 중앙으로 */
+}
+
+/* 본문 — 하단 정렬 + 가독성 스크림(텍스트 영역만 진하게) */
+.techlab-panel__content {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 20px 24px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.85) 42%,
+    rgba(0, 0, 0, 0.4) 76%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+.techlab-panel__title {
+  margin: 0;
+  color: var(--white);
+  font-size: var(--font-22);
+  font-weight: 700;
+}
+.techlab-panel__desc {
+  margin: 0;
+  color: rgba(248, 248, 248, 0.92);
+  font-size: var(--font-14);
+  line-height: var(--lh-loose);
+}
+/* 버튼: 카테고리 CTA 재사용 — 카드에 맞게 더 작고 컴팩트하게(전 구간) */
+.techlab-panel__content .category__cta-btn {
+  width: auto;
+  height: 38px;
+  padding: 0 16px;
+  margin-top: 8px;
+  font-size: var(--font-14);
+}
+.techlab-panel__content .category__cta-icon {
+  height: 18px;
+}
+
+/* 태블릿+ : 패널 좌우 2열 */
+@media (min-width: 768px) {
+  /* Experience 헤더 — 다른 섹션 헤더와 동일(56) */
+  .techlab .section-bar {
+    height: 56px;
+    font-size: var(--font-28);
+  }
+  /* AI·AR → Event 여백을 표준과 통일 */
+  .techlab + .event {
+    margin-top: 56px;
+  }
+  .techlab__inner {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+  .techlab__subtitle {
+    margin-bottom: 6px;
+    font-size: var(--font-16);
+  }
+  .techlab__title {
+    margin-bottom: 24px;
+    /* 폰트 크기는 base의 var(--font-28) 유지 → 이벤트 제목과 동일 */
+  }
+  .techlab__panels {
+    flex-direction: row;
+  }
+  .techlab-panel {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 400px;
+  }
+  .techlab-panel__title {
+    font-size: var(--font-28);
+  }
+}
+
+/* 데스크탑 */
+@media (min-width: 1200px) {
+  /* 데스크탑은 인라인 제목만 (이벤트 패턴) — Experience 바 숨김 */
+  .techlab .section-bar {
+    display: none;
+  }
+  /* AI·AR → Event 여백 표준 통일 */
+  .techlab + .event {
+    margin-top: 64px;
+  }
+  .techlab-panel {
+    min-height: 440px;
+  }
+  .techlab-panel__content {
+    padding: 32px;
+  }
+  .techlab-panel__desc {
+    font-size: var(--font-16);
   }
 }
