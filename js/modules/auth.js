@@ -1,3 +1,4 @@
+console.log("auth.js 실행됨");
 document
   .querySelectorAll(".toggle-password")
   .forEach(button => {
@@ -52,13 +53,15 @@ const passwordCheck =
 
 
 const emailError =
-  document.querySelectorAll(".error-message")[0];
+  email.parentElement.querySelector(".error-message");
 
 const passwordError =
-  document.querySelectorAll(".error-message")[1];
+  password.closest(".form-group")
+          .querySelector(".error-message");
 
 const passwordCheckError =
-  document.querySelectorAll(".error-message")[2];
+  passwordCheck.closest(".form-group")
+               .querySelector(".error-message");
 
 
 /* 이메일 */
