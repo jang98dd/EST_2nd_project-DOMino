@@ -18,6 +18,9 @@
   flex-direction: column;
   gap: 16px;
 }
+.page__inner {
+  margin-top: 88px;
+}
 .preview-box {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -311,6 +314,9 @@
   .desktop-nav {
     display: none;
   }
+  .page__inner {
+  margin-top: 88px;
+}
   .mobile-tabs {
     display: flex;
     border-bottom: 1px solid var(--gray);
@@ -345,6 +351,9 @@
   .section-panel {
     display: block;
   }
+  .page__inner {
+  margin-top: 88px;
+}
   .content-wrapper {
     display: flex;
     flex-direction: column;
@@ -367,4 +376,7 @@
     margin-top: 40px;
     align-items: flex-start;
   }
+  .service-container {
+  margin-top: 88px;
+}
 }
