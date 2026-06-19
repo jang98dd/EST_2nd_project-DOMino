@@ -408,7 +408,7 @@ function createProductCard(product) {
         
         <button class="btn-like btn--utility-sm"
           data-id="${product.id}"
-          aria-pressed="${isLiked}"
+          aria-pressed="${isLiked ? 'true' : 'false'}"
           aria-label="찜하기">
           <span class="material-icons">${iconText}</span>
         </button>
