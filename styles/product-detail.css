@@ -6,9 +6,6 @@
   min-width: 0;
   overflow-x: hidden;
 }
-.page {
-  margin-top: 88px;
-}
 .product-layout {
   display: grid;
   gap: 24px;
@@ -287,9 +284,6 @@
       "accordion accordion"
       "bottom bottom";
   }
-  .product-layout {
-    margin-top: 88px;
-  }
   .thumb-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -319,9 +313,6 @@
       "media info fitting"
       "accordion accordion accordion"
       "bottom bottom bottom";
-  }
-  .product-layout {
-    margin-top: 88px;
   }
   .thumb-list {
     grid-template-columns: repeat(5, 1fr);
@@ -612,7 +603,6 @@
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
   }
   .product-layout {
-    margin-top: 88px;
     padding-bottom: 90px;
   }
   .indicator-container {

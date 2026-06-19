@@ -62,7 +62,7 @@ const headerMarkup = `
     <div class="mega-inner">
       <div class="mega-col recommend-col">
         <h3 class="col-title">추천 서비스</h3>
-        <a href="/product-list.html" class="recommend-card">
+        <a href="/fitting-and-analysis.html" class="recommend-card">
           <div class="card-text">
             <span class="material-icons">face</span>
             <div class="card-text__text">

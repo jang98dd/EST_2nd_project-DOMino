@@ -15,7 +15,9 @@
   pointer-events: none;
   transition: 0.3s;
 }
-
+#header-root {
+  min-height: 88px;
+}
 .mobile-nav-overlay.open {
   opacity: 1;
   pointer-events: auto;

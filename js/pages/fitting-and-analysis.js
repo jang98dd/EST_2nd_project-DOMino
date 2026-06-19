@@ -1,5 +1,5 @@
 import { fetchProducts } from "../modules/fetchRender.js";
-import { initTabs } from "../components/tabs.js";
+import { initTabs } from "../modules/tabs.js";
 
 initTabs();
 
