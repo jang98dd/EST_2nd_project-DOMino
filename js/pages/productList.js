@@ -25,6 +25,14 @@ const state = {
   limit: 12
 };
 
+const DEFAULT_STATE = {
+  shape: [],
+  gender: "all",
+  size: [],
+  color: [],
+  price: Infinity
+};
+
 const SNAP = {
   full: 0,
   half: window.innerHeight * 0.4,
@@ -292,21 +300,41 @@ function setPrice(value) {
   state.page = 1;
   updateView();
 }
-
 function resetFilters() {
-  state.filters = {
-    shape: [],
-    gender: "all",
-    size: [],
-    color: [],
-    price: DEFAULT_PRICE
-  };
+  state.filters = structuredClone(DEFAULT_STATE);
 
   state.page = 1;
-  updateFilterUI();
+  state.sortType = "popular";
+
+  document.querySelectorAll("[data-filter-type]").forEach(el => {
+    el.classList.remove("is-active");
+    el.setAttribute("aria-pressed", "false");
+
+    if (el.tagName === "INPUT") {
+      el.checked = false;
+    }
+  });
+  closeSheet();
+  updateView();
+  document.querySelectorAll("[data-role='all']").forEach(all => {
+    if (all.tagName === "INPUT") all.checked = true;
+  });
+
+  document.querySelectorAll("[data-gender]").forEach(el => {
+    el.classList.remove("is-active");
+    el.setAttribute("aria-pressed", "false");
+  });
+
+  const priceInput = document.querySelector("#priceMax");
+  if (priceInput) {
+    priceInput.value = priceInput.max;
+  }
+
+  const chipWrap = document.querySelector(".active-filters");
+  if (chipWrap) chipWrap.innerHTML = "";
+
   updateView();
 }
-
 function initFilters() {
   const inputs = document.querySelectorAll('input[data-filter-type]');
 
