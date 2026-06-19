@@ -156,3 +156,58 @@ signupForm.addEventListener("submit", (e) => {
   });
 
 }
+
+/* 로그인 */
+
+const loginForm =
+  document.querySelector(".login-form");
+
+if (loginForm) {
+
+  const loginEmail =
+    loginForm.querySelector('input[type="email"]');
+
+  const loginPassword =
+    document.querySelector("#loginPw");
+
+  const loginError =
+    document.querySelector(".login-error");
+
+  loginForm.addEventListener("submit", (e) => {
+
+    e.preventDefault();
+
+    if (
+      loginEmail.value.trim() === "" ||
+      loginPassword.value.trim() === ""
+    ) {
+
+      loginError.innerHTML =
+        "아이디(로그인 전화번호, 로그인 전용 아이디) 또는 비밀번호가 잘못 되었습니다.<br>아이디와 비밀번호를 정확히 입력해 주세요.";
+
+      loginError.style.display = "block";
+
+      return;
+    }
+
+    loginError.style.display = "none";
+
+  });
+
+}
+
+if (loginForm) {
+
+  loginEmail.addEventListener("input", () => {
+
+    loginError.style.display = "none";
+
+  });
+
+  loginPassword.addEventListener("input", () => {
+
+    loginError.style.display = "none";
+
+  });
+
+}
