@@ -52,6 +52,43 @@
   --indicator-height: 2px;
 }
 
+/* PAGE LAYOUT */
+
+.page {
+  width: 100%;
+  padding: 0 16px;
+}
+
+.page__inner {
+  width: 100%;
+  margin: 0 auto;
+}
+.app {
+ width: 100%;
+}
+
+
+.back-btn {
+  justify-self: start;
+}
+
+.page-title {
+  justify-self: center;
+  margin: 0;
+  font-size: var(--font-22);
+}
+
+.page-header__spacer {
+  justify-self: end;
+}
+
+/* PAGE HEADER */
+
+.page-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
 /* RESPONSIVE TOKENS */
 @media (min-width: 768px) {
   :root {
@@ -99,20 +136,186 @@
   margin-top: var(--section);
 }
 
-/* TYPOGRAPHY */
-.font-body-sm {
-  font-size: var(--font-14);
-  line-height: var(--lh-normal);
+/* COLOR GRID */
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-items: center;
 }
 
-.font-body-lg {
-  font-size: var(--font-18);
-  line-height: var(--lh-normal);
+.color-grid button:nth-child(1) { background: #072369; }
+.color-grid button:nth-child(2) { background: #1c1c1c; }
+.color-grid button:nth-child(3) { background: #a09bee; }
+.color-grid button:nth-child(4) { background: #d9d9d9; }
+.color-grid button:nth-child(5) { background: #535762; }
+.color-grid button:last-child { background: #f2b705; }
+
+.color-dot {
+  border-radius: 50%;
+  display: flex;
 }
 
-.font-h1 {
-  font-size: var(--font-28);
-  line-height: var(--lh-tight);
+/* FRAME OPTIONS */
+
+.frame-list__item {
+  width: 100%;
+}
+
+.frame-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+/* FILTER */
+
+.filter-group {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-list {
+  display: flex;
+  justify-content: center;
+}
+
+.price-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.price-range {
+  width: 100%;
+}
+
+.price-current {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #535762;
+}
+
+/* FILTER */
+
+.filter-group {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-list {
+  display: flex;
+  justify-content: center;
+}
+
+.price-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.price-range {
+  width: 100%;
+}
+
+.price-current {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #535762;
+}
+
+/* PRODUCT LIST */
+
+.product-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  justify-items: center;
+}
+.product-card {
+  display: flex;
+  flex-direction: column;
+}
+.product-card__thumb {
+  position: relative;
+}
+.product-card__thumb img {
+  display: block;
+  width: 100%;
+}
+.product-cards h3 {
+  height: 52px;
+}
+.btn-more {
+  width: 232px;
+  height: var(--btn-sm);
+  border: 1px solid var(--black);
+}
+.product-card .btn-like {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+.product-card span {
+  font-size: 12px;
+  color: var(--primary);
+  transition: color .2s ease;
+}
+.btn-like[aria-pressed="true"]{
+  color: var(--primary);
+}
+.product-card .btn-fit {
+  position: absolute;
+  padding: 0 8px;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--gray);
+  color: var(--gray);
+}
+.btn--filter.is-active {
+  display: block;
+}
+/* ============================================
+   TYPOGRAPHY (Mobile First → Desktop)
+   ※ 자간 -2.5%는 페이지 전역 규칙(* letter-spacing)에서 처리
+============================================ */
+.text-base            { font-weight: 400; font-size: 1.75rem;  line-height: 1.15; } /* 28 */
+
+.heading-xl           { font-weight: 700; font-size: 1.75rem;  line-height: 1.15; } /* 28 */
+.heading-md           { font-weight: 700; font-size: 1.125rem; line-height: 1.5; }  /* 18 */
+
+.body-lg              { font-weight: 400; font-size: 1.125rem; line-height: 1.35; } /* 18 */
+.body-md              { font-weight: 400; font-size: 1rem;     line-height: 1.25; } /* 16 */
+.body-sm              { font-weight: 400; font-size: 0.875rem; line-height: 1.15; } /* 14 */
+.body-sm-bold         { font-weight: 700; font-size: 0.875rem; line-height: 1.4; }  /* 14 */
+.body-sm-bold--tight  { font-weight: 700; font-size: 0.875rem; line-height: 1; }    /* 14 */
+
+.caption              { font-weight: 700; font-size: 0.75rem;  line-height: 1.35; } /* 12 */
+
+.link                 { font-weight: 400; font-size: 1.125rem; line-height: 1.35; text-decoration: underline; } /* 18 */
+
+@media (min-width: 1200px) {
+  .display            { font-weight: 300; font-size: 3.5rem;   line-height: 1.14; } /* 56 */
+  .heading-xl         { font-weight: 700; font-size: 2.25rem;  line-height: 1.22; } /* 36 */
+  .heading-lg         { font-weight: 700; font-size: 1.75rem;  line-height: 1.28; } /* 28 */
+  .heading-md         { font-weight: 700; font-size: 1.25rem;  line-height: 1.4; }  /* 20 */
+  .body-lg            { font-weight: 400; font-size: 1.125rem; line-height: 1.55; } /* 18 */
+  .body-lg-bold       { font-weight: 700; font-size: 1rem;     line-height: 1.5; }  /* 16 */
+  .body-md            { font-weight: 400; font-size: 1rem;     line-height: 1.5; }  /* 16 */
+  .link               { font-weight: 400; font-size: 1.125rem; line-height: 1.55; text-decoration: underline; } /* 18 */
 }
 
 /* BUTTON SYSTEM */
@@ -286,4 +489,10 @@ body.is-sheet-open {
 .product-card p {
   font-size: var(--font-14);
   font-weight: 800;
+}
+@media (min-width: 1200px) {
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 }

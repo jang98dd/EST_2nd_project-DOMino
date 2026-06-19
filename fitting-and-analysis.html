@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ROUNZ 가상피팅 & 분석</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/normalize.css" />
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/fitting-and-anaylsis.css" />
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app">
+      <div id="header-root"></div>
+      <main class="service-container" aria-label="가상 피팅 및 얼굴 분석">
+        <div class="page__inner">
+          <nav class="page-header mobile-tabs" aria-label="페이지 위치">
+            <button
+              type="button"
+              class="btn tab-btn active"
+              data-tab="fitting"
+              aria-label="피팅"
+            >
+              피팅
+            </button>
+            <button
+              type="button"
+              class="btn tab-btn"
+              data-tab="analysis"
+              aria-label="분석"
+            >
+              분석
+            </button>
+          </nav>
+
+          <div class="content-wrapper">
+            <section id="fitting" class="section-panel active">
+              <h2 class="section-title sr-only">가상 피팅</h2>
+              <div class="fitting-grid">
+                <div class="preview-column">
+                  <div class="preview-box">
+                    <div class="image-frame">
+                      <img id="uploadedImage" alt="피팅 이미지" />
+                      <div class="glasses-overlay" id="glassesOverlay"></div>
+                    </div>
+                    <div class="upload-placeholder" id="uploadPlaceholder">
+                      <span class="material-icons">add_a_photo</span>
+                      <p>사진 업로드</p>
+                      <input
+                        type="file"
+                        id="fileInput"
+                        accept="image/*, .json"
+                        class="sr-only"
+                      />
+                    </div>
+                  </div>
+                  <div class="fitting-list-container">
+                    <p class="fitting-list-label">피팅할 안경 선택</p>
+                    <div
+                      id="fittingGlassesList"
+                      class="fitting-glasses-list"
+                    ></div>
+                  </div>
+                </div>
+                <div class="control-box">
+                  <div class="slider-group">
+                    <div class="slider-item">
+                      <label>X축 위치</label>
+                      <input
+                        type="range"
+                        id="slideX"
+                        class="custom-range"
+                        min="-150"
+                        max="150"
+                        value="0"
+                      />
+                      <span class="val">0px</span>
+                    </div>
+                    <div class="slider-item">
+                      <label>Y축 위치</label>
+                      <input
+                        type="range"
+                        id="slideY"
+                        class="custom-range"
+                        min="-150"
+                        max="150"
+                        value="0"
+                      />
+                      <span class="val">0px</span>
+                    </div>
+                    <div class="slider-item">
+                      <label>크기 조절</label>
+                      <input
+                        type="range"
+                        id="slideScale"
+                        class="custom-range"
+                        min="30"
+                        max="500"
+                        value="100"
+                      />
+                      <span class="val">100%</span>
+                    </div>
+                    <div class="slider-item">
+                      <label>회전 각도</label>
+                      <input
+                        type="range"
+                        id="slideRotate"
+                        class="custom-range"
+                        min="-180"
+                        max="360"
+                        value="0"
+                      />
+                      <span class="val">0°</span>
+                    </div>
+                  </div>
+
+                  <div class="action-btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-outline"
+                      id="btnUploadTrigger"
+                    >
+                      파일 가져오기
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-solid w-100"
+                      id="startAnalysisBtn"
+                    >
+                      얼굴형 분석하기
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="analysis" class="section-panel">
+              <h2 class="section-title">얼굴형 분석</h2>
+
+              <div
+                id="loadingOverlay"
+                class="loading-container"
+                style="display: none"
+              >
+                <div class="gauge-box">
+                  <h3 class="loading-title">얼굴형 분석 중...</h3>
+                  <div class="circle-gauge">
+                    <svg width="120" height="120">
+                      <circle
+                        cx="60"
+                        cy="60"
+                        r="50"
+                        fill="none"
+                        stroke="#eee"
+                        stroke-width="6"
+                      />
+                      <circle
+                        id="progressCircle"
+                        cx="60"
+                        cy="60"
+                        r="50"
+                        fill="none"
+                        stroke="#1ca744"
+                        stroke-width="6"
+                        stroke-dasharray="314"
+                        stroke-dashoffset="314"
+                        transform="rotate(-90 60 60)"
+                      />
+                    </svg>
+                    <p id="progressText">0%</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="analysis-result-box" id="analysisResult">
+                <div class="chart-area">
+                  <div class="canvas-holder">
+                    <svg viewBox="0 0 100 100" class="svg-radar">
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="9"
+                        fill="none"
+                        stroke="#E5E7EB"
+                        stroke-width="0.75"
+                      />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="18"
+                        fill="none"
+                        stroke="#E5E7EB"
+                        stroke-width="0.75"
+                      />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="27"
+                        fill="none"
+                        stroke="#E5E7EB"
+                        stroke-width="0.75"
+                      />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="36"
+                        fill="none"
+                        stroke="#E5E7EB"
+                        stroke-width="0.75"
+                      />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        fill="none"
+                        stroke="#D1D5DB"
+                        stroke-width="1"
+                      />
+
+                      <line
+                        x1="50"
+                        y1="50"
+                        x2="50"
+                        y2="5"
+                        stroke="#E5E7EB"
+                        stroke-width="0.75"
+                      />
+                      <line
+                        x1="50"
+                        y1="50"
+                        x2="93"
+                        y2="36"
+                        stroke="#E5E7EB"
+                        stroke-width="0.75"
+                      />
+                      <line
+                        x1="50"
+                        y1="50"
+                        x2="76"
+                        y2="88"
+                        stroke="#E5E7EB"
+                        stroke-width="0.75"
+                      />
+                      <line
+                        x1="50"
+                        y1="50"
+                        x2="24"
+                        y2="88"
+                        stroke="#E5E7EB"
+                        stroke-width="0.75"
+                      />
+                      <line
+                        x1="50"
+                        y1="50"
+                        x2="7"
+                        y2="36"
+                        stroke="#E5E7EB"
+                        stroke-width="0.75"
+                      />
+
+                      <polygon
+                        id="radar-data"
+                        fill="rgba(11, 30, 74, 0.3)"
+                        stroke="#0B1E4A"
+                        stroke-width="1"
+                      ></polygon>
+                    </svg>
+                    <span class="r-label label-top">밸런스</span>
+                    <span class="r-label label-right-top">각진형</span>
+                    <span class="r-label label-right-bottom">역삼각형</span>
+                    <span class="r-label label-left-bottom">하트형</span>
+                    <span class="r-label label-left-top">둥근형</span>
+                  </div>
+                </div>
+
+                <div class="analysis-text-info">
+                  <span class="badge">분석 완료</span>
+                  <h3 class="result-main-title">
+                    매우 매끄러운 <span class="highlight">달걀형 얼굴</span>
+                  </h3>
+                  <p class="result-sub-desc">
+                    전체적인 비율이 이상적이며 부드러운 인상을 주는 스퀘어
+                    프레임이 최적입니다.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+      <div data-include="/components/footer.html"></div>
+    </div>
+    <script type="module" src="js/pages/fitting-and-analysis.js"></script>
+    <script type="module" src="js/loadComponents.js"></script>
+    <script type="module" src="js/modules/header.js"></script>
+  </body>
+</html>

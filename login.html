@@ -1,97 +1,155 @@
-<main class="auth">
+<!DOCTYPE html>
+<html lang="ko">
 
-  <section class="auth__intro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <h2 class="auth__title">
-      Find the Frame<br>
-      that fits your style.
-    </h2>
+  <title>로그인</title>
 
-    <p class="auth__desc">
-      당신에게 가장 잘 어울리는 안경을 찾아보세요.
-    </p>
+  <link rel="stylesheet" href="./styles/reset.css">
+  <link rel="stylesheet" href="./styles/normalize.css">
+  <link rel="stylesheet" href="./styles/common.css">
 
-  </section>
+  <link rel="stylesheet" href="./styles/header.css">
+  <link rel="stylesheet" href="./styles/footer.css">
+  
+  <link rel="stylesheet" href="./styles/auth-login.css">
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
 
-  <form class="auth-form">
+<body data-page="login">
 
-    <div class="form-group">
+  <!-- 공통 헤더 — header.js가 #header-root에 주입 -->
+  <div id="header-root"></div>
 
-      <label for="email">
-        이메일
-      </label>
+  <main class="login-page">
+  
+    <div class="login-layout">
+  
+      <section class="login-content">
+  
+        <div class="login-title">
+  
+          <h2>
+            Find the Frame<br>
+            that fits your style.
+          </h2>
+  
+          <p>
+            당신에게 가장 잘 어울리는 안경을 찾아보세요.
+          </p>
+  
+        </div>
+  
+        <form class="login-form">
 
-      <input id="email" type="email" placeholder="이메일을 입력해주세요">
+        <div class="form-group">
 
-    </div>
+          <label>이메일</label>
 
-    <div class="form-group">
+          <input type="email" placeholder="이메일을 입력해주세요">
 
-      <label for="password">
-        비밀번호
-      </label>
+        </div>
 
-      <div class="input-password">
+        <div class="form-group">
 
-        <input id="password" type="password" placeholder="영문, 숫자, 특수문자 8자 이상">
+          <label>비밀번호</label>
 
-        <button type="button">
-          👁
+          <div class="password-wrap">
+
+            <input id="loginPw" type="password" placeholder="비밀번호를 입력해주세요">
+
+            <button type="button" class="toggle-password">
+
+              👁
+
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="login-option">
+
+          <label>
+
+            <input type="checkbox">
+
+            로그인 상태 유지
+
+          </label>
+
+          <a href="#">
+            비밀번호 찾기
+          </a>
+
+        </div>
+
+        <button type="submit" class="login-btn">
+
+          로그인
+
         </button>
 
+      </form>
+
+      <div class="divider">
+        <span>또는</span>
       </div>
 
-    </div>
+      <div class="social-login">
+      
+        <button class="social kakao">
+      
+          <img src="./assets/images/kakaotalk.png" alt="카카오">
+      
+          <span>카카오로 로그인</span>
+      
+        </button>
+      
+        <button class="social naver">
+      
+          <img src="./assets/images/naver.png" alt="네이버">
+      
+          <span>네이버로 로그인</span>
+      
+        </button>
+      
+        <button class="social apple">
+      
+          <img src="./assets/images/apple.png" alt="애플">
+      
+          <span>Apple로 로그인</span>
+      
+        </button>
+      
+      </div>
 
-    <div class="auth-option">
+      <p class="signup-link">
 
-      <label>
-        <input type="checkbox">
-        로그인 상태 유지
-      </label>
+        아직 회원이 아니신가요?
 
-      <a href="#">
-        비밀번호 찾기
-      </a>
+        <a href="./signup.html">
+          회원가입
+        </a>
 
-    </div>
+      </p>
 
-    <button type="submit" class="btn-login">
-      로그인
-    </button>
+     </section>
+      
+      
+      </div>
+     </main>
 
-    <div class="divider">
-      또는
-    </div>
+    <div data-include="/components/footer.html"></div>
+    
+    <script type="module" src="./js/loadComponents.js"></script>
+    <script type="module" src="./js/modules/header.js"></script>
+    <script type="module" src="./js/main.js"></script>
 
-    <div class="social-login">
+</body>
 
-      <button class="social kakao">
-        카카오로 로그인
-      </button>
-
-      <button class="social naver">
-        네이버로 로그인
-      </button>
-
-      <button class="social apple">
-        Apple로 로그인
-      </button>
-
-    </div>
-
-    <p class="signup-link">
-
-      아직 회원이 아니신가요?
-
-      <a href="#">
-        회원가입
-      </a>
-
-    </p>
-
-  </form>
-
-</main>
-<link rel="stylesheet" href="./css/style.css">
-<link rel="stylesheet" href="./css/auth.css">
+</html>

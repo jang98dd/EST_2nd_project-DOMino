@@ -1,133 +1,274 @@
-<main class="join">
+<!DOCTYPE html>
 
-  <section class="auth__intro">
+<html lang="ko">
 
-    <h2 class="auth__title">
-      Find the Frame<br>
-      that fits your style.
-    </h2>
+<head>
 
-    <p class="auth__desc">
-      당신에게 가장 잘 어울리는 안경을 찾아보세요.
-    </p>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  </section>
+  <title>회원가입</title>
 
-  <form class="join-form">
+  <link rel="stylesheet" href="./styles/reset.css">
+  <link rel="stylesheet" href="./styles/normalize.css">
+  <link rel="stylesheet" href="./styles/common.css">
+  
+  <link rel="stylesheet" href="./styles/header.css">
+  <link rel="stylesheet" href="./styles/footer.css">
+  
+  <link rel="stylesheet" href="./styles/auth-signup.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-    <div class="radio-group">
+</head>
 
-      <label>
-        <input type="radio" name="gender">
-        내국인
-      </label>
+<body data-page="signup">
 
-      <label>
-        <input type="radio" name="gender">
-        외국인(foreigner)
-      </label>
+  <!-- 공통 헤더 — header.js가 #header-root에 주입 -->
+  <div id="header-root"></div>
+
+  <main class="auth auth--signup">
+
+    <div class="auth__content">
+
+      <section class="auth__intro">
+
+        <h1>
+          Find the Frame<br>
+          that fits your style.
+        </h1>
+
+        <p>
+          당신에게 가장 잘 어울리는 안경을 찾아보세요.
+        </p>
+
+      </section>
+
+      <section class="auth__form">
+
+        <form class="signup-form" id="signupForm">
+
+          <div class="form-group">
+          
+            <label>회원구분 *</label>
+          
+            <div class="radio-group">
+          
+              <label>
+                <input type="radio" name="memberType" value="local">
+                개인회원
+              </label>
+          
+              <label>
+                <input type="radio" name="memberType" value="foreigner">
+                외국인회원(foreigner)
+              </label>
+          
+            </div>
+          
+          </div>
+          
+          <div class="form-group">
+          
+            <label>회원인증 *</label>
+            
+            <div class="radio-group">
+          
+              <label>
+                <input type="radio" name="verifyType" value="email">
+                이메일 인증
+              </label>
+
+            </div>
+
+            <p class="verify-desc">
+              기본정보 > 이메일 항목에 입력하신 정보로 본인인증을 진행합니다.<br>
+              회원가입 후 입력하신 이메일 주소로 인증 메일이 발송되오니,
+              확인해 주시기 바랍니다.
+            </p>
+          
+          </div>
+
+
+          <div class="signup-grid">
+
+            <div class="form-group">
+
+              <label for="name">
+                이름 *
+              </label>
+
+              <input id="name" type="text" placeholder="이름을 입력해주세요">
+
+            </div>
+
+            <div class="form-group">
+            
+              <label>
+                휴대폰 번호 *
+              </label>
+            
+              <div class="phone-group">
+            
+                <select class="phone-prefix">
+                  <option>010</option>
+                  <option>011</option>
+                </select>
+            
+                <input type="tel" placeholder="'-' 없이 입력해주세요">
+            
+              </div>
+            
+            </div>
+
+            <div class="form-group">
+
+              <label for="email">
+                이메일 *
+              </label>
+
+              <input id="email" type="email" placeholder="이메일을 입력해주세요">
+
+              <p class="error-message"></p>
+              
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="birth">
+                생년월일 *
+              </label>
+
+              <input id="datepicker" 
+              class="datepicker" 
+              type="text" 
+              placeholder="YYYY.MM.DD">
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="password">
+                비밀번호 *
+              </label>
+
+              <div class="password-wrap">
+
+                <input id="password" type="password" placeholder="영문, 숫자, 특수문자 8자 이상">
+
+                <button type="button" class="toggle-password">
+                  👁
+                </button>
+
+              </div>
+
+              <p class="error-message">
+                
+              </p>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>
+                성별 *
+              </label>
+
+              <div class="radio-group">
+
+                <label>
+                  <input type="radio" name="gender">
+                  남성
+                </label>
+
+                <label>
+                  <input type="radio" name="gender">
+                  여성
+                </label>
+
+              </div>
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="passwordCheck">
+                비밀번호 확인 *
+              </label>
+
+              <div class="password-wrap">
+
+                <input id="passwordCheck" type="password" placeholder="비밀번호를 다시 입력해주세요">
+
+                <button type="button" class="toggle-password">
+                  👁
+                </button>
+
+              </div>
+
+              <p class="error-message">
+              </p>
+
+            </div>
+
+            <div class="form-group">
+
+              <label>
+                마케팅 정보 수신 동의 (선택)
+              </label>
+
+              <div class="check-group">
+
+                <label>
+                  <input type="checkbox">
+                  이벤트 및 혜택 정보 수신 동의
+                </label>
+
+                <label>
+                  <input type="checkbox">
+                  개인정보 수집 및 이용 동의(필수)
+                </label>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <button type="submit" class="btn-black">
+            회원가입
+          </button>
+
+          <p class="login-link">
+
+            이미 계정이 있으신가요?
+
+            <a href="./login.html">
+              로그인
+            </a>
+
+          </p>
+
+        </form>
+
+      </section>
 
     </div>
 
-    <div class="radio-group">
 
-      <label>
-        <input type="radio" name="adult">
-        미성년자
-      </label>
+  </main>
+  <div data-include="/components/footer.html"></div>
 
-      <label>
-        <input type="radio" name="adult">
-        성인
-      </label>
+  <script type="module" src="./js/loadComponents.js"></script>
+  <script type="module" src="./js/modules/header.js"></script>
 
-    </div>
-
-    <div class="form-group">
-      <label>이름</label>
-      <input type="text">
-    </div>
-
-    <div class="form-group">
-      <label>이메일</label>
-      <input type="email">
-    </div>
-
-    <div class="form-group">
-      <label>비밀번호</label>
-
-      <div class="input-password">
-        <input type="password">
-        <button type="button">👁</button>
-      </div>
-
-    </div>
-
-    <div class="form-group">
-      <label>비밀번호 확인</label>
-
-      <div class="input-password">
-        <input type="password">
-        <button type="button">👁</button>
-      </div>
-
-    </div>
-
-    <div class="form-group">
-      <label>휴대폰 번호</label>
-
-      <div class="phone-group">
-
-        <input class="phone-prefix" value="010" readonly>
-
-        <input type="tel" placeholder="번호를 입력해주세요">
-
-      </div>
-
-    </div>
-
-    <div class="form-group">
-
-      <label>생년월일</label>
-
-      <input type="date">
-
-    </div>
-
-    <div class="radio-group">
-
-      <label>
-        <input type="radio" name="sex">
-        남성
-      </label>
-
-      <label>
-        <input type="radio" name="sex">
-        여성
-      </label>
-
-    </div>
-
-    <div class="check-group">
-
-      <label>
-        <input type="checkbox">
-        이벤트 및 마케팅 수신 동의
-      </label>
-
-      <label>
-        <input type="checkbox">
-        개인정보 수집 이용 동의
-      </label>
-
-    </div>
-
-    <button type="submit" class="btn-join">
-      회원가입
-    </button>
-
-  </form>
-
-</main>
-<link rel="stylesheet" href="./css/style.css">
-<link rel="stylesheet" href="./css/auth.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  
+  <script type="module" src="./js/main.js"></script>
+  <script src="./js/modules/auth.js"></script>
+</body>
+</html>

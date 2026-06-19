@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ROUNZ - Product Detail</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/normalize.css" />
+    <link rel="stylesheet" href="styles/common.css" />
+    <link rel="stylesheet" href="styles/product-detail.css" />
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app">
+      <div id="header-root"></div>
+      <main class="product-page">
+        <div class="page__inner">
+          <nav class="page-header" aria-label="페이지 위치">
+            <button
+              type="button"
+              class="back-btn"
+              aria-label="이전 페이지로 이동"
+            >
+              <span class="material-icons" aria-hidden="true"
+                >chevron_left</span
+              >
+            </button>
+
+            <h2 class="page-title sr-only" aria-label="상품명">상품명</h2>
+
+            <div class="page-header__spacer" aria-hidden="true"></div>
+          </nav>
+          <section class="product-layout">
+            <div class="media">
+              <div class="indicator-container" id="indicatorBar">
+                <div class="indicator-bar active"></div>
+                <div class="indicator-bar"></div>
+                <div class="indicator-bar"></div>
+              </div>
+              <div class="main-img-wrapper" id="mainSlider">
+                <div class="main-img"></div>
+                <div class="main-img"></div>
+                <div class="main-img"></div>
+              </div>
+              <div class="thumb-list" id="thumbList">
+                <div class="thumb-img"></div>
+                <div class="thumb-img"></div>
+                <div class="thumb-img"></div>
+              </div>
+            </div>
+
+            <div class="info">
+              <div class="top-info">
+                <p id="brand">ROUNZ</p>
+                <h1 id="title">RZ-193</h1>
+                <div class="rating-wrapper">
+                  <span class="stars">★★★★★</span>
+                  <span class="review-count">(130)</span>
+                </div>
+                <div class="price" id="price">129,000원</div>
+              </div>
+
+              <div class="options">
+                <h2 class="sr-only">상품 옵션</h2>
+                <div class="option-block">
+                  <h3>색상 선택</h3>
+                  <div class="colors" id="colorList">
+                    <div class="color"></div>
+                    <div class="color"></div>
+                    <div class="color"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn-like-outline">
+                  <span class="material-icons">favorite_border</span>
+                </button>
+                <button class="cart">장바구니 담기</button>
+                <button class="buy">바로 구매하기</button>
+              </div>
+            </div>
+
+            <div class="fitting-recommend-box">
+              <div class="recommend-box">
+                <h4>얼굴형 추천</h4>
+
+                <div class="chip-container">
+                  <span class="face-chip" id="faceShapeChip">Loading...</span>
+                </div>
+
+                <div class="recommend-accordion">
+                  <button type="button" class="rec-acc-btn" id="recAccBtn">
+                    <span>왜 잘 어울리나요?</span>
+                    <span class="material-icons arrow-icon">expand_more</span>
+                  </button>
+                  <div class="rec-panel" id="recPanel">
+                    <p id="recPanelText">설명을 불러오는 중입니다.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="fitting-box">
+                <h4>가상 피팅</h4>
+                <p>내 얼굴에 가상으로 착용해보세요</p>
+                <button class="btn--cta-lg">가상 피팅 시작</button>
+              </div>
+            </div>
+
+            <div class="accordion">
+              <button class="acc-btn">상품 정보</button>
+              <div class="panel" id="infoPanel">내용을 불러오는 중입니다.</div>
+
+              <button class="acc-btn">사이즈 가이드</button>
+              <div class="panel" id="sizePanel">내용을 불러오는 중입니다.</div>
+
+              <button class="acc-btn" id="reviewTabBtn">
+                리뷰 (<span id="tabReviewCount">0</span>)
+              </button>
+              <div class="panel" id="reviewPanel">
+                내용을 불러오는 중입니다.
+              </div>
+
+              <button class="acc-btn">배송/교환/환불</button>
+              <div class="panel" id="deliveryPanel">
+                내용을 불러오는 중입니다.
+              </div>
+            </div>
+            <div class="recommend-box-bottom">
+              <h3>이 상품을 본 고객이 함께 본 상품</h3>
+              <div class="slider-wrapper" id="recommendSlider">
+                <div class="recommend-item">
+                  <img src="..." alt="추천 상품" />
+                  <p>추천 상품 1</p>
+                </div>
+                <div class="recommend-item">
+                  <img src="..." alt="추천 상품" />
+                  <p>추천 상품 2</p>
+                </div>
+                <div class="recommend-item">
+                  <img src="..." alt="추천 상품" />
+                  <p>추천 상품 3</p>
+                </div>
+                <div class="recommend-item">
+                  <img src="..." alt="추천 상품" />
+                  <p>추천 상품 4</p>
+                </div>
+                <div class="recommend-item">
+                  <img src="..." alt="추천 상품" />
+                  <p>추천 상품 5</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- 공통 푸터 — loadComponents.js가 components/footer.html을 주입 -->
+      <div data-include="/components/footer.html"></div>
+    </div>
+    <script type="module" src="js/pages/productDetail.js"></script>
+    <script type="module" src="js/loadComponents.js"></script>
+    <script type="module" src="js/modules/header.js"></script>
+  </body>
+</html>

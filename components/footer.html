@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROUNZ Footer</title>
+  <!-- 단독 미리보기용 폰트/아이콘 (홈에 주입될 땐 index.html이 이미 로드함) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles/footer.css" />
+</head>
+
+<body>
+
+  <!-- 로더는 이 <footer> 요소만 추출해 index.html 푸터 자리에 주입 -->
+  <footer class="footer">
+    <div class="footer__inner">
+
+      <!-- 로고 -->
+      <h2 class="footer__logo"><a href="/index.html"><img src="/assets/icons/logo_b.svg" alt="ROUNZ" /></a></h2>
+
+      <!-- 고객센터 + 정책/서비스 링크 -->
+      <div class="footer__info">
+
+        <div class="footer__customer">
+          <p class="footer__center"><a href="#">고객센터(채널톡 문의)</a></p>
+          <p class="footer__chat">채널톡 문의 : 10:00 ~ 17:00 (점심시간 12:00 ~ 13:00)<span class="footer__pipe"> | </span><br class="footer__nl"><span class="footer__paren">(</span>주말, 공휴일 휴무<span class="footer__paren">)</span></p>
+          <p class="footer__store">안경원 안내 : 10:00 ~ 20:00 <br class="footer__nl">(설, 추석 휴무)</p>
+        </div>
+
+        <nav class="footer__links" aria-label="푸터 메뉴">
+          <ul class="footer__policy">
+            <li><a href="#">개인정보처리방침</a></li>
+            <li><a href="#">이용약관</a></li>
+            <li><a href="#">가맹문의</a></li>
+          </ul>
+          <ul class="footer__service">
+            <li><a href="#">라운즈앱</a></li>
+            <li><a href="#">라운즈 해외</a></li>
+            <li><a href="#">라운즈 파트너스</a></li>
+            <li><a href="#">글라스박스</a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <!-- 사업자정보 + SNS -->
+      <div class="footer__bottom">
+        <div class="footer__biz">
+          <a href="#">사업자정보확인</a>
+          <span class="footer__bar">|</span>
+          <button type="button" class="footer__biz-btn">
+            (주)라운즈 ROUNZ 사업자정보
+            <span class="material-icons" aria-hidden="true">expand_more</span>
+          </button>
+        </div>
+
+        <ul class="footer__sns">
+          <li><a href="https://www.kcp.co.kr" target="_blank" rel="noopener noreferrer"><img src="/assets/icons/btn_kcp.svg" alt="KCP" /></a></li>
+          <li><a href="https://blog.naver.com" target="_blank" rel="noopener noreferrer"><img src="/assets/icons/btn_naverBlog.svg" alt="네이버 블로그" /></a></li>
+          <li><a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer"><img src="/assets/icons/btn_facebook.svg" alt="페이스북" /></a></li>
+          <li><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer"><img src="/assets/icons/btn_instagram.svg" alt="인스타그램" /></a></li>
+          <li><a href="https://pf.kakao.com" target="_blank" rel="noopener noreferrer"><img src="/assets/icons/btn_kakaoTalk.svg" alt="카카오톡" /></a></li>
+        </ul>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+
+</html>
