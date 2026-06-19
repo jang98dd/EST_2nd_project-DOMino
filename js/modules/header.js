@@ -23,7 +23,7 @@ const headerMarkup = `
   <div class="header-inner">
     <h1 class="logo">
       <a href="index.html" class="logo-link">ROUNZ
-      <img src="assets/images/logo.webp"></a>
+      <img src="assets/images/logo.webp" alt=""></a>
     </h1>
 
     <nav class="desktop-nav">
@@ -152,7 +152,7 @@ const headerMarkup = `
   <div class="mobile-nav-overlay">
     <div class="mobile-nav-inner">
       <div class="mobile-nav-header">
-        <h2 class="logo"><a href="index.html" class="logo-link">ROUNZ<img src="assets/images/logo.webp"></a></h2>
+        <h2 class="logo"><a href="index.html" class="logo-link">ROUNZ<img src="assets/images/logo.webp" alt=""></a></h2>
         <button class="mobile-close-btn" aria-label="메뉴 닫기">✕</button>
       </div>
       

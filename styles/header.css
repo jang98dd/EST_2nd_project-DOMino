@@ -61,6 +61,18 @@
   color: var(--white);
 }
 
+/* 고정 헤더(88px)가 본문 상단을 가리지 않도록 콘텐츠를 아래로 내린다.
+   헤더는 모든 페이지에서 .site-header 로 동일하게 주입된다. */
+:root {
+  --header-height: 88px;
+}
+main {
+  padding-top: var(--header-height);
+}
+html {
+  scroll-padding-top: var(--header-height);
+}
+
 .site-header.scrolled {
   background: rgba(0,0,0,0.9);
   backdrop-filter: blur(10px);
