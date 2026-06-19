@@ -14,44 +14,18 @@
   <link rel="stylesheet" href="./styles/common.css">
   
   <link rel="stylesheet" href="./styles/header.css">
+  <link rel="stylesheet" href="./styles/nav.css">
+  <link rel="stylesheet" href="./styles/footer.css">
+  
   <link rel="stylesheet" href="./styles/auth-signup.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 </head>
 
-<body>
+<body data-page="signup">
 
-  <header class="header">
-
-    <div class="logo">ROUNZ</div>
-
-    <nav class="gnb">
-      <a href="#">상품</a>
-      <a href="#">가상피팅</a>
-      <a href="#">분석</a>
-      <a href="#">브랜드</a>
-      <a href="#">이벤트</a>
-      <a href="#">고객지원</a>
-    </nav>
-
-    <div class="header-icons">
-
-      <span class="material-symbols-outlined">
-        search
-      </span>
-      
-      <span class="material-symbols-outlined">
-        shopping_bag
-      </span>
-      
-      <span class="material-symbols-outlined">
-        menu
-      </span>
-
-    </div>
-
-  </header>
+  <div data-include="/components/header.html"></div>
 
   <main class="auth auth--signup">
 
@@ -284,10 +258,15 @@
 
 
   </main>
+  <div data-include="/components/footer.html"></div>
 
+  <script type="module" src="./js/loadComponents.js"></script>
+  
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-<script src="./js/modules/auth.js"></script>
+  
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  
+  <script type="module" src="./js/main.js"></script>
 
 </body>
 </html>
