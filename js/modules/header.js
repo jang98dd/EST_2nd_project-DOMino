@@ -166,7 +166,7 @@ const headerMarkup = `
           <li><a href="/index.html"><span class="menu-icon material-icons">home</span>홈</a></li>
           
           <li class="has-dropdown">
-            <a href="#"><span class="menu-icon material-icons">shopping_bag</span>상품</a>
+            <a href="/product-list.html"><span class="menu-icon material-icons">shopping_bag</span>상품</a>
             <button class="depth-toggle">+</button>
             <ul class="mobile-depth2">
               <li><a href="/product-list.html">전체 상품</a></li>
@@ -191,7 +191,7 @@ const headerMarkup = `
           </li>
           
           <li class="has-dropdown">
-            <a href="#"><span class="menu-icon material-icons">sell</span>브랜드</a>
+            <a href="/index.html"><span class="menu-icon material-icons">sell</span>브랜드</a>
             <button class="depth-toggle">+</button>
             <ul class="mobile-depth2">
               <li><a href="/product-list.html">전체 브랜드</a></li>

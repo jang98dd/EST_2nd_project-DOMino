@@ -16,9 +16,6 @@ document.querySelector(".header");
 const desktopNav =
 document.querySelector(".desktop-nav");
 
-/* ==========================
-모바일 / 태블릿 메뉴 열기
-========================== */
 
 menuBtn?.addEventListener("click", () => {
 
@@ -36,9 +33,6 @@ tabletNav?.classList.add("active");
 
 });
 
-/* ==========================
-모바일 / 태블릿 메뉴 닫기
-========================== */
 
 closeBtns.forEach(btn => {
 
@@ -53,9 +47,6 @@ tabletNav?.classList.remove("active");
 
 });
 
-/* ==========================
-모바일 서브메뉴 토글
-========================== */
 
 document
 .querySelectorAll(".has-sub button")
@@ -78,10 +69,6 @@ btn.addEventListener("click", () => {
 
 
 });
-
-/* ==========================
-데스크탑 메가메뉴
-========================== */
 
 const gnbItems =
 document.querySelectorAll(".gnb__list li");

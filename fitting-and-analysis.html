@@ -54,20 +54,28 @@
                       <p>사진 업로드</p>
                       <input
                         type="file"
+                        type="file"
                         id="fileInput"
                         accept="image/*, .json"
                         class="sr-only"
                       />
                     </div>
                   </div>
+                  
                   <div class="fitting-list-container">
-                    <p class="fitting-list-label">피팅할 안경 선택</p>
+                    <div class="fitting-list-header">
+                      <p class="fitting-list-label">추천 안경 리스트</p>
+                      <button type="button" id="btnOpenGlassesModal" class="btn-more">
+                        더보기 <span class="material-icons">chevron_right</span>
+                      </button>
+                    </div>
                     <div
                       id="fittingGlassesList"
                       class="fitting-glasses-list"
                     ></div>
                   </div>
                 </div>
+                
                 <div class="control-box">
                   <div class="slider-group">
                     <div class="slider-item">
@@ -296,6 +304,20 @@
       </main>
       <div data-include="/components/footer.html"></div>
     </div>
+
+    <div id="glassesModal" class="glasses-modal" style="display: none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>전체 안경 목록</h3>
+          <button type="button" id="btnCloseGlassesModal" class="btn-close">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+        <div id="modalGlassesGrid" class="modal-glasses-grid"></div>
+      </div>
+    </div>
+
     <script type="module" src="js/modules/header.js"></script>
     <script type="module" src="js/loadComponents.js"></script>
     <script type="module" src="js/pages/fitting-and-analysis.js"></script>

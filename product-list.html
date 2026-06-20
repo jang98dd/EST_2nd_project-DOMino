@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="styles/normalize.css" />
     <link rel="stylesheet" href="styles/common.css" />
     <link rel="stylesheet" href="styles/product-list.css" />
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/header.css" />
+    <link rel="stylesheet" href="styles/footer.css" />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
@@ -71,28 +71,6 @@
                       <input
                         type="checkbox"
                         data-filter-type="shape"
-                        value="square"
-                      />
-                      사각
-                    </label>
-                  </li>
-
-                  <li>
-                    <label>
-                      <input
-                        type="checkbox"
-                        data-filter-type="shape"
-                        value="aviator"
-                      />
-                      하금테
-                    </label>
-                  </li>
-
-                  <li>
-                    <label>
-                      <input
-                        type="checkbox"
-                        data-filter-type="shape"
                         value="boeing"
                       />
                       보잉
@@ -118,28 +96,6 @@
                         value="cat-eye"
                       />
                       캣아이
-                    </label>
-                  </li>
-
-                  <li>
-                    <label>
-                      <input
-                        type="checkbox"
-                        data-filter-type="shape"
-                        value="mix"
-                      />
-                      믹스
-                    </label>
-                  </li>
-
-                  <li>
-                    <label>
-                      <input
-                        type="checkbox"
-                        data-filter-type="shape"
-                        value="other"
-                      />
-                      기타
                     </label>
                   </li>
                 </ul>
@@ -196,6 +152,7 @@
                         type="checkbox"
                         data-filter-type="size"
                         value="all"
+                        data-role="all"
                       />
                       전체
                     </label>
@@ -239,46 +196,47 @@
                 <h3>색상</h3>
 
                 <div class="color-grid">
-                    <button type="button"
+                  <button
+                    type="button"
                     value="all"
                     hidden
                     data-role="all"
-                    data-filter-type="color" 
-                    class="custom-btn color-dot" 
-                    aria-label="전체">
-                    </button>
-                    <button
-                      data-filter-type="color"
-                      aria-pressed="false"
-                      type="button"
-                      data-filter-value="black"
-                      class="color-dot custom-btn"
-                      aria-label="검정색"
-                    ></button>
-                    <button
                     data-filter-type="color"
-                      aria-pressed="false"
-                      type="button"
-                      data-filter-value="purple"
-                      class="color-dot custom-btn"
-                      aria-label="보라색"
-                    ></button>
-                    <button
+                    class="custom-btn color-dot"
+                    aria-label="전체"
+                  ></button>
+                  <button
                     data-filter-type="color"
-                      aria-pressed="false"
-                      type="button"
-                      data-filter-value="primary"
-                      class="color-dot custom-btn"
-                      aria-label="남색"
-                    ></button>
-                    <button
-                      data-filter-type="color"
-                      aria-pressed="false"
-                      type="button"
-                      data-filter-value="superGray"
-                      class="color-dot custom-btn"
-                      aria-label="진회색"
-                    ></button>
+                    aria-pressed="false"
+                    type="button"
+                    data-filter-value="black"
+                    class="color-dot custom-btn"
+                    aria-label="검정색"
+                  ></button>
+                  <button
+                    data-filter-type="color"
+                    aria-pressed="false"
+                    type="button"
+                    data-filter-value="clear"
+                    class="color-dot custom-btn"
+                    aria-label="투명"
+                  ></button>
+                  <button
+                    data-filter-type="color"
+                    aria-pressed="false"
+                    type="button"
+                    data-filter-value="gold"
+                    class="color-dot custom-btn"
+                    aria-label="골드"
+                  ></button>
+                  <button
+                    data-filter-type="color"
+                    aria-pressed="false"
+                    type="button"
+                    data-filter-value="silver"
+                    class="color-dot custom-btn"
+                    aria-label="실버"
+                  ></button>
                 </div>
               </section>
               <section class="filter-group" aria-label="가격 필터">
@@ -294,9 +252,9 @@
                     type="range"
                     id="priceMaxSidebar"
                     min="0"
-                    max="10000000000"
+                    max="53150000"
                     step="10000"
-                    value="10000000000"
+                    value="53150000"
                     aria-label="최대 가격 선택"
                   />
                 </div>
@@ -340,15 +298,15 @@
               <div class="active-filters"></div>
               <section class="product-list" aria-label="상품 목록">
                 <h1 class="sr-only">상품 목록</h1>
-                  <div
-                    class="product-cards grid grid--2"
-                    aria-live="polite"
-                  ></div>
-                  <nav class="pagination" aria-label="페이지 이동"></nav>
+                <div
+                  class="product-cards grid grid--2"
+                  aria-live="polite"
+                ></div>
+                <nav class="pagination" aria-label="페이지 이동"></nav>
               </section>
               <button
                 type="button"
-                class="btn btn--action btn-more btn-more--mobile"
+                class="btn--action btn-more btn-more--mobile"
                 aria-label="더 많은 상품 불러오기"
               >
                 더 보기
@@ -427,6 +385,17 @@
               <ul class="chip-grid">
                 <li>
                   <button
+                    type="button"
+                    data-filter-type="shape"
+                    value="all"
+                    data-filter-value="all"
+                    data-role="all"
+                  >
+                    전체
+                  </button>
+                </li>
+                <li>
+                  <button
                     class="btn-utility"
                     data-filter-type="shape"
                     data-filter-value="round"
@@ -442,33 +411,7 @@
                   <button
                     class="btn-utility"
                     data-filter-type="shape"
-                    data-filter-value="square"
-                  >
-                    <img
-                      src="./assets/icons/frame_square.svg"
-                      alt="스퀘어 프레임"
-                    />
-                    <span class="btn-label">스퀘어</span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="btn-utility"
-                    data-filter-type="shape"
-                    data-filter-value="avaitor"
-                  >
-                    <img
-                      src="./assets/icons/frame_aviator.svg"
-                      alt="하금테 프레임"
-                    />
-                    <span class="btn-label">하금테</span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="btn-utility"
-                    data-filter-type="shape"
-                    data-filter-value="browine"
+                    data-filter-value="boeing"
                   >
                     <img
                       src="./assets/icons/frame_browline.svg"
@@ -501,29 +444,6 @@
                       alt="캣아이 프레임"
                     />
                     <span class="btn-label">캣아이</span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="btn-utility"
-                    data-filter-type="shape"
-                    data-filter-value="mix"
-                  >
-                    <img src="./assets/icons/frame_mix.svg" alt="믹스 프레임" />
-                    <span class="btn-label">믹스</span>
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="btn-utility"
-                    data-filter-type="shape"
-                    data-filter-value="other"
-                  >
-                    <img
-                      src="./assets/icons/frame_other.svg"
-                      alt="기타 프레임"
-                    />
-                    <span class="btn-label">기타</span>
                   </button>
                 </li>
               </ul>
@@ -565,6 +485,16 @@
               <ul class="chip-grid">
                 <li>
                   <button
+                    type="button"
+                    data-filter-type="size"
+                    data-filter-value="all"
+                    data-role="all"
+                  >
+                    전체
+                  </button>
+                </li>
+                <li>
+                  <button
                     class="btn-utility"
                     data-filter-type="size"
                     data-filter-value="S"
@@ -599,26 +529,26 @@
                 <button
                   class="color-dot"
                   data-filter-type="color"
-                  data-filter-value="primary"
-                  aria-label="프라이머리색 선택"
-                ></button>
-                <button
-                  class="color-dot"
-                  data-filter-type="color"
                   data-filter-value="black"
-                  aria-label="검정색 선택"
+                  aria-label="검정색상 선택"
                 ></button>
                 <button
                   class="color-dot"
                   data-filter-type="color"
-                  data-filter-value="secondary"
-                  aria-label="세컨더리색 선택"
+                  data-filter-value="clear"
+                  aria-label="투명색상 선택"
                 ></button>
                 <button
                   class="color-dot"
                   data-filter-type="color"
-                  data-filter-value="white"
-                  aria-label="흰색 선택"
+                  data-filter-value="gold"
+                  aria-label="골드색상 선택"
+                ></button>
+                <button
+                  class="color-dot"
+                  data-filter-type="color"
+                  data-filter-value="silver"
+                  aria-label="실버색상 선택"
                 ></button>
               </div>
             </section>
@@ -635,9 +565,9 @@
                   type="range"
                   id="priceMaxSheet"
                   min="0"
-                  max="10000000000"
+                  max="53150000"
                   step="10000"
-                  value="10000000000"
+                  value="53150000"
                   aria-label="최대 가격 선택"
                 />
               </div>

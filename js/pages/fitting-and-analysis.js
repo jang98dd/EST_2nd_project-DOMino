@@ -15,7 +15,24 @@ let currentBaseScores = FACE_PRESETS.balance;
 const SCORE_CONFIG = {
   weights: { xEffect: 0.25, yEffect: 0.35, scaleEffect: 0.40, rotateEffect: 0.50 }
 };
+const glassesModal = document.getElementById('glassesModal');
+const btnOpenGlassesModal = document.getElementById('btnOpenGlassesModal');
+const btnCloseGlassesModal = document.getElementById('btnCloseGlassesModal');
+const modalOverlay = document.querySelector('.modal-overlay');
 
+function openModal() {
+  if (glassesModal) {
+    glassesModal.style.display = 'flex';
+  }
+}
+function closeModal() {
+  if (glassesModal) {
+    glassesModal.style.display = 'none';
+  }
+}
+if (btnOpenGlassesModal) btnOpenGlassesModal.addEventListener('click', openModal);
+if (btnCloseGlassesModal) btnCloseGlassesModal.addEventListener('click', closeModal);
+if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
 const tabButtons = document.querySelectorAll('.mobile-tabs .tab-btn');
 const sectionPanels = document.querySelectorAll('.section-panel');
 tabButtons.forEach(button => {
@@ -32,21 +49,7 @@ tabButtons.forEach(button => {
     });
   });
 });
-const savedGlassesId = localStorage.getItem('selectedGlasses');
 
-if (savedGlassesId) {
-  const glassesOverlay = document.getElementById('glassesOverlay');
-  
-  if (glassesOverlay) {
-    glassesOverlay.classList.add('active');
-    const targetItem = document.querySelector(`.fitting-item[data-id="${savedGlassesId}"]`);
-    if (targetItem) {
-      document.querySelectorAll('.fitting-item').forEach(el => el.classList.remove('active'));
-      targetItem.classList.add('active');
-    }
-  }
-  localStorage.removeItem('selectedGlasses');
-}
 function applyGlassesToOverlay(product) {
   try {
     if (!product) throw new Error("적용할 상품 데이터가 존재하지 않습니다.");
@@ -107,6 +110,7 @@ function renderLiveFitting() {
 
   glassesOverlay.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale}) rotate(${rotate}deg)`;
 }
+
 function renderRadarChart() {
   const radarPolygon = document.getElementById('radar-data');
   if (!radarPolygon) return;
@@ -131,6 +135,7 @@ function renderRadarChart() {
 
   radarPolygon.setAttribute('points', pointArr.join(' '));
 }
+
 function handleImageUpload(e) {
   const file = e.target.files[0];
   const uploadedImage = document.getElementById('uploadedImage');
@@ -152,55 +157,119 @@ function handleImageUpload(e) {
     reader.readAsDataURL(file);
   }
 }
-
 async function initializeApp() {
   console.log("ROUNZ 시스템 모듈 초기화 구동...");
   
+  const urlParams = new URLSearchParams(window.location.search);
+  const targetGlassesId = urlParams.get('id') || localStorage.getItem('selectedGlasses') || '29';
+
   let productsArray = []; 
+  let targetGlasses = null;
+
   try {
     const rawData = await fetchProducts();
     if (!rawData) throw new Error("서버 혹은 파일로부터 받아온 데이터가 무효합니다.");
 
-    let targetGlasses = null;
     if (Array.isArray(rawData)) {
       productsArray = rawData; 
-      targetGlasses = rawData.find(item => item.id === 29) || rawData[0];
     } else if (rawData.products && Array.isArray(rawData.products)) {
       productsArray = rawData.products; 
-      targetGlasses = rawData.products.find(item => item.id === 29) || rawData.products[0];
     } else if (rawData.data && Array.isArray(rawData.data)) {
       productsArray = rawData.data; 
-      targetGlasses = rawData.data.find(item => item.id === 29) || rawData.data[0];
     } else if (typeof rawData === 'object' && rawData.id) {
       productsArray = [rawData]; 
-      targetGlasses = rawData;
     }
     
+    targetGlasses = productsArray.find(item => String(item.id) === String(targetGlassesId)) || productsArray[0];
     if (!targetGlasses) throw new Error("매칭 가능한 상품 데이터를 트리에서 찾을 수 없습니다.");
+    
     applyGlassesToOverlay(targetGlasses);
+    
+    const glassesOverlay = document.getElementById('glassesOverlay');
+    if (glassesOverlay) {
+      glassesOverlay.classList.add('active');
+    }
 
   } catch (globalError) {
     console.error("초기 데이터 로딩 및 파싱 단계 중 예외 발생:", globalError);
-  }
-
+  }  
   const fittingGlassesList = document.getElementById('fittingGlassesList');
   if (fittingGlassesList && productsArray.length > 0) {
     fittingGlassesList.innerHTML = ''; 
-    productsArray.slice(0, 6).forEach((product) => {
+    productsArray
+  .filter(p => String(p.id) !== "1")
+  .slice(0, 6)
+  .forEach((product) => {
       const img = document.createElement('img');
       img.src = product.thumbnail;
       img.alt = product.title;
       img.classList.add('fitting-item'); 
-      if (product.id === 29) img.classList.add('active');
-      img.addEventListener('click', () => {
-        document.querySelectorAll('.fitting-item').forEach(el => el.classList.remove('active'));
+      img.setAttribute('data-id', product.id); 
+      
+      if (String(product.id) === String(targetGlasses?.id)) {
         img.classList.add('active');
+      }
+
+      img.addEventListener('click', () => {
+        document.querySelectorAll('.fitting-item, .modal-item').forEach(el => el.classList.remove('active'));
+        img.classList.add('active');
+        const modalMatchedItem = document.querySelector(`.modal-item[data-id="${product.id}"]`);
+        if (modalMatchedItem) modalMatchedItem.classList.add('active');
+
         applyGlassesToOverlay(product);
       });
 
       fittingGlassesList.appendChild(img);
     });
   }
+  const modalGlassesGrid = document.getElementById('modalGlassesGrid');
+  if (modalGlassesGrid && productsArray.length > 0) {
+    modalGlassesGrid.innerHTML = '';
+    
+    productsArray.forEach((product) => {
+      const itemBox = document.createElement('div');
+      itemBox.classList.add('modal-item');
+      itemBox.setAttribute('data-id', product.id);
+
+      if (String(product.id) === String(targetGlasses?.id)) {
+        itemBox.classList.add('active');
+      }
+      const img = document.createElement('img');
+      img.src = product.thumbnail;
+      img.alt = product.title;
+      img.classList.add('modal-item-img');
+
+      const textWrap = document.createElement('div');
+      textWrap.classList.add('modal-item-info');
+      
+      const brandName = document.createElement('strong');
+      brandName.textContent = product.brand || 'ROUNZ';
+      
+      const productName = document.createElement('span');
+      productName.textContent = product.title;
+
+      textWrap.appendChild(brandName);
+      textWrap.appendChild(productName);
+      
+      itemBox.appendChild(img);
+      itemBox.appendChild(textWrap);
+
+      itemBox.addEventListener('click', () => {
+        document.querySelectorAll('.fitting-item, .modal-item').forEach(el => el.classList.remove('active'));
+        itemBox.classList.add('active');
+        const miniMatchedItem = document.querySelector(`.fitting-item[data-id="${product.id}"]`);
+        if (miniMatchedItem) miniMatchedItem.classList.add('active');
+
+        applyGlassesToOverlay(product);
+        
+        closeModal();
+      });
+
+      modalGlassesGrid.appendChild(itemBox);
+    });
+  }
+  localStorage.removeItem('selectedGlasses');
+  localStorage.removeItem('selectedGlassesItem');
   const fileInput = document.getElementById('fileInput');
   const uploadPlaceholder = document.getElementById('uploadPlaceholder');
   const btnUploadTrigger = document.getElementById('btnUploadTrigger');
@@ -218,6 +287,7 @@ async function initializeApp() {
   sliders.forEach(id => {
     document.getElementById(id)?.addEventListener('input', renderLiveFitting);
   });
+
   if (startAnalysisBtn) {
     startAnalysisBtn.addEventListener('click', () => {
       if (loadingOverlay) loadingOverlay.style.display = 'flex';

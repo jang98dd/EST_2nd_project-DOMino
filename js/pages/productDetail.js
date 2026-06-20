@@ -214,8 +214,6 @@ function initActions(product) {
       likeBtn.classList.add('liked');
       if (icon) icon.textContent = 'favorite';
     }
-
-    // [클릭 이벤트]
     likeBtn.addEventListener('click', () => {
       if (!icon) return;
       const currentLikedState = toggleWishlist(product); 
