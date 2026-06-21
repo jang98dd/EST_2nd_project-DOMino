@@ -225,7 +225,7 @@ async function loadRecommendations() {
     const track = document.querySelector(".frame-track");
     if (!track) return;
 
-    const response = await fetch("/data/products.json");
+    const response = await fetch("data/products.json");
     if (!response.ok) throw new Error("데이터를 불러오는데 실패했습니다.");
 
     const data = await response.json();
@@ -252,7 +252,7 @@ function renderRecommendations(products) {
     .map(
       (product) => `
     <article class="frame-card product-card">
-      <a href="../product-detail.html?id=${product.id}">
+      <a href="product-detail.html?id=${product.id}">
         <img src="${product.image || product.thumbnail || ""}" alt="${product.name || product.title}" style="display:block; width:100%;" />
         <h3 class="body-sm">${product.name || product.title}</h3>
         <p body-sm-bold--tight>₩${(product.price || 0).toLocaleString()}</p>
@@ -506,8 +506,8 @@ function createProductCard(product) {
 
   return `
     <article class="product-card" style="position: relative; cursor: pointer;">
-      <a href="../product-detail.html?id=${product.id}" 
-         class="product-card__main-link" 
+      <a href="product-detail.html?id=${product.id}"
+         class="product-card__main-link"
          aria-label="${product.title || product.name} 상세 페이지로 이동">
       </a>
       <div class="product-card__thumb">
@@ -518,7 +518,7 @@ function createProductCard(product) {
         <button class="btn-cart btn--utility-sm" data-id="${product.id}" aria-label="장바구니 담기">
           <span class="material-icons">shopping_cart</span>
         </button>
-        <a href="../fitting-and-analysis.html?id=${product.id}" class="btn-fit btn--utility-sm" data-id="${product.id}">
+        <a href="fitting-and-analysis.html?id=${product.id}" class="btn-fit btn--utility-sm" data-id="${product.id}">
           착용하기
         </a>
       </div>

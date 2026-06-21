@@ -51,7 +51,6 @@ async function initHome() {
   } catch (err) {
     console.error(err);
     showErrors();
-  } finally {
   }
 }
 

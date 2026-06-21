@@ -22,7 +22,7 @@ export function initHeaderSearch(headerRoot) {
       });
 
       if (matched) {
-        window.location.href = `../product-detail.html?id=${matched.id}`;
+        window.location.href = `product-detail.html?id=${matched.id}`;
       } else {
         alert('일치하는 상품이 없습니다.');
       }
