@@ -1544,7 +1544,7 @@
 .techlab__bg {
   position: absolute;
   inset: 0;
-  background: url("../assets/images/ar:ai-test.png") center 50px / cover no-repeat;
+  background: url("../assets/images/ar_ai-test.png") center 50px / cover no-repeat;
 }
 /* 딤 처리 */
 .techlab__dim {
