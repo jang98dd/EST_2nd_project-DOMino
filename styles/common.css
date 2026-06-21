@@ -143,14 +143,6 @@
   grid-template-columns: repeat(7, 1fr);
   justify-items: center;
 }
-
-.color-grid button:nth-child(1) { background: #072369; }
-.color-grid button:nth-child(2) { background: #1c1c1c; }
-.color-grid button:nth-child(3) { background: #a09bee; }
-.color-grid button:nth-child(4) { background: #d9d9d9; }
-.color-grid button:nth-child(5) { background: #535762; }
-.color-grid button:last-child { background: #f2b705; }
-
 .color-dot {
   border-radius: 50%;
   display: flex;

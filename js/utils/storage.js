@@ -26,30 +26,33 @@ export function updateCartCount() {
   if (cartCount) {
     cartCount.textContent = getCartCount();
   }
-  window.dispatchEvent(new CustomEvent("cartUpdated"));
 }
 
 export function addToCart(product, qty = 1) {
   if (!product) return;
-  
+
   const currentCart = getFromStorage("cart", []);
   const productId = String(product.id);
-  const existingItem = currentCart.find(item => String(item.id) === productId);
+  const existingItem = currentCart.find(
+    (item) => String(item.id) === productId,
+  );
 
   if (existingItem) {
     existingItem.qty += qty;
   } else {
     currentCart.push({
       id: productId,
-      brand: product.brand || '',
-      title: product.title || '',
+      brand: product.brand || "",
+      title: product.title || "",
       price: product.price || 0,
-      thumbnail: product.thumbnail || '',
+      thumbnail: product.thumbnail || "",
       qty,
     });
   }
 
   saveToStorage("cart", currentCart);
+  window.dispatchEvent(new CustomEvent("cartUpdated"));
+
   updateCartCount();
 }
 export function getWishlistCount() {
@@ -62,35 +65,38 @@ export function updateWishlistCount() {
   if (wishlistCount) {
     wishlistCount.textContent = getWishlistCount();
   }
-  window.dispatchEvent(new CustomEvent("wishlistUpdated"));
 }
 
 export function toggleWishlist(product) {
   if (!product) return;
-  
+
   const currentWishlist = getFromStorage("wishlist", []);
   const productId = String(product.id);
-  const index = currentWishlist.findIndex(item => String(item.id) === productId);
+  const index = currentWishlist.findIndex(
+    (item) => String(item.id) === productId,
+  );
 
   if (index !== -1) {
     currentWishlist.splice(index, 1);
   } else {
     currentWishlist.push({
       id: productId,
-      brand: product.brand || '',
-      title: product.title || '',
+      brand: product.brand || "",
+      title: product.title || "",
       price: product.price || 0,
-      thumbnail: product.thumbnail || '',
+      thumbnail: product.thumbnail || "",
     });
   }
 
   saveToStorage("wishlist", currentWishlist);
+  window.dispatchEvent(new CustomEvent("wishlistUpdated"));
+
   updateWishlistCount();
-  
-  return index === -1; 
+
+  return index === -1;
 }
 
 export function isProductLiked(productId) {
   const currentWishlist = getFromStorage("wishlist", []);
-  return currentWishlist.some(item => String(item.id) === String(productId));
+  return currentWishlist.some((item) => String(item.id) === String(productId));
 }

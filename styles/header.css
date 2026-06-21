@@ -15,7 +15,9 @@
   pointer-events: none;
   transition: 0.3s;
 }
-
+#header-root {
+  min-height: 88px;
+}
 .mobile-nav-overlay.open {
   opacity: 1;
   pointer-events: auto;
@@ -367,13 +369,7 @@ html {
   }
 .mega-inner {
   display: grid;
-
-  grid-template-columns:
-    minmax(180px, 370px)
-    repeat(5, 220px)
-    minmax(180px, 360px);
-
-  justify-content: center;
+  grid-template-columns: 1fr repeat(5, minmax(120px, 170px)) 1fr;
 }
 .mega-col.active-blue-col {
   background: var(--primary);
@@ -382,24 +378,32 @@ html {
 .mega-col.active-blue-col ul li a {
   color: var(--white);
 }
-  .mega-col {
+  .mega-col{
     min-height: 436px;
     min-width: 0;
-
-    padding: 40px 24px;
+    padding: 40px 0;
+  }
+  .mega-col:nth-of-type(2) {
+    padding-left: 20px;
+  }
+  .mega-col:nth-of-type(3) {
+    padding-left: 12px;
   }
   .mega-col:nth-of-type(4) {
-    padding-left: 40px;
+    padding-left: 16px;
   }
   .mega-col:nth-of-type(5) {
-    padding-left: 50px;
+    padding-left: 16px;
   }
   .mega-col:nth-of-type(6) {
-    padding-left: 54px;
+    padding-left: 12px;
   }
-
+  .recommend-col {
+    padding: 40px 12px;
+  }
   .active-blue-col {
     background: var(--primary);
+    padding: 40px 0;
   }
 
 .mega-col.body-md {
@@ -432,11 +436,11 @@ html {
 
   .recommend-card {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
-
-    padding: 16px;
-
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
     margin-bottom: 12px;
 
     background: #181818;
@@ -459,6 +463,9 @@ html {
     font-size: 11px;
     color: var(--gray);
     line-height: 1.4;
+  }
+  .recommend-card .arrow {
+    margin-top: 16px;
   }
 
   .mega-col ul li {
@@ -534,5 +541,29 @@ html {
   .banner-link {
     font-size: 12px;
     color: var(--white);
+  }
+}
+
+@media (min-width: 1460px) {
+  .mega-inner {
+    grid-template-columns:
+      1fr
+      repeat(5, minmax(180px, 220px))
+      1fr;
+  }
+  .mega-col:nth-of-type(2) {
+    padding-left: 24px;
+  }
+  .mega-col:nth-of-type(3) {
+    padding-left: 24px;
+  }
+  .mega-col:nth-of-type(4) {
+    padding-left: 32px;
+  }
+  .mega-col:nth-of-type(5) {
+    padding-left: 40px;
+  }
+  .mega-col:nth-of-type(6) {
+    padding-left: 54px;
   }
 }
