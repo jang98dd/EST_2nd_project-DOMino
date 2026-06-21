@@ -494,6 +494,7 @@
   background: var(--gray);
   color: var(--superGray);
   letter-spacing: 4px;
+  border: none;
 }
 
 .category__viewall .material-icons {
