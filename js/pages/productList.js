@@ -1,42 +1,68 @@
 import { fetchProducts } from "../modules/fetchRender.js";
-import { 
-  addToCart, 
-  toggleWishlist, 
-  isProductLiked, 
-  updateCartCount, 
-  updateWishlistCount 
-} from "../utils/storage.js"; 
+import {
+  addToCart,
+  toggleWishlist,
+  isProductLiked,
+  updateCartCount,
+  updateWishlistCount,
+} from "../utils/storage.js";
 
-const state = {
-  products: [],
-  baseProducts: [],  
-  totalProducts: [],
-  filteredProducts: [],
-  isLoading: true,
-  sortType: "popular",
-  filters: {
-    shape: [],
-    gender: "all",
-    size: [],
-    color: [],
-    price: Infinity
-  },
-  page: 1,
-  limit: 12
-};
+const DEFAULT_PRICE = Infinity;
 
 const DEFAULT_STATE = {
   shape: [],
   gender: "all",
   size: [],
   color: [],
-  price: Infinity
+  price: DEFAULT_PRICE,
 };
+
+const state = {
+  products: [],
+  baseProducts: [],
+  totalProducts: [],
+  filteredProducts: [],
+  isLoading: true,
+  sortType: "popular",
+  filters: structuredClone(DEFAULT_STATE),
+  currentPage: 1,
+  limit: 12,
+  isDesktop: window.innerWidth >= 1200,
+};
+
+function getColor(title) {
+  const target = title || "";
+  if (target.includes("블랙")) return "black";
+  if (target.includes("투명")) return "clear";
+  if (target.includes("골드")) return "gold";
+  if (target.includes("실버")) return "silver";
+  return "other";
+}
+
+function getSize(title) {
+  const target = title || "";
+  const match = target.match(/(\d+)mm/);
+  if (!match) return "M";
+  const size = Number(match[1]);
+  if (size < 50) return "S";
+  if (size <= 55) return "M";
+  return "L";
+}
+
+function getShape(title) {
+  const target = title || "";
+  if (target.includes("라운드")) return "round";
+  if (target.includes("캣아이")) return "cat-eye";
+  if (target.includes("고글")) return "goggle";
+  if (target.includes("보잉")) return "boeing";
+  if (target.includes("오벌")) return "mix";
+  return "other";
+}
 
 const SNAP = {
   full: 0,
   half: window.innerHeight * 0.4,
-  closed: window.innerHeight
+  closed: window.innerHeight,
 };
 
 let currentY = window.innerHeight;
@@ -46,14 +72,15 @@ let startSheetY = 0;
 let lastY = 0;
 let lastTime = 0;
 let velocity = 0;
+
 const sheet = document.querySelector(".bottom-sheet");
 const panel = document.querySelector(".bottom-sheet__panel");
 const handle = document.querySelector(".handle");
 const backdrop = document.querySelector(".bottom-sheet__backdrop");
-
 const productCards = document.querySelector(".product-cards");
 const sortTrigger = document.querySelector(".sort-trigger");
 const sortMenu = document.querySelector(".sort-menu");
+
 if (sortTrigger && sortMenu) {
   sortTrigger.addEventListener("click", () => {
     const open = sortMenu.classList.toggle("is-open");
@@ -64,178 +91,242 @@ if (sortTrigger && sortMenu) {
 document.querySelectorAll("[data-sort]").forEach((el) => {
   el.addEventListener("click", () => {
     state.sortType = el.dataset.sort;
-    state.page = 1;
-
     if (sortMenu) sortMenu.classList.remove("is-open");
     if (sortTrigger) sortTrigger.setAttribute("aria-expanded", "false");
-
     updateView();
   });
 });
+
 function bindEvents() {
-  const openRecommendBtn = document.getElementById('openFrameRecommend');
-  const recommendSheet = document.getElementById('recommendSheet');
-  const closeRecommendElements = document.querySelectorAll('[data-close="recommend"]');
+  const openRecommendBtn = document.getElementById("openFrameRecommend");
+  const recommendSheet = document.getElementById("recommendSheet");
+  const closeRecommendElements = document.querySelectorAll(
+    '[data-close="recommend"]',
+  );
 
   if (openRecommendBtn && recommendSheet) {
-    openRecommendBtn.addEventListener('click', () => {
-      recommendSheet.removeAttribute('hidden');
+    openRecommendBtn.addEventListener("click", () => {
+      recommendSheet.removeAttribute("hidden");
     });
   }
 
   closeRecommendElements.forEach((element) => {
-    element.addEventListener('click', () => {
-      recommendSheet.setAttribute('hidden', '');
+    element.addEventListener("click", () => {
+      recommendSheet.setAttribute("hidden", "");
     });
   });
 }
+
 function bindTopCategories() {
-  const categoryBtns = document.querySelectorAll('.btn-category');
+  const categoryBtns = document.querySelectorAll(".btn-category");
   if (!categoryBtns.length) return;
 
-  categoryBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      categoryBtns.forEach(b => b.classList.remove('is-active'));
-      e.currentTarget.classList.add('is-active');
-
+  categoryBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      categoryBtns.forEach((b) => b.classList.remove("is-active"));
+      e.currentTarget.classList.add("is-active");
       const selectedCategory = e.currentTarget.dataset.cat;
-      console.log('클릭된 카테고리:', selectedCategory);
+      console.log("클릭된 카테고리:", selectedCategory);
       handleCategoryChange(selectedCategory);
     });
   });
 }
-function handleCategoryChange(category) {
-  
-  if (category === 'wishlist') {
-  } else if (category === 'all') {
-  }
-}
+
+function handleCategoryChange(category) {}
+
 async function init() {
+  if (!productCards) return;
+  window.state = state;
   bindUI();
   initBottomSheet();
   bindEvents();
-  initFilters();   
   initSort();
   initProductCardClicks();
   bindChipEvents();
   bindBottomSheetFilters();
   bindSidebarFilters();
-
-  bindTopCategories()
+  bindTopCategories();
 
   updateCartCount();
   updateWishlistCount();
-
   state.isLoading = true;
   updateView();
-  
+
   try {
     const data = await fetchProducts();
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    if (data && data.products) {
-      state.products = data.products.map(p => {
-        const cleanedPrice = typeof p.price === 'number' 
-          ? p.price 
-          : Number(String(p.price || 0).replace(/[^0-9]/g, ''));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    const rawProducts =
+      data && data.products ? data.products : Array.isArray(data) ? data : [];
+
+    if (rawProducts.length > 0) {
+      const products = rawProducts.filter((product) => product.id !== 1);
+      state.products = products.map((product) => {
+        const cleanedPrice =
+          typeof product.price === "string"
+            ? Number(product.price.replace(/[^0-9]/g, ""))
+            : Number(product.price || 0);
+
+        const productTitle = product.title || product.name || "";
 
         return {
-          ...p,
-          price: cleanedPrice, 
-          shape: (p.category || "").toLowerCase(),
-          color: (p.color || "").toLowerCase(),
-          size: (p.size || "m").toLowerCase(),
-          gender: (p.gender || "all").toLowerCase()
+          ...product,
+          price: cleanedPrice,
+          color: getColor(productTitle),
+          size: getSize(productTitle),
+          shape: getShape(productTitle),
+          gender: product.id % 2 === 0 ? "male" : "female",
         };
       });
     }
-
     state.baseProducts = [...state.products];
 
-    const prices = state.baseProducts.map(p => p.price);
-    const maxPrice = prices.length > 0 ? Math.max(...prices) : 500000; 
+    state.priceSteps = [
+      ...new Set(state.baseProducts.map((p) => p.price)),
+    ].sort((a, b) => a - b);
 
-    const priceInput = document.querySelector("#priceMax");
-    if (priceInput) {
-      priceInput.max = maxPrice;
-      priceInput.value = maxPrice;
+    if (!state.priceSteps.length) return;
+
+    initFilters();
+    const priceInputs = document.querySelectorAll(
+      "#priceMaxSidebar, #priceMaxSheet",
+    );
+    if (state.priceSteps?.length > 0) {
+      priceInputs.forEach((input) => {
+        input.min = 0;
+        input.max = state.priceSteps.length - 1;
+        input.step = 1;
+        input.value = state.priceSteps.length - 1;
+      });
     }
+
+    state.filters.price = Infinity;
     await loadRecommendations();
-    
   } catch (error) {
     console.error("데이터를 불러오는 중 에러가 발생했습니다:", error);
   } finally {
     state.isLoading = false;
     updateView();
   }
+
+  window.addEventListener("resize", () => {
+    const currentIsDesktop = window.innerWidth >= 1200;
+    if (state.isDesktop !== currentIsDesktop) {
+      state.isDesktop = currentIsDesktop;
+      updateView();
+    }
+  });
 }
+
 init();
+
 async function loadRecommendations() {
   try {
-    const track = document.querySelector('.frame-track');
-    if (!track) return; 
+    const track = document.querySelector(".frame-track");
+    if (!track) return;
 
-    const response = await fetch('data/products.json'); 
-    if (!response.ok) throw new Error('데이터를 불러오는데 실패했습니다.');
-    
+    const response = await fetch("/data/products.json");
+    if (!response.ok) throw new Error("데이터를 불러오는데 실패했습니다.");
+
     const data = await response.json();
-    const recommendations = data.recommendations || data.products || (Array.isArray(data) ? data : null);
-    
-    if (!recommendations) throw new Error('상품 배열을 찾을 수 없습니다.');
-    
-    renderRecommendations(recommendations); 
+    const recommendations =
+      data.recommendations ||
+      data.products ||
+      (Array.isArray(data) ? data : null);
+
+    if (!recommendations) throw new Error("상품 배열을 찾을 수 없습니다.");
+    const filteredRecommendations = recommendations.filter(
+      (product) => product.id !== 1,
+    );
+
+    renderRecommendations(filteredRecommendations);
   } catch (error) {
-    console.error('추천 상품 에러 발생:', error);
+    console.error("추천 상품 에러 발생:", error);
   }
 }
 
 function renderRecommendations(products) {
-  const track = document.querySelector('.frame-track');
+  const track = document.querySelector(".frame-track");
   if (!track) return;
-  track.innerHTML = products.map(product => `
+  track.innerHTML = products
+    .map(
+      (product) => `
     <article class="frame-card product-card">
       <a href="../product-detail.html?id=${product.id}">
-        <img src="${product.image || product.thumbnail || ''}" alt="${product.name || product.title}" style="display:block; width:100%; border-radius: 8px;" />
+        <img src="${product.image || product.thumbnail || ""}" alt="${product.name || product.title}" style="display:block; width:100%;" />
         <h3 class="body-sm">${product.name || product.title}</h3>
         <p body-sm-bold--tight>₩${(product.price || 0).toLocaleString()}</p>
       </a>
     </article>
-  `).join('');
+  `,
+    )
+    .join("");
 }
 
 function updateView() {
-  const displayArea = document.querySelector(".product-display-area");
-  if (displayArea) {
-    displayArea.classList.toggle("is-loading", state.isLoading);
-  }
   if (state.isLoading) {
     if (productCards) {
-      productCards.innerHTML = Array.from({ length: 12 })
-        .map(() => createSkeletonCard())
+      productCards.innerHTML = Array(state.limit)
+        .fill(createSkeletonCard())
         .join("");
     }
+    const countEl = document.querySelector(".product-count");
+    if (countEl) countEl.textContent = "로딩 중...";
+
+    const btnMore = document.querySelector(".btn-more");
+    if (btnMore) {
+      btnMore.style.display = window.innerWidth >= 1200 ? "none" : "block";
+      btnMore.disabled = true;
+      btnMore.innerHTML = `로딩 중...`;
+    }
+    const pagination = document.querySelector(".pagination");
+    if (pagination) pagination.style.display = "none";
     return;
   }
-  
   const products = applySort(applyFilters([...state.baseProducts]));
   state.filteredProducts = products;
-  const paginated = applyPagination(products);
-  
-  renderProducts(paginated);
-  renderPagination();
-  renderProductCount();
-  updateLoadMoreButton();
+  state.isDesktop = window.innerWidth >= 1200;
 
+  const maxPage = Math.ceil(products.length / state.limit) || 1;
+  state.currentPage = Math.min(state.currentPage, maxPage);
+  if (state.currentPage < 1) state.currentPage = 1;
+
+  let visibleProducts = [];
+
+  if (state.isDesktop) {
+    const start = (state.currentPage - 1) * state.limit;
+    visibleProducts = products.slice(start, start + state.limit);
+  } else {
+    const end = state.currentPage * state.limit;
+    visibleProducts = products.slice(0, end);
+  }
+
+  renderProducts(visibleProducts);
+
+  const btnMore = document.querySelector(".btn-more");
+  const pagination = document.querySelector(".pagination");
+
+  if (state.isDesktop) {
+    renderPagination();
+    if (btnMore) btnMore.style.display = "none";
+    if (pagination) pagination.style.display = "flex";
+  } else {
+    updateLoadMoreButton();
+    if (btnMore) btnMore.style.display = "flex";
+    if (pagination) pagination.style.display = "none";
+  }
+
+  renderProductCount();
   updateFilterUI();
   renderActiveFilterChips();
   updateFilterCountUI();
+  updatePriceFilter();
 }
-
 function initSort() {
   document.querySelectorAll("[data-sort]").forEach((el) => {
     el.addEventListener("click", () => {
       state.sortType = el.dataset.sort;
-      state.page = 1;
+      resetPaging();
       updateView();
     });
   });
@@ -259,169 +350,157 @@ function applySort(products) {
   }
 }
 
-const DEFAULT_PRICE = Infinity;
-
 function applyFilters(products) {
-  const f = state.filters;
+  let filtered = [...products];
 
-  return products.filter(p => {
-    const ok =
-      (f.shape.length === 0 || f.shape.includes(p.shape)) &&
-      (f.size.length === 0 || f.size.includes(p.size)) &&
-      (f.color.length === 0 || f.color.includes(p.color)) &&
-      (f.gender === "all" || p.gender === f.gender) &&
-      (f.price === Infinity || p.price <= f.price);
+  if (state.filters.shape.length) {
+    filtered = filtered.filter((product) =>
+      state.filters.shape.includes(product.shape),
+    );
+  }
+  if (state.filters.size.length) {
+    filtered = filtered.filter((product) =>
+      state.filters.size.includes(product.size.toLowerCase()),
+    );
+  }
+  if (state.filters.color.length) {
+    filtered = filtered.filter((product) =>
+      state.filters.color.includes(product.color),
+    );
+  }
+  if (state.filters.gender !== "all") {
+    filtered = filtered.filter(
+      (product) => product.gender === state.filters.gender,
+    );
+  }
 
-    return ok;
-  });
+  filtered = filtered.filter((product) => product.price <= state.filters.price);
+  return filtered;
 }
 
 function toggleFilter(type, value) {
+  if (value === "all") {
+    state.filters[type] = [];
+    resetPaging();
+    updateView();
+    return;
+  }
+
   const arr = state.filters[type];
   const normalizedValue = String(value).toLowerCase();
-
   const idx = arr.indexOf(normalizedValue);
+
   if (idx === -1) arr.push(normalizedValue);
   else arr.splice(idx, 1);
-
-  state.page = 1;
-  updateView(); 
+  resetPaging();
+  updateView();
 }
 
 function setGender(value) {
   state.filters.gender = String(value).toLowerCase();
-  state.page = 1;
   updateFilterUI();
+  resetPaging();
   updateView();
 }
 
 function setPrice(value) {
   state.filters.price = Number(value);
-  state.page = 1;
+  resetPaging();
   updateView();
 }
+
 function resetFilters() {
   state.filters = structuredClone(DEFAULT_STATE);
-
-  state.page = 1;
   state.sortType = "popular";
-
-  document.querySelectorAll("[data-filter-type]").forEach(el => {
+  document.querySelectorAll("[data-filter-type]").forEach((el) => {
     el.classList.remove("is-active");
     el.setAttribute("aria-pressed", "false");
-
-    if (el.tagName === "INPUT") {
-      el.checked = false;
-    }
+    if (el.tagName === "INPUT") el.checked = false;
   });
   closeSheet();
-  updateView();
-  document.querySelectorAll("[data-role='all']").forEach(all => {
+  resetPaging();
+
+  document.querySelectorAll("[data-role='all']").forEach((all) => {
     if (all.tagName === "INPUT") all.checked = true;
   });
 
-  document.querySelectorAll("[data-gender]").forEach(el => {
+  document.querySelectorAll("[data-gender]").forEach((el) => {
     el.classList.remove("is-active");
     el.setAttribute("aria-pressed", "false");
   });
-
-  const priceInput = document.querySelector("#priceMax");
-  if (priceInput) {
-    priceInput.value = priceInput.max;
-  }
 
   const chipWrap = document.querySelector(".active-filters");
   if (chipWrap) chipWrap.innerHTML = "";
 
   updateView();
 }
+
 function initFilters() {
-  const inputs = document.querySelectorAll('input[data-filter-type]');
-
-  inputs.forEach(el => el.addEventListener('change', (e) => {
-    const type = e.target.dataset.filterType;
-    if (e.target.dataset.role === 'all') {
-      if (e.target.checked) {
-        state.filters[type] = []; 
-        document.querySelectorAll(`input[data-filter-type="${type}"]:not([data-role="all"])`)
-          .forEach(cb => cb.checked = false);
+  const inputs = document.querySelectorAll("input[data-filter-type]");
+  const priceLen = state.priceSteps?.length ?? 0;
+  state.filters.priceIndex = priceLen ? priceLen - 1 : 0;
+  inputs.forEach((el) =>
+    el.addEventListener("change", (e) => {
+      const type = e.target.dataset.filterType;
+      if (e.target.dataset.role === "all") {
+        if (e.target.checked) {
+          state.filters[type] = [];
+          document
+            .querySelectorAll(
+              `input[data-filter-type="${type}"]:not([data-role="all"])`,
+            )
+            .forEach((cb) => (cb.checked = false));
+        }
+        resetPaging();
+        updateView();
+      } else {
+        handleNormalCheckbox(type, e.target);
       }
-      state.page = 1;
-      updateView();
-    } else {
-      handleNormalCheckbox(type, e.target);
-    }
-  }));
+    }),
+  );
+  const priceInputs = document.querySelectorAll(
+    "#priceMaxSidebar, #priceMaxSheet",
+  );
+  state.filters.priceIndex = state.priceSteps.length - 1;
 
-  const priceInput = document.querySelector("#priceMax");
-  if (priceInput) {
-    priceInput.addEventListener("input", (e) => {
-      const value = Number(e.target.value);
-      const max = Number(e.target.max);
-      state.filters.price = (value === max) ? Infinity : value;
-      state.page = 1;
+  priceInputs.forEach((input) => {
+    input.addEventListener("input", (e) => {
+      const index = Number(e.target.value);
+
+      state.filters.priceIndex = index;
+      state.filters.price = state.priceSteps[index] ?? Infinity;
+      resetPaging();
       updateView();
     });
-  }
+  });
 }
 
 function updateFilterUI() {
-  document.querySelectorAll("[data-filter-type]").forEach((el) => {
-    const type = el.dataset.filterType;
-    if (type === 'price' || type === 'gender') return; 
+  document
+    .querySelectorAll("[data-gender], input[name='gender']")
+    .forEach((el) => {
+      const val = String(el.dataset.gender || el.value).toLowerCase();
+      const isActive = state.filters.gender === val;
 
-    const rawValue = el.dataset.filterValue || el.value; 
-    const value = String(rawValue || "").toLowerCase();
-    const active = state.filters[type].includes(value);
+      el.classList.toggle("is-active", isActive);
+      el.setAttribute("aria-pressed", String(isActive));
 
-    el.setAttribute("aria-pressed", String(active));
-    el.classList.toggle("is-active", active);
-    
-    if (el.tagName === "INPUT" && el.dataset.role !== "all") {
-      el.checked = active;
-    }
-  });
-
-  document.querySelectorAll('input[data-role="all"]').forEach((allInput) => {
-    const type = allInput.dataset.filterType;
-    allInput.checked = state.filters[type].length === 0;
-  });
-
-  document.querySelectorAll("[data-gender], input[name='gender']").forEach((el) => {
-    const val = String(el.dataset.gender || el.value).toLowerCase();
-    const isActive = state.filters.gender === val;
-
-    el.classList.toggle("is-active", isActive);
-    el.setAttribute("aria-pressed", String(isActive));
-    
-    if (el.tagName === "INPUT" && el.type === "radio") {
-      el.checked = isActive;
-    }
-  });
-
-  const priceInput = document.querySelector("#priceMax");
-  if (priceInput) {
-    const isFilterOff = state.filters.price === Infinity;
-    priceInput.value = isFilterOff ? priceInput.max : state.filters.price;
-    
-    const maxPriceText = document.querySelector(".price-current span:last-child");
-    if (maxPriceText) {
-      const displayPrice = isFilterOff ? priceInput.max : state.filters.price;
-      maxPriceText.textContent = `₩${Number(displayPrice).toLocaleString()}`;
-    }
-  }
+      if (el.tagName === "INPUT" && el.type === "radio") {
+        el.checked = isActive;
+      }
+    });
 }
 
 function renderProducts(list) {
-  if (productCards) {
-    productCards.innerHTML = list.map(createProductCard).join("");
-  }
+  if (!productCards) return;
+  productCards.innerHTML = list.map(createProductCard).join("");
 }
-function createProductCard(product) {
-  const formattedPrice = typeof product.price === 'number'
-    ? `${product.price.toLocaleString()}원` 
-    : product.price;
 
+function createProductCard(product) {
+  const formattedPrice =
+    typeof product.price === "number"
+      ? `${product.price.toLocaleString()}원`
+      : product.price;
   const isLiked = isProductLiked(product.id);
   const iconText = isLiked ? "favorite" : "favorite_border";
 
@@ -429,40 +508,32 @@ function createProductCard(product) {
     <article class="product-card" style="position: relative; cursor: pointer;">
       <a href="../product-detail.html?id=${product.id}" 
          class="product-card__main-link" 
-         aria-label="${product.title} 상세 페이지로 이동">
+         aria-label="${product.title || product.name} 상세 페이지로 이동">
       </a>
       <div class="product-card__thumb">
-        <img src="${product.thumbnail}" alt="${product.title}" />
-        
-        <button class="btn-like btn--utility-sm"
-          data-id="${product.id}"
-          aria-pressed="${isLiked ? 'true' : 'false'}"
-          aria-label="찜하기">
+        <img src="${product.thumbnail}" alt="${product.title || product.name}" />
+        <button class="btn-like btn--utility-sm" data-id="${product.id}" aria-pressed="${isLiked ? "true" : "false"}" aria-label="찜하기">
           <span class="material-icons">${iconText}</span>
         </button>
-
-        <button class="btn-cart btn--utility-sm" 
-          data-id="${product.id}" 
-          aria-label="장바구니 담기">
+        <button class="btn-cart btn--utility-sm" data-id="${product.id}" aria-label="장바구니 담기">
           <span class="material-icons">shopping_cart</span>
         </button>
-
-        <a href="../fitting-and-analysis.html?id=${product.id}" 
-           class="btn-fit btn--utility-sm" data-id="${product.id}">
+        <a href="../fitting-and-analysis.html?id=${product.id}" class="btn-fit btn--utility-sm" data-id="${product.id}">
           착용하기
         </a>
       </div>
-      <p class="body-sm-bold--tight">${product.brand}</p>
-      <h3 class="body-sm">${product.title}</h3>
+      <p class="body-sm-bold--tight">${product.brand || ""}</p>
+      <h3 class="body-sm">${product.title || product.name}</h3>
       <p class="price">${formattedPrice}</p>
     </article>
   `;
 }
+
 function createSkeletonCard() {
   return `
     <article class="product-card skeleton-card">
       <div class="product-card__thumb"></div>
-      <p class="skeleton-text"></p>
+      <p class="skeleton-text" ></p>
       <h3 class="skeleton-text"></h3>
       <p class="skeleton-text"></p>
     </article>
@@ -470,38 +541,46 @@ function createSkeletonCard() {
 }
 
 function renderProductCount() {
-  const total = state.baseProducts.length; 
-  const visible = Math.min(state.page * state.limit, state.filteredProducts.length);
+  const total = state.filteredProducts.length;
+  const visible = Math.min(state.currentPage * state.limit, total);
+
   const countEl = document.querySelector(".product-count");
   if (countEl) countEl.textContent = `${visible} / ${total}`;
 }
+
 function initProductCardClicks() {
   if (!productCards) return;
 
   productCards.addEventListener("click", (e) => {
     const likeBtn = e.target.closest(".btn-like");
     if (likeBtn) {
-      e.stopPropagation(); 
-      const productId = likeBtn.dataset.id; 
-      const productData = state.baseProducts.find(p => String(p.id) === String(productId));
-      
+      e.stopPropagation();
+      const productId = likeBtn.dataset.id;
+      const productData = state.baseProducts.find(
+        (p) => String(p.id) === String(productId),
+      );
+
       if (productData) {
-        const isLiked = toggleWishlist(productData); 
+        const isLiked = toggleWishlist(productData);
         likeBtn.setAttribute("aria-pressed", String(isLiked));
         const icon = likeBtn.querySelector(".material-icons");
         if (icon) icon.textContent = isLiked ? "favorite" : "favorite_border";
       }
-      return; 
+      return;
     }
     const cartBtn = e.target.closest(".btn-cart");
     if (cartBtn) {
-      e.stopPropagation(); 
+      e.stopPropagation();
       const productId = cartBtn.dataset.id;
-      const productData = state.baseProducts.find(p => String(p.id) === String(productId));
+      const productData = state.baseProducts.find(
+        (p) => String(p.id) === String(productId),
+      );
 
       if (productData) {
-        addToCart(productData, 1); 
-        alert(`${productData.title}\n상품이 장바구니에 담겼습니다.`);
+        addToCart(productData, 1);
+        alert(
+          `${productData.title || productData.name}\n상품이 장바구니에 담겼습니다.`,
+        );
       }
       return;
     }
@@ -509,51 +588,57 @@ function initProductCardClicks() {
     if (fitBtn) {
       e.preventDefault();
       e.stopPropagation();
-      const glassesId = fitBtn.dataset.id; 
-      localStorage.setItem('selectedGlasses', glassesId);
-      window.location.href = fitBtn.href || `../fitting-and-analysis.html?id=${glassesId}`; 
-      return; 
+      const glassesId = fitBtn.dataset.id;
+      const productData = state.baseProducts.find(
+        (p) => String(p.id) === String(glassesId),
+      );
+
+      if (productData) {
+        localStorage.setItem("selectedGlasses", glassesId);
+        localStorage.setItem(
+          "selectedGlassesItem",
+          JSON.stringify(productData),
+        );
+      }
+      window.location.href = fitBtn.href;
+      return;
     }
+
     const card = e.target.closest(".product-card");
     if (card && !card.classList.contains("skeleton-card")) {
       const mainLink = card.querySelector(".product-card__main-link");
-      if (mainLink) {
-        window.location.href = mainLink.href;
-      }
+      if (mainLink) window.location.href = mainLink.href;
     }
   });
 }
 
-function applyPagination(products) {
-  const start = (state.page - 1) * state.limit;
-  const end = start + state.limit;
-  return products.slice(start, end);
-}
-
 function renderPagination() {
   const container = document.querySelector(".pagination");
-  if (!container) return; 
+  if (!container) return;
 
   const totalPages = Math.ceil(state.filteredProducts.length / state.limit);
-  
   container.innerHTML = "";
+
   for (let i = 1; i <= totalPages; i++) {
     const btn = document.createElement("button");
     btn.textContent = i;
-    btn.className = `btn-page ${i === state.page ? "is-active" : ""}`;
-    
+    btn.className = `btn-page ${i === state.currentPage ? "is-active" : ""}`;
+
     btn.addEventListener("click", () => {
-      state.page = i;
+      state.currentPage = i;
       updateView();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
-    
     container.appendChild(btn);
   }
 }
 
+function resetPaging() {
+  state.currentPage = 1;
+}
+
 function handleLoadMore() {
-  state.page++;
+  state.currentPage++;
   updateView();
 }
 
@@ -561,11 +646,12 @@ function updateLoadMoreButton() {
   const btn = document.querySelector(".btn-more");
   if (!btn) return;
 
-  const total = state.filteredProducts.length;
-  const loaded = state.page * state.limit;
-  const isEnd = loaded >= total;
+  const loadedCount = state.currentPage * state.limit;
+  const totalCount = state.filteredProducts.length;
+  const isEnd = loadedCount >= totalCount;
 
   btn.disabled = isEnd;
+
   if (isEnd) {
     btn.innerHTML = `<span class="material-icons">check</span> 마지막 상품입니다`;
   } else {
@@ -574,21 +660,19 @@ function updateLoadMoreButton() {
 }
 
 function bindUI() {
-  document.querySelector(".btn-more")?.addEventListener("click", handleLoadMore);
-  document.querySelectorAll(".btn--filter").forEach(btn => {
-    if (btn.id === "openFrameRecommend") return; 
-    
+  document
+    .querySelector(".btn-more")
+    ?.addEventListener("click", handleLoadMore);
+  document.querySelectorAll(".btn--filter").forEach((btn) => {
+    if (btn.id === "openFrameRecommend") return;
     btn.addEventListener("click", openSheet);
   });
 
   document.querySelector(".close-btn")?.addEventListener("click", closeSheet);
-
   document.querySelector(".btn-apply")?.addEventListener("click", () => {
-    state.page = 1;
     updateView();
     closeSheet();
   });
-
   document.querySelector(".btn-reset")?.addEventListener("click", resetFilters);
 }
 
@@ -622,14 +706,13 @@ function setSheet(y, animate = false) {
   panel.style.transition = animate
     ? "transform 0.35s cubic-bezier(0.2, 0.9, 0.2, 1)"
     : "none";
-
   panel.style.transform = `translateY(${currentY}px)`;
 }
 
 function snapTo(key) {
   const targetY = SNAP[key];
-  setSheet(targetY, true); 
-  
+  setSheet(targetY, true);
+
   if (key === "closed") {
     setTimeout(() => {
       if (sheet) {
@@ -641,36 +724,28 @@ function snapTo(key) {
 }
 
 function bindBottomSheetFilters() {
-  document.querySelectorAll(".bottom-sheet [data-filter-type]").forEach(btn => {
-    if (btn.tagName === "INPUT") return; 
-    btn.addEventListener("click", () => {
-      toggleFilter(btn.dataset.filterType, btn.dataset.filterValue);
+  document
+    .querySelectorAll(".bottom-sheet [data-filter-type]")
+    .forEach((btn) => {
+      if (btn.tagName === "INPUT") return;
+      btn.addEventListener("click", () => {
+        toggleFilter(btn.dataset.filterType, btn.dataset.filterValue);
+      });
     });
-  });
-  document.querySelectorAll(".bottom-sheet [data-gender]").forEach(el => {
+  document.querySelectorAll(".bottom-sheet [data-gender]").forEach((el) => {
     const eventType = el.tagName === "INPUT" ? "change" : "click";
     el.addEventListener(eventType, () => {
       const value = el.dataset.gender || el.value;
       setGender(value);
     });
   });
-
-  const priceInput = document.querySelector("#priceMax");
-  if (priceInput) {
-    priceInput.addEventListener("input", (e) => setPrice(e.target.value));
-    priceInput.addEventListener("pointerdown", (e) => {
-      e.stopPropagation();
-    });
-    priceInput.addEventListener("mousedown", (e) => {
-      e.stopPropagation();
-    });
-  }
 }
+
 function bindSidebarFilters() {
   const root = document.querySelector(".filter-sidebar");
   if (!root) return;
-  root.querySelectorAll("[data-filter-type]").forEach(btn => {
-    if (btn.tagName === "INPUT") return; 
+  root.querySelectorAll("[data-filter-type]").forEach((btn) => {
+    if (btn.tagName === "INPUT") return;
 
     btn.addEventListener("click", () => {
       const type = btn.dataset.filterType;
@@ -683,7 +758,7 @@ function bindSidebarFilters() {
       handleNormal(type, value, btn);
     });
   });
-  root.querySelectorAll("[data-gender]").forEach(el => {
+  root.querySelectorAll("[data-gender]").forEach((el) => {
     const eventType = el.tagName === "INPUT" ? "change" : "click";
     el.addEventListener(eventType, () => {
       const value = el.dataset.gender || el.value;
@@ -691,17 +766,21 @@ function bindSidebarFilters() {
     });
   });
 }
+
 function handleSelectAll(type) {
   state.filters[type] = [];
   const root = document.querySelector(".filter-sidebar");
   if (!root) return;
 
-  const items = root.querySelectorAll(`[data-filter-type="${type}"]:not([data-role="all"])`);
-  items.forEach(btn => {
+  const items = root.querySelectorAll(
+    `[data-filter-type="${type}"]:not([data-role="all"])`,
+  );
+  items.forEach((btn) => {
     btn.classList.remove("is-active");
     btn.setAttribute("aria-pressed", "false");
   });
 
+  resetPaging();
   updateFilterUI();
   updateView();
 }
@@ -713,11 +792,13 @@ function handleNormal(type, value, btn) {
 
   if (idx === -1) arr.push(normalizedValue);
   else arr.splice(idx, 1);
-  
+
   const root = document.querySelector(".filter-sidebar");
   if (!root) return;
 
-  const allBtn = root.querySelector(`[data-role="all"][data-filter-type="${type}"]`);
+  const allBtn = root.querySelector(
+    `[data-role="all"][data-filter-type="${type}"]`,
+  );
 
   if (arr.length === 0) {
     if (allBtn) {
@@ -731,32 +812,35 @@ function handleNormal(type, value, btn) {
     }
   }
 
+  resetPaging();
   updateView();
 }
 
 function handleNormalCheckbox(type, cb) {
-  const all = document.querySelector(`[data-role="all"][data-filter-type="${type}"]`);
+  const all = document.querySelector(
+    `[data-role="all"][data-filter-type="${type}"]`,
+  );
   if (all) all.checked = false;
 
   const val = String(cb.dataset.filterValue || cb.value).toLowerCase();
   const arr = state.filters[type];
   const idx = arr.indexOf(val);
-
   if (cb.checked) {
     if (idx === -1) arr.push(val);
   } else {
     if (idx !== -1) arr.splice(idx, 1);
   }
-  
-  const group = document.querySelectorAll(`[data-filter-type="${type}"]:not([data-role="all"])`);
-  const noneChecked = [...group].every(x => !x.checked);
+
+  const group = document.querySelectorAll(
+    `[data-filter-type="${type}"]:not([data-role="all"])`,
+  );
+  const noneChecked = [...group].every((x) => !x.checked);
 
   if (noneChecked && all) {
     all.checked = true;
     state.filters[type] = [];
   }
-
-  state.page = 1;
+  resetPaging();
   updateView();
 }
 
@@ -778,9 +862,8 @@ function bindChipEvents() {
       const idx = arr.indexOf(value);
       if (idx !== -1) arr.splice(idx, 1);
     }
-
-    state.page = 1;
     updateFilterUI();
+    resetPaging();
     updateView();
   });
 }
@@ -792,18 +875,24 @@ function renderActiveFilterChips() {
   const f = state.filters;
   const chips = [];
 
-  f.shape.forEach(v => chips.push({ type: "shape", value: v }));
-  f.size.forEach(v => chips.push({ type: "size", value: v }));
-  f.color.forEach(v => chips.push({ type: "color", value: v }));
+  f.shape.forEach((v) => chips.push({ type: "shape", value: v }));
+  f.size.forEach((v) => chips.push({ type: "size", value: v }));
+  f.color.forEach((v) => chips.push({ type: "color", value: v }));
 
   if (f.gender !== "all") chips.push({ type: "gender", value: f.gender });
-  if (f.price < DEFAULT_PRICE) chips.push({ type: "price", value: `₩${f.price}` });
+  if (f.price < DEFAULT_PRICE) {
+    chips.push({ type: "price", value: `₩${f.price.toLocaleString()}` });
+  }
 
-  wrap.innerHTML = chips.map(c => `
+  wrap.innerHTML = chips
+    .map(
+      (c) => `
     <button class="chip" data-type="${c.type}" data-value="${c.value}">
-      ${c.value} ×
+      ${c.value} x
     </button>
-  `).join("");
+  `,
+    )
+    .join("");
 }
 
 function getActiveFilterCount() {
@@ -855,12 +944,36 @@ function onPointerUp() {
   const targets = [
     { key: "full", value: SNAP.full },
     { key: "half", value: SNAP.half },
-    { key: "closed", value: SNAP.closed }
+    { key: "closed", value: SNAP.closed },
   ];
 
   const closest = targets.reduce((a, b) =>
-    Math.abs(b.value - projected) < Math.abs(a.value - projected) ? b : a
+    Math.abs(b.value - projected) < Math.abs(a.value - projected) ? b : a,
   );
 
   snapTo(closest.key);
+}
+
+function updatePriceFilter() {
+  const priceInputs = document.querySelectorAll(
+    "#priceMaxSidebar, #priceMaxSheet",
+  );
+  const maxPriceTexts = document.querySelectorAll(
+    ".price-current span:last-child",
+  );
+
+  if (!state.priceSteps?.length) return;
+
+  const idx = state.filters.priceIndex ?? state.priceSteps.length - 1;
+
+  const safeIdx = Math.max(0, Math.min(idx, state.priceSteps.length - 1));
+  const displayPrice = state.priceSteps[safeIdx];
+
+  priceInputs.forEach((input) => {
+    input.value = safeIdx;
+  });
+
+  maxPriceTexts.forEach((el) => {
+    el.textContent = `₩${displayPrice.toLocaleString()}`;
+  });
 }

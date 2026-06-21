@@ -1,9 +1,7 @@
 import { fetchProducts } from "../modules/fetchRender.js";
 
-/* 엔트리포인트는 파일 맨 아래 */
-
 let allProducts = [];
-const swipers = {}; // 섹션별 Swiper 인스턴스 보관
+const swipers = {};
 
 /* 영상 데이터 */
 const HERO_VIDEOS = [
@@ -21,8 +19,6 @@ const BRAND_VIDEOS = [
   { id: "G6KBfKVga-s", title: "Rudy Project x FCI: A New Chapter for Italian Cycling" },
 ];
 
-/* 카테고리 모양은 index.html 정적 마크업 */
-
 /* Best Pick 브랜드 탭 데이터 */
 const BRANDS = [
   "all", "RAY-BAN", "FAKEME", "NINE ACCORD", "NISHIDE KAZUO",
@@ -31,18 +27,15 @@ const BRANDS = [
 ];
 
 async function initHome() {
-  // 영상 캐러셀
   initVideoSection("hero", HERO_VIDEOS);
   initVideoSection("brand", BRAND_VIDEOS);
-  renderTabs(); // Best Pick 브랜드 탭 주입
-  bindBestPickTabs(); // 탭 클릭 바인딩 — 미리 해서 이후 코드 에러와 무관하게 동작
-  initTabDragScroll(); // 데스크탑: 탭 마우스 드래그 가로 스크롤
-  bindBestPickLoadMore(); // 더보기 버튼 바인딩
+  renderTabs();
+  bindBestPickTabs();
+  initTabDragScroll();
+  bindBestPickLoadMore();
 
-  // 비동기 로딩: try/catch/finally
   try {
     const data = await fetchProducts();
-    // 노이즈 제거
     allProducts = (data.products || []).filter(
       (p) => p && p.thumbnail && Number(p.price) >= 10000
     );
@@ -54,16 +47,15 @@ async function initHome() {
 
     renderBestPick("all");
     renderJennies();
-    initCelebSwiper(); // 셀럽 캐러셀 + 첫 셀럽 상품 렌더
+    initCelebSwiper();
   } catch (err) {
     console.error(err);
     showErrors();
   } finally {
-    // 성공·실패 공통 정리 지점 (로딩 표시를 추가하면 여기서 해제)
   }
 }
 
-/* ---------- 공통 ---------- */
+/* 공통 */
 function formatPrice(n) {
   return Number(n).toLocaleString("ko-KR");
 }
@@ -76,10 +68,9 @@ function escapeHtml(str = "") {
   );
 }
 
-/* ---------- 영상 캐러셀 ---------- */
-const videoSections = {}; // prefix → 상태
+/* 영상 캐러셀 */
+const videoSections = {};
 
-/* YouTube IFrame API는 페이지당 1회만 로드 */
 let ytApiPromise;
 function loadYouTubeAPI() {
   if (ytApiPromise) return ytApiPromise;
@@ -97,11 +88,10 @@ function loadYouTubeAPI() {
   return ytApiPromise;
 }
 
-/* 슬라이드 = 포스터 + 영상 자리 */
 function videoSlides(prefix, videos) {
   return videos
     .map((v, i) => {
-      const eager = prefix === "hero" && i === 0; // 히어로 첫 장면이 LCP
+      const eager = prefix === "hero" && i === 0;
       return `
     <div class="swiper-slide">
       <div class="${prefix}__video">
@@ -125,21 +115,20 @@ function initVideoSection(prefix, videos) {
 
   const state = {
     prefix, root, videos,
-    players: [], // 지연 생성
+    players: [],
     active: 0,
-    muted: true, // 음소거로 자동재생
-    userPaused: false, // 재생 버튼으로 직접 멈췄는지
-    visible: false, // 화면에 보이는지
-    started: false, // 첫 플레이어를 생성했는지
+    muted: true,
+    userPaused: false,
+    visible: false,
+    started: false,
     swiper: null,
     raf: 0,
   };
   videoSections[prefix] = state;
 
-  // 스와이프 + 진행바
   state.swiper = new Swiper(carousel, {
     slidesPerView: 1,
-    rewind: true, // 마지막 → 처음 반복
+    rewind: true,
     pagination: {
       el: `.${prefix}__pagination`,
       clickable: true,
@@ -152,11 +141,10 @@ function initVideoSection(prefix, videos) {
   bindVideoControls(state);
   startProgressLoop(state);
   updateControlIcons(state);
-  observeVisibility(state); // 보이는 동안 + 상호작용 후에 첫 플레이어 생성
-  armInteraction(); // 첫 사용자 동작 때 영상 로드 시작
+  observeVisibility(state);
+  armInteraction();
 }
 
-/* facade: 첫 동작 때 영상 로드 */
 let userInteracted = false;
 function armInteraction() {
   if (window.__videoInteractArmed) return;
@@ -166,7 +154,6 @@ function armInteraction() {
     if (userInteracted) return;
     userInteracted = true;
     events.forEach((e) => window.removeEventListener(e, onFirst));
-    // 지금 보이는 영상 섹션부터 시작
     Object.values(videoSections).forEach((s) => {
       if (s.visible) startSection(s);
     });
@@ -174,19 +161,17 @@ function armInteraction() {
   events.forEach((e) => window.addEventListener(e, onFirst, { passive: true }));
 }
 
-/* 첫 노출 시 활성 영상 플레이어 생성 */
 async function startSection(state) {
   if (state.started) {
     syncPlayback(state);
     return;
   }
   state.started = true;
-  updateControlIcons(state); // 재생 시작 아이콘
+  updateControlIcons(state);
   await loadYouTubeAPI();
   ensurePlayer(state, state.active);
 }
 
-/* 플레이어 지연 생성 */
 function ensurePlayer(state, i) {
   if (i < 0 || i >= state.videos.length || state.players[i]) return;
   const YT = window.YT;
@@ -203,19 +188,17 @@ function ensurePlayer(state, i) {
         if (i === state.active) syncPlayback(state);
       },
       onStateChange: (e) => {
-        // 영상 끝나면 다음으로
         if (i === state.active && e.data === 0) state.swiper.slideNext();
       },
     },
   });
 }
 
-/* 슬라이드 전환 */
 function onSlideChange(state) {
   state.active = state.swiper.activeIndex;
-  state.userPaused = false; // 이동하면 해당 영상 자동재생
+  state.userPaused = false;
   if (state.started) {
-    ensurePlayer(state, state.active); // 처음 보는 영상이면 이때 생성
+    ensurePlayer(state, state.active);
     state.players.forEach((p, i) => {
       if (!p || !p.seekTo) return;
       applyMute(p, state.muted);
@@ -228,7 +211,6 @@ function onSlideChange(state) {
   resetBars(state);
 }
 
-/* 사용자 일시정지 또는 화면 밖이면 정지, 아니면 재생 */
 function syncPlayback(state) {
   const p = state.players[state.active];
   if (!p || !p.playVideo) return;
@@ -242,7 +224,6 @@ function bindVideoControls(state) {
     .querySelector(`.${prefix}__control[data-action="play"]`)
     ?.addEventListener("click", () => {
       if (!state.started) {
-        // 아직 영상 미로드 → 재생 버튼이 첫 동작이면 로드+재생
         state.userPaused = false;
         startSection(state);
       } else {
@@ -254,7 +235,7 @@ function bindVideoControls(state) {
   root
     .querySelector(`.${prefix}__control[data-action="mute"]`)
     ?.addEventListener("click", () => {
-      state.muted = !state.muted; // 한 번 켜면 계속 유지
+      state.muted = !state.muted;
       state.players.forEach((p) => applyMute(p, state.muted));
       updateControlIcons(state);
     });
@@ -270,7 +251,6 @@ function updateControlIcons(state) {
   const playBtn = root.querySelector(`.${prefix}__control[data-action="play"]`);
   const muteBtn = root.querySelector(`.${prefix}__control[data-action="mute"]`);
   if (playBtn) {
-    // 재생 상태에 따라 아이콘
     const playing = state.started && !state.userPaused;
     const icon = playBtn.querySelector(".material-symbols-rounded");
     if (icon) icon.textContent = playing ? "pause_circle" : "play_circle";
@@ -313,26 +293,24 @@ function startProgressLoop(state) {
   state.raf = requestAnimationFrame(tick);
 }
 
-/* 노출·정지 제어 */
 function observeVisibility(state) {
   new IntersectionObserver(
     ([entry]) => {
       state.visible = entry.isIntersecting;
       if (state.visible && userInteracted) startSection(state);
-      else syncPlayback(state); // 미상호작용·화면 밖 → 시작 안 함/정지
+      else syncPlayback(state);
     },
-    { threshold: 0.3, rootMargin: "200px" } // 200px 전에 미리 준비
+    { threshold: 0.3, rootMargin: "200px" }
   ).observe(state.root);
 }
 
-/* YT API 호출이 준비 전이면 throw 가능 → 안전 래퍼 */
 function safe(fn) {
   try {
     fn();
   } catch (e) {}
 }
 
-/* ---------- Best Pick 브랜드 탭 ---------- */
+/* Best Pick 브랜드 탭 */
 function createTab(brand, isFirst) {
   const label = brand === "all" ? "ALL" : brand;
   const id = "bp-tab-" + brand.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -382,20 +360,17 @@ function initSwiper(key, carouselSelector, scrollbarSelector, extra = {}) {
   });
 }
 
-/* 로딩 완료: 스켈레톤·에러 숨김 */
 function finishLoading(sectionSelector) {
   const section = document.querySelector(sectionSelector);
   if (!section) return;
   section.querySelector('[class*="__error"]')?.setAttribute("hidden", "");
 }
 
-/* ---------- Best Pick ---------- */
-/* 더보기 상태: 현재 탭의 상품 목록 + 표시 개수 */
+/* Best Pick */
 const bestPick = { list: [], shown: 0 };
-const BEST_PICK_INITIAL = 24; /* 24개 = 12열, 가로 행을 가득 채움 */
-const LOAD_MORE_STEP = 10; /* 더보기 클릭당 추가 개수 */
+const BEST_PICK_INITIAL = 24;
+const LOAD_MORE_STEP = 10;
 
-/* 무한 순환으로 count개 카드 추출(소진 시 처음부터 반복) */
 function bestPickCards(start, count) {
   const { list } = bestPick;
   const out = [];
@@ -403,7 +378,6 @@ function bestPickCards(start, count) {
   return out;
 }
 
-/* 카드 2장을 세로로 묶어 슬라이드 1개 = 2행 가로 스크롤 */
 function bestPickPairSlides(products) {
   let html = "";
   for (let i = 0; i < products.length; i += 2) {
@@ -424,9 +398,7 @@ function renderBestPick(brand) {
     brand === "all" ? allProducts : allProducts.filter((p) => p.brand === brand);
 
   bestPick.list = list;
-  // 상품이 적은 브랜드도 순환 반복으로 가로 행을 가득 채움(빈 목록만 0개)
   let count = list.length ? BEST_PICK_INITIAL : 0;
-  // 2행 그리드 빈칸 방지를 위해 카드 수를 짝수로 맞춤(홀수면 순환으로 1장 더)
   if (count % 2 === 1) count += 1;
   bestPick.shown = count;
   renderBestPickGrid(count ? bestPickCards(0, count) : []);
@@ -434,15 +406,13 @@ function renderBestPick(brand) {
   finishLoading(".best-pick");
 }
 
-/* 더보기: 10개 추가(소진 시 처음부터 무한 순환) + 추가된 상품으로 캐러셀 이동 */
 function loadMoreBestPick() {
   const { list, shown } = bestPick;
   if (!list.length) return;
 
-  const next = bestPickCards(shown, LOAD_MORE_STEP); // 무한 순환
+  const next = bestPickCards(shown, LOAD_MORE_STEP);
   bestPick.shown = shown + LOAD_MORE_STEP;
 
-  // 추가분도 2장씩 묶어 슬라이드로
   const slides = [];
   for (let i = 0; i < next.length; i += 2) {
     const pair = next.slice(i, i + 2).map(productCardHtml).join("");
@@ -451,10 +421,9 @@ function loadMoreBestPick() {
 
   const sw = swipers.bestpick;
   if (!sw || !sw.appendSlide) return;
-  const firstNewIndex = sw.slides.length; // 추가 전 슬라이드 수 = 새 첫 슬라이드 인덱스
-  sw.appendSlide(slides); // 끝에 추가
-  sw.update(); // 스크롤바 너비 반영
-  // 추가된 상품이 보이도록 캐러셀을 새 슬라이드 위치로 부드럽게 이동(다음 프레임에)
+  const firstNewIndex = sw.slides.length;
+  sw.appendSlide(slides);
+  sw.update();
   const target = Math.min(firstNewIndex, sw.slides.length - 1);
   requestAnimationFrame(() => sw.slideTo(target, 600));
 }
@@ -468,7 +437,6 @@ function bindBestPickLoadMore() {
 function bindBestPickTabs() {
   const tabs = [...document.querySelectorAll(".best-pick__tab")];
 
-  // 탭 활성화(선택) — 클릭 / Enter / Space(버튼 기본 동작)
   const activate = (tab) => {
     tabs.forEach((t) => {
       t.classList.remove("is-active");
@@ -481,7 +449,6 @@ function bindBestPickTabs() {
     renderBestPick(tab.dataset.brand);
   };
 
-  // 포커스만 이동(수동 활성화) — 로빙 tabindex
   const moveFocus = (index) => {
     const t = tabs[index];
     if (!t) return;
@@ -493,7 +460,6 @@ function bindBestPickTabs() {
   tabs.forEach((tab, i) => {
     tab.addEventListener("click", () => activate(tab));
 
-    // ←/→ 탭 포커스 이동(순환), Home/End 처음/마지막. 선택은 Enter/Space(버튼 기본 클릭)
     tab.addEventListener("keydown", (e) => {
       let target;
       switch (e.key) {
@@ -518,10 +484,7 @@ function bindBestPickTabs() {
   });
 }
 
-/* ---------- 탭 마우스 드래그 가로 스크롤(데스크탑) ----------
-   .best-pick__tabs는 overflow-x:auto라 휠/트랙패드 스크롤은 되지만
-   마우스 클릭-드래그로는 안 밀렸음 → 포인터 드래그로 scrollLeft 제어.
-   터치는 네이티브 스크롤을 그대로 쓰고, 드래그가 발생한 클릭은 탭 전환을 막음. */
+/* 탭 마우스 드래그 가로 스크롤(데스크탑) */
 function initTabDragScroll() {
   const tabs = document.querySelector(".best-pick__tabs");
   if (!tabs) return;
@@ -532,7 +495,7 @@ function initTabDragScroll() {
   let startScroll = 0;
 
   tabs.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === "touch") return; // 터치는 네이티브 스크롤 유지
+    if (e.pointerType === "touch") return;
     isDown = true;
     moved = false;
     startX = e.clientX;
@@ -543,7 +506,7 @@ function initTabDragScroll() {
   window.addEventListener("pointermove", (e) => {
     if (!isDown) return;
     const dx = e.clientX - startX;
-    if (Math.abs(dx) > 3) moved = true; // 3px 이상이면 드래그로 간주
+    if (Math.abs(dx) > 3) moved = true;
     tabs.scrollLeft = startScroll - dx;
   });
 
@@ -555,7 +518,6 @@ function initTabDragScroll() {
   window.addEventListener("pointerup", end);
   window.addEventListener("pointercancel", end);
 
-  // 드래그 직후의 클릭은 탭 활성화 막기(드래그 ≠ 탭 선택)
   tabs.addEventListener(
     "click",
     (e) => {
@@ -564,17 +526,16 @@ function initTabDragScroll() {
       e.stopPropagation();
       moved = false;
     },
-    true // capture: 탭 버튼의 click 핸들러보다 먼저 가로채기
+    true
   );
 }
 
-/* ---------- Jennie's Collection ---------- */
+/* Jennie's Collection */
 function renderJennies() {
   const products = allProducts.slice(0, 9);
   const wrapper = document.querySelector(".collection__carousel .swiper-wrapper");
   if (wrapper) {
     if (window.matchMedia("(min-width: 1200px)").matches) {
-      // 데스크탑: 3장씩 묶어 3행
       let html = "";
       for (let i = 0; i < products.length; i += 3) {
         const group = products.slice(i, i + 3).map(productCardHtml).join("");
@@ -589,18 +550,15 @@ function renderJennies() {
   finishLoading(".collection");
 }
 
-/* ---------- More Collection : 셀럽 캐러셀 ---------- */
-/* Swiper 미사용 — 3슬라이드 무한 순환 (DOM 재배치 + translateX 슬라이드 인).
-   가운데(is-active) 크게 / 양옆(is-prev·is-next) 작게. 드래그·클릭으로 이동. */
+/* More Collection : 셀럽 캐러셀 */
 function initCelebSwiper() {
   const root = document.querySelector(".more-collection__celebs");
   const track = root?.querySelector(".swiper-wrapper");
   if (!root || !track || track.children.length !== 3) return;
 
-  const DURATION = 600; // ms — CSS 전환 시간과 동일
+  const DURATION = 600;
   let isAnimating = false;
 
-  // 슬라이드 역할 부여: roles[i] = "is-prev" | "is-active" | "is-next"
   function setRoles(roles) {
     [...track.children].forEach((el, i) => {
       el.classList.remove("is-prev", "is-active", "is-next");
@@ -608,7 +566,6 @@ function initCelebSwiper() {
     });
   }
 
-  // 가운데(children[1]) 셀럽으로 라벨·상품 동기화
   function sync() {
     const active = track.children[1];
     if (!active) return;
@@ -618,7 +575,6 @@ function initCelebSwiper() {
     renderMore(active.dataset.celeb);
   }
 
-  // 양옆 칸 너비 + gap (현재 브레이크포인트에서 동적 측정)
   function stepSize() {
     const side =
       track.querySelector(".is-prev") || track.querySelector(".is-next");
@@ -627,37 +583,32 @@ function initCelebSwiper() {
     return w + gap;
   }
 
-  // direction: "next" | "prev"
   function rotate(direction, dragOffset = 0) {
     if (isAnimating) return;
     isAnimating = true;
 
     const step = stepSize();
 
-    // 1) 전환 끄고 DOM 재배치 + 시작 위치 보정 + 직전 화면 유지(PRE 역할)
     root.classList.remove("is-sliding");
     track.style.transition = "none";
     if (direction === "next") {
-      track.appendChild(track.firstElementChild); // 맨 앞 → 맨 뒤
+      track.appendChild(track.firstElementChild);
       track.style.transform = `translateX(${step + dragOffset}px)`;
-      setRoles(["is-active", "is-next", "is-prev"]); // 옛 가운데를 그대로 가운데처럼
+      setRoles(["is-active", "is-next", "is-prev"]);
     } else {
-      track.insertBefore(track.lastElementChild, track.firstElementChild); // 맨 뒤 → 맨 앞
+      track.insertBefore(track.lastElementChild, track.firstElementChild);
       track.style.transform = `translateX(${-step + dragOffset}px)`;
       setRoles(["is-next", "is-prev", "is-active"]);
     }
 
-    // 2) 강제 리플로우 — 시작 상태 확정
     void track.offsetHeight;
 
-    // 3) 가운데로 슬라이드 인 (transform·크기 동시 전환)
     root.classList.add("is-sliding");
     track.style.transition = `transform ${DURATION}ms cubic-bezier(0.25, 1, 0.5, 1)`;
     track.style.transform = "translateX(0px)";
-    setRoles(["is-prev", "is-active", "is-next"]); // 새 가운데 확정
+    setRoles(["is-prev", "is-active", "is-next"]);
     sync();
 
-    // 4) 정리
     let safety;
     const done = (e) => {
       if (e && (e.target !== track || e.propertyName !== "transform")) return;
@@ -670,7 +621,7 @@ function initCelebSwiper() {
     safety = setTimeout(done, DURATION + 120);
   }
 
-  /* ---- 드래그 / 스와이프 ---- */
+  /* 드래그 / 스와이프 */
   let startX = 0;
   let dragDistance = 0;
   let isDragging = false;
@@ -707,7 +658,6 @@ function initCelebSwiper() {
       dragDistance = 0;
       rotate("prev", off);
     } else {
-      // 임계값 미만 → 원위치
       track.style.transition = "transform 250ms cubic-bezier(0.25, 1, 0.5, 1)";
       track.style.transform = "translateX(0px)";
       dragDistance = 0;
@@ -720,9 +670,8 @@ function initCelebSwiper() {
   track.addEventListener("touchstart", onDragStart, { passive: true });
   window.addEventListener("touchmove", onDragMove, { passive: false });
   window.addEventListener("touchend", onDragEnd);
-  track.addEventListener("dragstart", (e) => e.preventDefault()); // 이미지 기본 드래그 방지
+  track.addEventListener("dragstart", (e) => e.preventDefault());
 
-  // 양옆 클릭으로 이동 (드래그가 아니었을 때만)
   track.addEventListener("click", (e) => {
     if (dragMoved) return;
     const slide = e.target.closest(".swiper-slide");
@@ -731,21 +680,19 @@ function initCelebSwiper() {
     else if (slide.classList.contains("is-prev")) rotate("prev");
   });
 
-  // 초기 배치: [덱스(prev), GD(active), 나영(next)] — 소스 [GD,나영,덱스]에서 덱스를 맨 앞으로
   track.insertBefore(track.lastElementChild, track.firstElementChild);
   setRoles(["is-prev", "is-active", "is-next"]);
   sync();
 }
 
 function renderMore(celeb) {
-  // 셀럽마다 다른 묶음
   const offset = { gd: 0, nayoung: 8, dex: 16 }[celeb] ?? 0;
   renderInto(".more-collection__carousel", allProducts.slice(offset, offset + 8));
   initSwiper("more", ".more-collection__carousel", ".more-collection__scrollbar");
   finishLoading(".more-collection");
 }
 
-/* ---------- 에러 / 재시도 ---------- */
+/* 에러 / 재시도 */
 function showErrors() {
   [".best-pick", ".collection", ".more-collection"].forEach((sel) => {
     const section = document.querySelector(sel);
@@ -761,10 +708,9 @@ function bindRetry() {
 
 /* 엔트리포인트 */
 if (document.body.dataset.page === "home") {
-  bindRetry(); // 다시 시도 버튼
+  bindRetry();
   initHome();
 
-  // 제니 리사이즈 시 재렌더
   let jennieResizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(jennieResizeTimer);

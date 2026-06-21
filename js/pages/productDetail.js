@@ -8,6 +8,7 @@ import {
 } from "../utils/storage.js";
 
 async function init() {
+  if (!document.getElementById('mainSlider')) return;
   const data = await fetchProducts();
 
   const params = new URLSearchParams(location.search);
@@ -221,8 +222,6 @@ function initActions(product) {
       likeBtn.classList.add('liked');
       if (icon) icon.textContent = 'favorite';
     }
-
-    // [클릭 이벤트]
     likeBtn.addEventListener('click', () => {
       if (!icon) return;
       const currentLikedState = toggleWishlist(product); 

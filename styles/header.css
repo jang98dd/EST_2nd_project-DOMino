@@ -15,7 +15,9 @@
   pointer-events: none;
   transition: 0.3s;
 }
-
+#header-root {
+  min-height: 88px;
+}
 .mobile-nav-overlay.open {
   opacity: 1;
   pointer-events: auto;
@@ -61,13 +63,10 @@
   color: var(--white);
 }
 
-/* 고정 헤더(88px)가 본문 상단을 가리지 않도록 콘텐츠를 아래로 내린다.
-   헤더는 모든 페이지에서 .site-header 로 동일하게 주입된다. */
+/* 고정 헤더(88px) 자리 확보는 #header-root { min-height: 88px } 가 전담한다.
+   여기선 변수와 앵커 스크롤 보정만 둔다(본문 padding-top 중복 제거). */
 :root {
   --header-height: 88px;
-}
-main {
-  padding-top: var(--header-height);
 }
 html {
   scroll-padding-top: var(--header-height);
@@ -367,13 +366,7 @@ html {
   }
 .mega-inner {
   display: grid;
-
-  grid-template-columns:
-    minmax(180px, 370px)
-    repeat(5, 220px)
-    minmax(180px, 360px);
-
-  justify-content: center;
+  grid-template-columns: 1fr repeat(5, minmax(120px, 170px)) 1fr;
 }
 .mega-col.active-blue-col {
   background: var(--primary);
@@ -382,24 +375,32 @@ html {
 .mega-col.active-blue-col ul li a {
   color: var(--white);
 }
-  .mega-col {
+  .mega-col{
     min-height: 436px;
     min-width: 0;
-
-    padding: 40px 24px;
+    padding: 40px 0;
+  }
+  .mega-col:nth-of-type(2) {
+    padding-left: 20px;
+  }
+  .mega-col:nth-of-type(3) {
+    padding-left: 12px;
   }
   .mega-col:nth-of-type(4) {
-    padding-left: 40px;
+    padding-left: 16px;
   }
   .mega-col:nth-of-type(5) {
-    padding-left: 50px;
+    padding-left: 16px;
   }
   .mega-col:nth-of-type(6) {
-    padding-left: 54px;
+    padding-left: 12px;
   }
-
+  .recommend-col {
+    padding: 40px 12px;
+  }
   .active-blue-col {
     background: var(--primary);
+    padding: 40px 0;
   }
 
 .mega-col.body-md {
@@ -432,11 +433,11 @@ html {
 
   .recommend-card {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
-
-    padding: 16px;
-
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
     margin-bottom: 12px;
 
     background: #181818;
@@ -459,6 +460,9 @@ html {
     font-size: 11px;
     color: var(--gray);
     line-height: 1.4;
+  }
+  .recommend-card .arrow {
+    margin-top: 16px;
   }
 
   .mega-col ul li {
@@ -534,5 +538,29 @@ html {
   .banner-link {
     font-size: 12px;
     color: var(--white);
+  }
+}
+
+@media (min-width: 1460px) {
+  .mega-inner {
+    grid-template-columns:
+      1fr
+      repeat(5, minmax(180px, 220px))
+      1fr;
+  }
+  .mega-col:nth-of-type(2) {
+    padding-left: 24px;
+  }
+  .mega-col:nth-of-type(3) {
+    padding-left: 24px;
+  }
+  .mega-col:nth-of-type(4) {
+    padding-left: 32px;
+  }
+  .mega-col:nth-of-type(5) {
+    padding-left: 40px;
+  }
+  .mega-col:nth-of-type(6) {
+    padding-left: 54px;
   }
 }

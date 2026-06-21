@@ -11,10 +11,3 @@ export async function fetchProducts() {
     return [];
   }
 }
-function createProductCard() {
-
-}
-
-function renderProducts() {
-
-}

@@ -9,7 +9,6 @@ body {
 }
 
 .auth--signup {
-  margin-top: var(--header-height); /* 고정 헤더(88px)가 본문을 가리지 않도록 */
   min-height: calc(100vh - 88px);
   padding: 40px 24px;
   background: #f5f5f5;
