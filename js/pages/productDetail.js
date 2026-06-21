@@ -16,11 +16,11 @@ async function init() {
   const products = data.products || [];
   const product = products.find(item => item.id === productId);
   
-  if (!productId) {
-  alert("올바르지 않은 접근입니다. 상품 목록으로 이동합니다.");
-  window.location.href = "./product-list.html"; 
-  return;
-}
+  if (!product) {
+    alert("올바르지 않은 접근입니다. 상품 목록으로 이동합니다.");
+    window.location.href = "./product-list.html";
+    return;
+  }
   updateCartCount();
   updateWishlistCount();
   
@@ -34,8 +34,15 @@ async function init() {
   initActions(product); 
 }
 
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
 function renderProductDetail(product) {
-  const pId = product.id || 1; 
+  if (!product) return;
+
+  const pId = product.id || 1;
   
   const scoresPool = [4.8, 4.2, 4.5, 3.9, 4.7, 4.1, 4.6, 4.3];
   const reviewsPool = [128, 45, 89, 214, 34, 167, 92, 56];
@@ -52,9 +59,9 @@ function renderProductDetail(product) {
   const brandName = product.brand || 'ROUNZ';
   const productTitle = product.title || product.name || 'RZ-193';
   
-  document.getElementById('brand').textContent = brandName;
-  document.getElementById('title').textContent = productTitle;
-  document.getElementById('price').textContent = product.price ? `${Number(product.price).toLocaleString()}원` : '가격 정보 없음';
+  setText('brand', brandName);
+  setText('title', productTitle);
+  setText('price', product.price ? `${Number(product.price).toLocaleString()}원` : '가격 정보 없음');
   const ratingWrapper = document.querySelector('.rating-wrapper');
   if (ratingWrapper) {
     const starPercentage = (score / 5) * 100; 
@@ -195,10 +202,10 @@ function renderProductDetail(product) {
   const images = Array(5).fill(product.thumbnail);  
   
   if (images.length === 0) return;
-  
-  mainSlider.innerHTML = images.map(img => `<img src="${img}" class="main-img" alt="상세 이미지" draggable="false" />`).join('');
-  indicatorBar.innerHTML = images.map((_, idx) => `<div class="indicator-bar ${idx === 0 ? 'active' : ''}" style="cursor:pointer;"></div>`).join('');
-  thumbList.innerHTML = images.map(img => `<img src="${img}" class="thumb-img" alt="썸네일" />`).join('');
+
+  if (mainSlider) mainSlider.innerHTML = images.map(img => `<img src="${img}" class="main-img" alt="상세 이미지" draggable="false" />`).join('');
+  if (indicatorBar) indicatorBar.innerHTML = images.map((_, idx) => `<div class="indicator-bar ${idx === 0 ? 'active' : ''}" style="cursor:pointer;"></div>`).join('');
+  if (thumbList) thumbList.innerHTML = images.map(img => `<img src="${img}" class="thumb-img" alt="썸네일" />`).join('');
 }
 
 function initActions(product) {
@@ -245,7 +252,7 @@ function initActions(product) {
     buyBtn.addEventListener('click', () => {
       const confirmBuy = confirm(`🛍️ [${productTitle}]\n이 상품을 바로 구매하시겠습니까?`);
       if (confirmBuy) {
-        window.location.href = '/cart.html';
+        window.location.href = 'cart.html';
       }
     });
   }

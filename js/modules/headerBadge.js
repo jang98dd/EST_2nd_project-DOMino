@@ -10,7 +10,7 @@ export function initHeaderBadge(headerRoot) {
   const wishlistBtn = headerRoot.querySelector(".wishlist-btn");
   if (cartBtn) {
     cartBtn.onclick = () => {
-      window.location.href = "/cart.html"; 
+      window.location.href = "cart.html"; 
     };
     if (!cartBtn.querySelector(".cart-count")) {
       const badge = document.createElement("span");
@@ -21,7 +21,7 @@ export function initHeaderBadge(headerRoot) {
 
   if (wishlistBtn) {
     wishlistBtn.onclick = () => {
-      window.location.href = "/cart.html";
+      window.location.href = "cart.html";
     };
     if (!wishlistBtn.querySelector(".wishlist-count")) {
       const badge = document.createElement("span");

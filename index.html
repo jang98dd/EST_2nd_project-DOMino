@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ROUNZ</title>
+  <meta name="description" content="AR 가상 피팅과 AI 얼굴형 분석으로 나에게 어울리는 안경을 찾아보세요. 다양한 브랜드의 안경테와 선글라스를 만나는 온라인 안경 쇼핑몰 ROUNZ." />
   <link rel="stylesheet" href="styles/reset.css" />
   <link rel="stylesheet" href="styles/normalize.css" />
   <link rel="stylesheet" href="styles/common.css" />
@@ -61,7 +62,7 @@
         </div>
       </section>
 
-      <!-- 2. CATEGORY  -->
+      <!-- 2. CATEGORY -->
       <section class="category section" aria-labelledby="category-title">
         <div class="page">
           <h2 class="category__title" id="category-title">Category</h2>
@@ -71,35 +72,35 @@
           <div class="category__grid grid">
             <!-- 모양 8종 -->
             <a class="category__item" href="product-list.html" data-shape="round">
-              <img class="category__icon" src="assets/icons/shape_1.png" alt="" />
+              <img class="category__icon" src="assets/icons/frame_round.svg" alt="" />
               <span class="category__label">라운드</span>
             </a>
             <a class="category__item" href="product-list.html" data-shape="square">
-              <img class="category__icon" src="assets/icons/shape_2.png" alt="" />
+              <img class="category__icon" src="assets/icons/frame_square.svg" alt="" />
               <span class="category__label">스퀘어</span>
             </a>
             <a class="category__item" href="product-list.html" data-shape="browline">
-              <img class="category__icon" src="assets/icons/shape_3.png" alt="" />
+              <img class="category__icon" src="assets/icons/frame_aviator.svg" alt="" />
               <span class="category__label">하금테</span>
             </a>
             <a class="category__item" href="product-list.html" data-shape="goggle">
-              <img class="category__icon" src="assets/icons/shape_4.png" alt="" />
+              <img class="category__icon" src="assets/icons/frame_goggle.svg" alt="" />
               <span class="category__label">고글</span>
             </a>
             <a class="category__item" href="product-list.html" data-shape="mix">
-              <img class="category__icon" src="assets/icons/shape_5.png" alt="" />
+              <img class="category__icon" src="assets/icons/frame_mix.svg" alt="" />
               <span class="category__label">믹스</span>
             </a>
             <a class="category__item" href="product-list.html" data-shape="aviator">
-              <img class="category__icon" src="assets/icons/shape_6.png" alt="" />
+              <img class="category__icon" src="assets/icons/frame_browline.svg" alt="" />
               <span class="category__label">보잉</span>
             </a>
             <a class="category__item" href="product-list.html" data-shape="cat-eye">
-              <img class="category__icon" src="assets/icons/shape_7.png" alt="" />
+              <img class="category__icon" src="assets/icons/frame_cat-eye.svg" alt="" />
               <span class="category__label">캣아이</span>
             </a>
             <a class="category__item" href="product-list.html" data-shape="other">
-              <img class="category__icon" src="assets/icons/shape_8.png" alt="" />
+              <img class="category__icon" src="assets/icons/frame_other.svg" alt="" />
               <span class="category__label">기타</span>
             </a>
             <a class="btn category__kids" href="#">KIDS</a>
@@ -199,17 +200,20 @@
       <section class="more-collection section" aria-labelledby="more-title" data-collection="more">
         <h2 class="section-bar" id="more-title">More Collection</h2>
 
-        <!-- 셀럽 이미지 캐러셀 -->
+        <!-- 셀럽 이미지 캐러셀 (가운데 활성 사진에 이름 캡션) -->
         <div class="more-collection__celebs swiper" data-celeb-swiper role="group" aria-label="셀럽 컬렉션">
           <div class="swiper-wrapper">
             <div class="swiper-slide" data-celeb="gd" data-celeb-name="지드래곤">
               <img src="assets/images/celebrity_gd.jpg" alt="지드래곤 컬렉션" />
+              <span class="more-collection__celeb-cap">지드래곤's Collection</span>
             </div>
             <div class="swiper-slide" data-celeb="nayoung" data-celeb-name="나영">
               <img src="assets/images/celebrity_nayoung.jpg" alt="나영 컬렉션" />
+              <span class="more-collection__celeb-cap">나영's Collection</span>
             </div>
             <div class="swiper-slide" data-celeb="dex" data-celeb-name="덱스">
               <img src="assets/images/celebrity_dex.jpg" alt="덱스 컬렉션" />
+              <span class="more-collection__celeb-cap">덱스's Collection</span>
             </div>
           </div>
         </div>
@@ -237,6 +241,46 @@
             <span data-celeb-label>지드래곤</span> 컬렉션 더 보기
             <span class="material-icons" aria-hidden="true">chevron_right</span>
           </a>
+        </div>
+      </section>
+
+      <!-- 5-1. AI · AR 기술 체험 (Experience) -->
+      <section class="techlab" aria-labelledby="techlab-title">
+        <h2 class="section-bar" id="techlab-title">Experience</h2>
+        <div class="techlab__bg" aria-hidden="true"></div>
+        <div class="techlab__dim" aria-hidden="true"></div>
+
+        <div class="page techlab__inner">
+          <p class="techlab__subtitle">라운즈의 기술</p>
+          <h3 class="techlab__title">뭘 사야할지 고민될 때,</h3>
+
+          <div class="techlab__panels">
+            <!-- 좌 : 얼굴형 분석 -->
+            <article class="techlab-panel techlab-panel--ai">
+              <img class="techlab-panel__reveal" src="assets/images/ai-analyze.png" alt="" aria-hidden="true" />
+              <div class="techlab-panel__content">
+                <h4 class="techlab-panel__title">얼굴형 분석하기</h4>
+                <p class="techlab-panel__desc">나의 얼굴형을 알아보고 가장 잘 어울리는 프레임을 확인해보세요.</p>
+                <a class="btn category__cta-btn category__cta-btn--analysis" href="analysis.html">
+                  <img class="category__cta-icon" src="assets/icons/face.png" alt="" />
+                  얼굴형 분석
+                </a>
+              </div>
+            </article>
+
+            <!-- 우 : 안경 써보기 -->
+            <article class="techlab-panel techlab-panel--ar">
+              <img class="techlab-panel__reveal" src="assets/images/ar-fit.png" alt="" aria-hidden="true" />
+              <div class="techlab-panel__content">
+                <h4 class="techlab-panel__title">지금 안경 써보기</h4>
+                <p class="techlab-panel__desc">매장에 방문하지 않아도 핸드폰과 컴퓨터 카메라만 있다면 지금 바로 착용해보고 결정하세요.</p>
+                <a class="btn category__cta-btn category__cta-btn--fitting" href="fitting.html">
+                  <img class="category__cta-icon" src="assets/icons/wear.png" alt="" />
+                  안경 써보기
+                </a>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -330,7 +374,7 @@
     </main>
 
     <!-- 공통 푸터 — 로더가 components/footer.html을 주입 -->
-    <div data-include="/components/footer.html"></div>
+    <div data-include="components/footer.html"></div>
   </div>
 
   <!-- 슬라이드 -->
@@ -346,3 +390,4 @@
 </body>
 
 </html>
+ 

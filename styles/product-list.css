@@ -55,6 +55,8 @@
   font-size: var(--font-18);
   position: sticky;
   top: 0;
+  z-index: 1000;
+  background: var(--white);
 }
 
 .sort-btn,
@@ -83,12 +85,6 @@
   flex-wrap: wrap;
   gap: 16px;
 }
-.color-grid label:nth-child(1) .color-dot { background: var(--primary); }
-.color-grid label:nth-child(2) .color-dot { background: var(--black); }
-.color-grid label:nth-child(3) .color-dot { background: var(--purple); }
-.color-grid label:nth-child(4) .color-dot { background: var(--white); }
-.color-grid label:nth-child(5) .color-dot { background: var(--superGray); }
-.color-grid label:last-child .color-dot { background: var(--secondary); }
 
 .color-dot {
   width: 24px;
@@ -166,7 +162,7 @@
   height: 160px;
   overflow: hidden;
   z-index: 1;
-  transform: translateZ(0);
+  transform: none;
 }
 .product-card__thumb img {
   display: block;
@@ -241,22 +237,25 @@
 }
 .sort-dropdown {
   position: relative;
+  z-index: 9999;
   display: inline-block;
 }
 
 .sort-menu {
   position: absolute;
+  z-index: 10000;
   top: 100%;
   left: 0;
   display: none;
   min-width: 120px;
-  z-index: 10;
+  background: var(--white);
   padding: 0;
   box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
 }
 
 .sort-menu.is-open {
   display: block;
+  background: var(--white);
 }
 
 .sort-menu li {
@@ -466,7 +465,7 @@ body.is-sheet-open {
   overflow: hidden;
 }
 .skeleton-card { 
-  animation: skeleton-loading 1.5s infinte;
+  animation: skeleton-loading 1.5s infinite;
 }
 .product-display-area:not(.is-loading) .skeleton-list {
   display: none;
@@ -516,6 +515,15 @@ body.is-sheet-open {
   transition: all 0.2s ease;
   font-size: var(--font-18);
 }
+.product-content {
+  position: relative;
+  z-index: 1;
+}
+.color-grid button:first-child { width: 32px; height: 18px; }
+.color-grid button:nth-child(2) { background: var(--black); }
+.color-grid button:nth-child(3) { border: 1px solid var(--superGray); }
+.color-grid button:nth-child(4) { background: gold; }
+.color-grid button:last-child { background: silver; }
 
 .btn-page.is-active {
   border: 1px solid var(--primary);
@@ -588,12 +596,6 @@ body.is-sheet-open {
     cursor: pointer;
     font-size: 14px;
   }
-.color-grid label:nth-child(1) .color-dot { background: var(--primary); }
-.color-grid label:nth-child(2) .color-dot { background: var(--black); }
-.color-grid label:nth-child(3) .color-dot { background: var(--purple); }
-.color-grid label:nth-child(4) .color-dot { background: var(--white); border: 1px solid var(--gray); }
-.color-grid label:nth-child(5) .color-dot { background: var(--superGray); }
-.color-grid button:last-child { background: none; }
   .product-cards {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: 40px;
