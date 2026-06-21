@@ -175,7 +175,7 @@ async function loadRecommendations() {
     const track = document.querySelector('.frame-track');
     if (!track) return; 
 
-    const response = await fetch('/data/products.json'); 
+    const response = await fetch('data/products.json'); 
     if (!response.ok) throw new Error('데이터를 불러오는데 실패했습니다.');
     
     const data = await response.json();

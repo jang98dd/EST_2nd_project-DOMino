@@ -1,3 +1,7 @@
+/* 고정 헤더(88px)가 본문을 가리지 않도록 */
+.page--product-list {
+  margin-top: var(--header-height);
+}
 .mode-btn {
   height: var(--btn-2xs);
   font-size: var(--font-18);

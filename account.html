@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ROUNZ - 마이페이지</title>
+    <meta name="description" content="ROUNZ 마이페이지. 주문 내역, 찜한 상품, 회원 정보를 한곳에서 관리하세요." />
     <link rel="stylesheet" href="styles/reset.css" />
     <link rel="stylesheet" href="styles/normalize.css" />
     <link rel="stylesheet" href="styles/common.css" />
@@ -13,6 +14,12 @@
     <link rel="stylesheet" href="./css/account.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/static/pretendard.min.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- 고정 헤더(88px)가 본문을 가리지 않도록 -->
+    <style>
+      main.page {
+        margin-top: var(--header-height);
+      }
+    </style>
   </head>
 
   <body>
@@ -25,7 +32,7 @@
       </main>
 
       <!-- 공통 푸터 — loadComponents.js가 components/footer.html을 주입 -->
-      <div data-include="/components/footer.html"></div>
+      <div data-include="components/footer.html"></div>
     </div>
 
     <script type="module" src="js/loadComponents.js"></script>
