@@ -481,22 +481,19 @@
 .category__viewall {
   width: 100%;
   height: 48px;
+  gap: 4px;
   font-size: var(--font-14);
   font-weight: 700;
   line-height: 1.4;
+  background: transparent;
+  border: 1px solid var(--black);
+  color: var(--black);
 }
 
 .category__kids {
   background: var(--gray);
   color: var(--superGray);
   letter-spacing: 4px;
-}
-
-.category__viewall {
-  gap: 4px;
-  background: transparent;
-  border: 1px solid var(--black);
-  color: var(--black);
 }
 
 .category__viewall .material-icons {
@@ -703,10 +700,7 @@
   position: relative;
 }
 
-.collection__carousel {
-  margin-top: 8px;
-}
-
+.collection__carousel,
 .more-collection__carousel {
   margin-top: 8px;
 }
