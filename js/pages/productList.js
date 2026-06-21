@@ -135,6 +135,7 @@ function bindTopCategories() {
 function handleCategoryChange(category) {}
 
 async function init() {
+  if (!productCards) return;
   window.state = state;
   bindUI();
   initBottomSheet();

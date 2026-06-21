@@ -8,6 +8,7 @@ import {
 } from "../utils/storage.js";
 
 async function init() {
+  if (!document.getElementById('mainSlider')) return;
   const data = await fetchProducts();
 
   const params = new URLSearchParams(location.search);
