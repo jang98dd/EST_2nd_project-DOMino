@@ -1,12 +1,9 @@
 /* HOME 페이지 */
 
-/* 전역 자간 -2.5% */
 * {
   letter-spacing: -0.025em;
 }
 
-/* 반응형 줄바꿈 br (모바일 숨김 → 화면별로 켬)
-   .br-td=태블릿·데스크탑 / .br-t=태블릿만 / .br-d=데스크탑만 */
 .br-td,
 .br-t,
 .br-d {
@@ -52,7 +49,6 @@
   font-weight: 700;
   line-height: var(--lh-loose);
 }
-/* techlab은 풀블리드 배경/딤 위라 헤더를 위로 띄움 */
 .techlab .section-bar {
   position: relative;
   z-index: 2;
@@ -80,10 +76,10 @@
 .collection .collection__scrollbar,
 .more-collection .more-collection__scrollbar {
   position: relative;
-  width: auto; /* swiper 기본 width:calc(100%-2%) 무력화 → margin이 폭을 정하게(우측 잘림 방지) */
-  left: 0; /* swiper 기본 left:1% 무력화 → 우측 쏠림 방지 */
-  bottom: auto; /* swiper 기본 bottom:4px 무력화 → 위로 뜨는 것 방지 */
-  margin: 11px 0 0; /* 카드 → 스크롤바 */
+  width: auto;
+  left: 0;
+  bottom: auto;
+  margin: 11px 0 0;
   height: 2px;
   background: var(--gray);
 }
@@ -94,7 +90,6 @@
   background: var(--black);
 }
 
-/* 제니(모바일) — 카드↔바 여백을 바↔버튼과 동일하게 16 (태블릿/데스크탑은 아래 미디어쿼리가 덮어씀) */
 .collection .collection__scrollbar {
   margin-top: 16px;
 }
@@ -113,7 +108,7 @@
   gap: 16px;
 }
 
-/* ===== 상품카드 컴포넌트 ===== */
+/* 상품카드 컴포넌트 */
 /* 구조 + 모바일 기본 */
 .product-card {
   width: 160px;
@@ -131,27 +126,27 @@
   display: block;
 }
 .product-card__info {
-  margin-top: 8px; /* 이미지 → 브랜드 */
+  margin-top: 8px;
 }
 /* 브랜드·가격·상품명 폰트 */
 .product-card .product-card__brand,
 .product-card .product-card__price {
   font-size: var(--font-14);
   font-weight: 700;
-  line-height: 1; /* 100% */
+  line-height: 1;
 }
 .product-card .product-card__name {
-  margin-top: 10px; /* 브랜드 → 상품명 */
+  margin-top: 10px;
   font-size: var(--font-14);
   font-weight: 400;
-  line-height: 1.15; /* 115% */
+  line-height: 1.15;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* 2줄, 넘치면 … */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .product-card .product-card__price {
-  margin-top: 10px; /* 상품명 → 가격 */
+  margin-top: 10px;
 }
 
 /* Best Pick */
@@ -193,7 +188,7 @@
   .collection .product-card .product-card__price,
   .more-collection .product-card .product-card__brand,
   .more-collection .product-card .product-card__price {
-    line-height: 1.4; /* 140% */
+    line-height: 1.4;
   }
   .collection .product-card .product-card__name,
   .more-collection .product-card .product-card__name {
@@ -245,7 +240,7 @@
   }
   .collection .product-card .product-card__info {
     margin-top: 0;
-    margin-left: 17px; /* 이미지 ↔ 텍스트 17 */
+    margin-left: 17px;
   }
   .collection .product-card .product-card__brand,
   .collection .product-card .product-card__price {
@@ -319,10 +314,10 @@
   transform: translate(-50%, -50%);
   height: 100%;
   width: auto;
-  max-width: none; /* reset.css의 iframe max-width:100% 무력화 → 좌우 넘쳐서 cover */
+  max-width: none;
   aspect-ratio: 16 / 9;
   border: 0;
-  pointer-events: none; /* 영상 위에서도 스와이프/컨트롤이 동작 */
+  pointer-events: none;
 }
 
 /* 상단 진행바 */
@@ -360,7 +355,7 @@
   display: block;
   width: 0;
   height: 100%;
-  background: rgba(28, 28, 28, 0.7); /* 블랙 70% */
+  background: rgba(28, 28, 28, 0.7);
 }
 
 /* 커스텀 컨트롤 */
@@ -391,25 +386,21 @@
 .hero__control .material-symbols-rounded,
 .brand__control .material-symbols-rounded {
   font-size: 32px;
-  /* 아이콘 thin */
   font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 40;
 }
 
 /* 2. CATEGORY */
 .category {
-  margin-bottom: 56px; /* 마지막 버튼 → 다음 섹션 */
+  margin-bottom: 56px;
 }
 
-/* More Collection → AI·AR : 위는 여백, 아래(Event)는 붙임(색으로 구분).
-   태블릿 56 / 데스크탑 64 는 각 미디어쿼리에서 덮어씀 */
 .more-collection + .techlab {
   margin-top: 40px;
 }
 .techlab + .event {
-  margin-top: 0;
+  margin-top: var(--section);
 }
 
-/* .page 좌우 패딩 제거 */
 .category .page {
   padding: 0;
 }
@@ -548,7 +539,7 @@
 }
 
 .best-pick__subtitle {
-  display: none; /* 모바일 숨김, 태블릿+에서 표시 */
+  display: none;
   color: var(--white);
 }
 
@@ -556,13 +547,12 @@
 .best-pick__tabs {
   display: flex;
   gap: 8px;
-  margin-top: 16px; /* 헤더 → 탭 */
+  margin-top: 16px;
   overflow-x: auto;
   scrollbar-width: none;
-  cursor: grab; /* 마우스 드래그 가로 스크롤 가능 표시 */
+  cursor: grab;
 }
 
-/* 드래그 중: 커서 변경 + 텍스트 선택 방지(JS가 .is-dragging 토글) */
 .best-pick__tabs.is-dragging {
   cursor: grabbing;
   user-select: none;
@@ -576,7 +566,7 @@
   flex: 0 0 auto;
   height: 32px;
   padding: 0 16px;
-  box-shadow: inset 0 0 0 1px var(--black); /* 테두리 안쪽 */
+  box-shadow: inset 0 0 0 1px var(--black);
   background: transparent;
   color: var(--black);
   font-size: var(--font-14);
@@ -596,7 +586,7 @@
 
 /* 상품 패널 */
 .best-pick__panel {
-  margin-top: 16px; /* 탭 → 상품 카드 */
+  margin-top: 16px;
 }
 
 .best-pick__carousel {
@@ -609,7 +599,7 @@
   gap: 4px;
   width: 232px;
   height: 40px;
-  margin: 11px auto 0; /* 스크롤바 → 더보기 11, 좌우 auto 가운데 */
+  margin: 11px auto 0;
   font-size: var(--font-16);
   font-weight: 400;
   line-height: 1.25;
@@ -643,7 +633,7 @@
   object-fit: cover;
 }
 
-/* 셀럽 이미지 캐러셀 (Swiper 미사용 — 3슬라이드 무한 순환, JS가 DOM 재배치) */
+/* 셀럽 이미지 캐러셀 */
 .more-collection__celebs .swiper-wrapper {
   display: flex;
   justify-content: center;
@@ -670,18 +660,14 @@
   width: 100%;
   aspect-ratio: 272 / 376;
   object-fit: cover;
-  pointer-events: none; /* 드래그 시 이미지 고스트 방지 */
+  pointer-events: none;
 }
-/* 슬라이드 인 동안에만 크기 전환 (드래그 중엔 전환 없음) */
 .more-collection__celebs.is-sliding .swiper-slide,
 .more-collection__celebs.is-sliding .swiper-slide img {
   transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1),
     height 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* 가운데(활성) 사진: 하단 그라데이션 + 이름 캡션 (히어로/브랜드 방식).
-   데스크탑 ::after는 양옆 흰색 오버레이 용도라, 그라데이션은 ::before 로 분리.
-   가독성 위해 진하게(하단 0.88 검정). */
 .more-collection__celebs .swiper-slide.is-active::before {
   content: "";
   position: absolute;
@@ -705,7 +691,7 @@
   font-size: var(--font-18);
   font-weight: 700;
   line-height: var(--lh-tight);
-  opacity: 0; /* 비활성 슬라이드는 숨김 */
+  opacity: 0;
   pointer-events: none;
 }
 .more-collection__celebs .swiper-slide.is-active .more-collection__celeb-cap {
@@ -718,11 +704,11 @@
 }
 
 .collection__carousel {
-  margin-top: 8px; /* 이미지 → 카드 */
+  margin-top: 8px;
 }
 
 .more-collection__carousel {
-  margin-top: 8px; /* 셀럽 이미지 → 카드 */
+  margin-top: 8px;
 }
 
 /* 더 보기 버튼 */
@@ -740,7 +726,6 @@
   color: var(--black);
 }
 
-/* 제니(모바일) — 바↔버튼 여백 16 (카드↔바와 동일) */
 .collection .btn-more {
   margin-top: 16px;
 }
@@ -773,11 +758,11 @@
 
 /* 7. STORE */
 .store {
-  margin-bottom: 48px; /* 파트너 안경원 찾기 → Brand 섹션 */
+  margin-bottom: 48px;
 }
 
 .store__block {
-  margin-top: 16px; /* 이미지·이전 블록 → 블록 타이틀 */
+  margin-top: 16px;
 }
 
 .store__title {
@@ -798,7 +783,7 @@
 }
 
 /* 반응형 */
-/* ===== 태블릿 */
+/* 태블릿 */
 @media (min-width: 768px) {
   /* HERO / BRAND 영상 */
   .hero__carousel {
@@ -821,29 +806,28 @@
     padding: 0 24px;
   }
   .category {
-    margin-bottom: 0; /* 마지막 버튼 → 다음 섹션 */
+    margin-bottom: 0;
   }
   .category__title {
     padding-left: 0;
-    margin-bottom: 0; /* 타이틀 → 부제 0 */
-    font-size: var(--font-56); /* 56 */
-    font-weight: 300; /* Light */
-    line-height: 1.14; /* 114% */
-    letter-spacing: -0.05em; /* -5% */
+    margin-bottom: 0;
+    font-size: var(--font-56);
+    font-weight: 300;
+    line-height: 1.14;
+    letter-spacing: -0.05em;
   }
   .category__subtitle {
     display: block;
     padding-left: 0;
-    margin: 0 0 12px; /* 부제 → 버튼 12 */
-    font-size: var(--font-16); /* 16 */
-    font-weight: 400; /* Regular */
-    line-height: 1.25; /* 125% */
+    margin: 0 0 12px;
+    font-size: var(--font-16);
+    font-weight: 400;
+    line-height: 1.25;
   }
   .category__grid {
     grid-template-columns: repeat(4, 1fr);
-    gap: 16px; /* 버튼 사이 가로·세로 16 */
+    gap: 16px;
   }
-  /* 우측열 액션 버튼 배치 */
   .category__cta-btn--analysis {
     grid-column: 4;
     grid-row: 1;
@@ -871,22 +855,21 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    padding-bottom: 8px; /* 부제 → 헤더 끝 8 */
+    padding-bottom: 8px;
   }
   .best-pick__header h2 {
-    font-size: var(--font-56); /* 56 */
-    font-weight: 300; /* Light */
-    line-height: 1.14; /* 114% */
+    font-size: var(--font-56);
+    font-weight: 300;
+    line-height: 1.14;
   }
   .best-pick__subtitle {
     display: block;
-    margin: 0; /* Best Pick → 부제 0 */
-    font-size: var(--font-16); /* 16 */
-    font-weight: 400; /* Regular */
-    line-height: 1.25; /* 125% */
+    margin: 0;
+    font-size: var(--font-16);
+    font-weight: 400;
+    line-height: 1.25;
   }
 
-  /* .page 패딩 제거 → 요소별로 좌우 간격 따로 지정 */
   .best-pick .page {
     padding: 0;
   }
@@ -898,14 +881,12 @@
   }
   .best-pick__tab {
     height: 40px;
-    padding: 0 24px; /* 상하10은 높이40에 흡수, 글씨 14 고정 */
+    padding: 0 24px;
   }
 
-  /* 탭 → 상품카드 24 */
   .best-pick__panel {
     margin-top: 24px;
   }
-  /* 상품 캐러셀 좌우 24 인셋 */
   .best-pick .best-pick__carousel,
   .collection .collection__carousel,
   .more-collection .more-collection__carousel {
@@ -928,7 +909,6 @@
     line-height: 1.25;
   }
 
-  /* 더보기 → 제니 섹션 헤더 36 */
   .best-pick + .collection {
     margin-top: 36px;
   }
@@ -940,15 +920,12 @@
     font-size: var(--font-28);
     line-height: var(--lh-tight);
   }
-  /* 대표 이미지 768×456 */
   .collection__signature img {
     aspect-ratio: 768 / 456;
   }
-  /* .page 패딩 제거 → 요소별 좌우 간격 따로 */
   .collection .page {
     padding: 0;
   }
-  /* 대표이미지 → 상품카드 24 */
   .collection__carousel {
     margin-top: 24px;
   }
@@ -966,7 +943,6 @@
     font-weight: 400;
     line-height: 1.25;
   }
-  /* 더보기 → More Collection 헤더 56 */
   .collection + .more-collection {
     margin-top: 56px;
   }
@@ -978,27 +954,22 @@
     font-size: var(--font-28);
     line-height: var(--lh-tight);
   }
-  /* 셀럽 이미지 캐러셀 — 칸 605 (확대 없음, 가운데정렬 회전) */
   .more-collection__celebs .swiper-slide {
     width: 605px;
   }
   .more-collection__celebs img {
     aspect-ratio: 605 / 456;
   }
-  /* 활성 사진 이름 캡션 — 큰 사진에 맞게 확대 */
   .more-collection__celeb-cap {
     bottom: 22px;
     font-size: var(--font-28);
   }
-  /* .page 패딩 제거 → 요소별 좌우 간격 */
   .more-collection .page {
     padding: 0;
   }
-  /* 셀럽 이미지 → 상품카드 24 */
   .more-collection__carousel {
     margin-top: 24px;
   }
-  /* 상품카드 스펙은 제니와 동일 */
   /* 스크롤바 */
   .more-collection .more-collection__scrollbar {
     margin: 22px 0 0;
@@ -1013,7 +984,6 @@
     font-weight: 400;
     line-height: 1.25;
   }
-  /* More Collection → AI·AR(techlab) 56 */
   .more-collection + .techlab {
     margin-top: 56px;
   }
@@ -1025,11 +995,9 @@
     font-size: var(--font-28);
     line-height: var(--lh-tight);
   }
-  /* 배너 이미지 768×592 */
   .event__banner img {
     aspect-ratio: 768 / 592;
   }
-  /* 본문 가운데 정렬 */
   .event .page {
     text-align: center;
   }
@@ -1046,7 +1014,6 @@
     font-weight: 400;
     line-height: 1.25;
   }
-  /* 더보기 → Store 헤더 56 */
   .event + .store {
     margin-top: 56px;
   }
@@ -1058,11 +1025,9 @@
     font-size: var(--font-28);
     line-height: var(--lh-tight);
   }
-  /* 매장 이미지 768×436 */
   .store__image img {
     aspect-ratio: 768 / 436;
   }
-  /* 본문 좌우 여백 96 */
   .store .page {
     padding: 0 96px;
   }
@@ -1093,7 +1058,6 @@
     padding-top: 16px;
     border-top: 1px solid var(--gray);
   }
-  /* 마지막 링크 → Brand 섹션 56 */
   .store + .brand {
     margin-top: 56px;
   }
@@ -1105,7 +1069,7 @@
 }
 
 @media (min-width: 1200px) {
-  /* ===== 데스크탑 ===== */
+  /* 데스크탑 */
 
   /* 1·8. HERO / BRAND — 와이드 영상 */
   .hero__carousel {
@@ -1128,7 +1092,6 @@
     top: 24px;
     gap: 8px;
   }
-  /* Hero·Brand 컨트롤 — 왼쪽 하단 코너, 48px (터치 타깃) */
   .hero__controls,
   .brand__controls {
     left: 40px;
@@ -1154,15 +1117,12 @@
   .category__title {
     margin-bottom: 4px;
   }
-  /* 부제 → 그리드 22 */
   .category__subtitle {
     margin-bottom: 22px;
   }
-  /* 4열 + 간격 24 */
   .category__grid {
     gap: 24px;
   }
-  /* 박스/버튼 높이 80 */
   .category__item,
   .category__kids,
   .category__viewall,
@@ -1176,7 +1136,7 @@
     font-size: 20px;
   }
   .category__label {
-    width: 60px; /* 고정폭 가운데정렬 */
+    width: 60px;
   }
   /* 얼굴형분석 / 안경써보기 */
   .category__cta-btn {
@@ -1188,18 +1148,15 @@
   .category__cta-icon {
     height: 40px;
   }
-  /* 모양 아이콘 높이 28 */
   .category__icon {
     height: 28px;
   }
-  /* 구분선 높이 21 / 굵기 1.5 */
   .category__item::before {
     height: 21px;
     width: 1.5px;
   }
 
   /* 3. BEST PICK */
-  /* 네이비 헤더 112, 제목→부제 4, 부제→끝 16 */
   .best-pick__header {
     min-height: 112px;
     padding-bottom: 16px;
@@ -1207,7 +1164,6 @@
   .best-pick__subtitle {
     margin-top: 4px;
   }
-  /* 컨텐츠 1128 가운데 */
   .best-pick .page {
     max-width: 1128px;
     margin: 0 auto;
@@ -1222,13 +1178,11 @@
   .best-pick__tab {
     height: 48px;
     padding: 0 32px;
-    font-size: 20px; /* 활성·비활성 모두 20 */
+    font-size: 20px;
   }
-  /* 탭 → 카드 24 */
   .best-pick__panel {
     margin-top: 24px;
   }
-  /* 캐러셀 인셋 리셋 */
   .best-pick .best-pick__carousel,
   .collection .collection__carousel,
   .more-collection .more-collection__carousel {
@@ -1245,7 +1199,6 @@
     margin-top: 43px;
     line-height: 1.5;
   }
-  /* 더보기 → 제니 섹션 64 */
   .best-pick + .collection {
     margin-top: 64px;
   }
@@ -1254,14 +1207,14 @@
   .collection {
     background: var(--black);
     display: grid;
-    grid-template-columns: 608px 450px; /* 이미지 / 카드영역 */
-    column-gap: 32px; /* 이미지 ↔ 카드 32 */
+    grid-template-columns: 608px 450px;
+    column-gap: 32px;
     grid-template-areas:
       "title ."
-      "sig   page"; /* 제목=이미지 위, 카드=우측열 */
-    justify-content: center; /* 컨텐츠 1090 가운데 */
+      "sig   page";
+    justify-content: center;
     align-items: start;
-    padding: 64px 0; /* 섹션 상하 64 */
+    padding: 64px 0;
   }
   /* 제목 */
   .collection .section-bar {
@@ -1273,7 +1226,6 @@
     font-weight: 700;
     line-height: 1.22;
   }
-  /* 대표 이미지 608×744, 헤더 → 이미지 18 */
   .collection__signature {
     grid-area: sig;
     margin-top: 18px;
@@ -1281,7 +1233,6 @@
   .collection__signature img {
     aspect-ratio: 608 / 744;
   }
-  /* 카드영역 세로 가운데 정렬 */
   .collection .page {
     grid-area: page;
     align-self: center;
@@ -1305,13 +1256,11 @@
     color: var(--white);
     border-color: var(--white);
   }
-  /* 상품카드 텍스트 흰색 */
   .collection .product-card .product-card__brand,
   .collection .product-card .product-card__name,
   .collection .product-card .product-card__price {
     color: var(--white);
   }
-  /* 데스크탑 제니 — 3행 묶음 */
   .collection__carousel .swiper-wrapper,
   .collection__carousel .swiper-slide {
     height: auto;
@@ -1321,23 +1270,19 @@
     flex-direction: column;
     gap: 24px;
   }
-  /* 제니 → More 간격 */
   .collection + .more-collection {
     margin-top: 64px;
   }
 
   /* 5. MORE COLLECTION */
-  /* 헤더 "More Collection" 표시 — 네이비 띠를 아래 셀럽 이미지 너비(1128)에 맞춤 */
   .more-collection .section-bar {
     max-width: 1128px;
     margin: 0 auto;
   }
-  /* 셀럽 캐러셀 — 가운데(is-active) 580×578 / 양옆 250×426 + 흰색 오버레이 40%
-     안쪽 폭 1128 = 250 + 24 + 580 + 24 + 250 (= 컨테이너 1200 − 좌우 36) */
   .more-collection__celebs {
     max-width: 1128px;
     margin: 0 auto;
-    overflow: hidden; /* 가운데+양옆 3장만 노출 (Figma 동일) */
+    overflow: hidden;
   }
   .more-collection__celebs .swiper-wrapper {
     gap: 24px;
@@ -1349,9 +1294,8 @@
   .more-collection__celebs .swiper-slide img {
     width: 250px;
     height: 426px;
-    max-width: none; /* reset.css의 img max-width:100% 무력화 (전환 중 깎임 방지) */
+    max-width: none;
   }
-  /* 가운데(활성) — 580×578 */
   .more-collection__celebs .swiper-slide.is-active {
     width: 580px;
     z-index: 2;
@@ -1360,11 +1304,10 @@
     width: 580px;
     height: 578px;
   }
-  /* 양옆(비활성) — 이미지 영역(250×426)에 흰색 40%, 전환 시 부드럽게 페이드 */
   .more-collection__celebs .swiper-slide::after {
     content: "";
     position: absolute;
-    top: 76px; /* (578-426)/2 */
+    top: 76px;
     bottom: 76px;
     left: 0;
     right: 0;
@@ -1376,12 +1319,10 @@
   .more-collection__celebs .swiper-slide.is-active::after {
     opacity: 0;
   }
-  /* 카드 영역 1116 가운데 */
   .more-collection .page {
     max-width: 1116px;
     margin: 0 auto;
   }
-  /* 셀럽 → 상품카드 14 */
   .more-collection__carousel {
     margin-top: 14px;
   }
@@ -1395,7 +1336,6 @@
     margin-top: 18px;
     line-height: 1.5;
   }
-  /* More Collection → AI·AR(techlab) 64 */
   .more-collection + .techlab {
     margin-top: 64px;
   }
@@ -1410,7 +1350,7 @@
     padding: 64px max(64px, calc((100% - 1200px) / 2 + 64px));
   }
   .event .section-bar {
-    display: none; /* 헤더 없음 */
+    display: none;
   }
   .event .page {
     grid-area: text;
@@ -1464,7 +1404,6 @@
     color: var(--white);
     line-height: 1.5;
   }
-  /* Event → Store 간격 */
   .event + .store {
     margin-top: 0;
   }
@@ -1474,13 +1413,13 @@
     display: grid;
     grid-template-columns: 528px 1fr;
     grid-template-areas: "image text";
-    column-gap: 72px; /* 이미지 ↔ 텍스트 72 */
-    align-items: center; /* 텍스트를 이미지 높이 정중앙에 */
-    margin-bottom: 0; /* 모바일 48 해제 */
+    column-gap: 72px;
+    align-items: center;
+    margin-bottom: 0;
     padding: 64px calc((100% - 1128px) / 2);
   }
   .store .section-bar {
-    display: none; /* 헤더 없음 */
+    display: none;
   }
   .store__image {
     grid-area: image;
@@ -1490,7 +1429,7 @@
   }
   .store .page {
     grid-area: text;
-    padding: 0; /* 기본 좌우 16 제거 → 텍스트 칸 528 그대로 */
+    padding: 0;
   }
   /* 블록 — 좌측 정렬 */
   .store__block {
@@ -1501,17 +1440,14 @@
   .store__desc {
     text-align: left;
   }
-  /* 제목 볼드 36 122% / 제목→설명 8 */
   .store__title {
     margin: 0 0 8px;
   }
-  /* 설명 레귤러 18 155% / 설명→링크 8 */
   .store__desc {
     margin: 0 0 8px;
     font-size: var(--font-18);
     line-height: 1.55;
   }
-  /* 링크 레귤러 18 155% */
   .store__link {
     line-height: 1.55;
   }
@@ -1521,30 +1457,17 @@
     padding-top: 39px;
     border-top: 1px solid var(--gray);
   }
-  /* 이미지 → Brand */
   .store + .brand {
     margin-top: 0;
   }
 }
 
-/* ============================================================
-   5-1. AI · AR 기술 체험
-   - ar:ai-test.png 배경 + 딤 처리
-   - 좌/우 패널 hover 시 ai-analyze / ar-fit 이미지가
-     각각 좌측 하단 / 우측 하단에서 중앙으로 슬라이드 인
-   - 버튼은 카테고리 CTA(.category__cta-btn) 재사용
-   ============================================================ */
+/* 5-1. AI · AR 기술 체험 */
 .techlab {
   position: relative;
   overflow: hidden;
   color: var(--white);
   background: var(--black);
-}
-/* 배경(ar:ai-test) — 콜론 포함 경로라 따옴표로 감쌈 */
-.techlab__bg {
-  position: absolute;
-  inset: 0;
-  background: url("../assets/images/ar_ai-test.png") center 50px / cover no-repeat;
 }
 /* 딤 처리 */
 .techlab__dim {
@@ -1553,7 +1476,7 @@
   background: rgba(10, 12, 20, 0.72);
 }
 .techlab__inner {
-  position: relative; /* 배경/딤 위 */
+  position: relative;
   z-index: 1;
   padding-top: 40px;
   padding-bottom: 40px;
@@ -1583,15 +1506,13 @@
 .techlab-panel {
   position: relative;
   display: flex;
-  flex-direction: column; /* 본문(스크림)이 카드 전체 너비를 차지하도록 */
+  flex-direction: column;
   min-height: 250px;
   overflow: hidden;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* 카드 이미지: 항상 보이며 평소엔 모서리 쪽으로 살짝 치우침,
-   hover 시 중앙으로 슬라이드(전 구간에서 hover 가능하면 동작) */
 .techlab-panel__reveal {
   position: absolute;
   inset: 0;
@@ -1602,16 +1523,15 @@
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .techlab-panel--ai .techlab-panel__reveal {
-  transform: translate(-8%, 7%) scale(1.12); /* 평소: 좌측 하단으로 치우침 */
+  transform: translate(-8%, calc(7% - 40px)) scale(1.12);
 }
 .techlab-panel--ar .techlab-panel__reveal {
-  transform: translate(8%, 7%) scale(1.12); /* 평소: 우측 하단으로 치우침 */
+  transform: translate(8%, calc(7% - 40px)) scale(1.12);
 }
 .techlab-panel:hover .techlab-panel__reveal {
-  transform: translate(0, 0) scale(1); /* hover: 중앙으로 */
+  transform: translate(0, 0) scale(1);
 }
 
-/* 본문 — 하단 정렬 + 가독성 스크림(텍스트 영역만 진하게) */
 .techlab-panel__content {
   position: relative;
   z-index: 1;
@@ -1641,26 +1561,22 @@
   font-size: var(--font-14);
   line-height: var(--lh-loose);
 }
-/* 버튼: 카테고리 CTA 재사용 — 카드에 맞게 더 작고 컴팩트하게(전 구간) */
 .techlab-panel__content .category__cta-btn {
   width: auto;
-  height: 38px;
-  padding: 0 16px;
+  height: 44px;
+  padding: 0 20px;
   margin-top: 8px;
-  font-size: var(--font-14);
+  font-size: var(--font-16);
 }
 .techlab-panel__content .category__cta-icon {
-  height: 18px;
+  height: 20px;
 }
 
-/* 태블릿+ : 패널 좌우 2열 */
 @media (min-width: 768px) {
-  /* Experience 헤더 — 다른 섹션 헤더와 동일(56) */
   .techlab .section-bar {
     height: 56px;
     font-size: var(--font-28);
   }
-  /* AI·AR → Event 여백을 표준과 통일 */
   .techlab + .event {
     margin-top: 56px;
   }
@@ -1674,7 +1590,6 @@
   }
   .techlab__title {
     margin-bottom: 24px;
-    /* 폰트 크기는 base의 var(--font-28) 유지 → 이벤트 제목과 동일 */
   }
   .techlab__panels {
     flex-direction: row;
@@ -1691,11 +1606,9 @@
 
 /* 데스크탑 */
 @media (min-width: 1200px) {
-  /* 데스크탑은 인라인 제목만 (이벤트 패턴) — Experience 바 숨김 */
   .techlab .section-bar {
     display: none;
   }
-  /* AI·AR → Event 여백 표준 통일 */
   .techlab + .event {
     margin-top: 64px;
   }

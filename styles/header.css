@@ -63,13 +63,10 @@
   color: var(--white);
 }
 
-/* 고정 헤더(88px)가 본문 상단을 가리지 않도록 콘텐츠를 아래로 내린다.
-   헤더는 모든 페이지에서 .site-header 로 동일하게 주입된다. */
+/* 고정 헤더(88px) 자리 확보는 #header-root { min-height: 88px } 가 전담한다.
+   여기선 변수와 앵커 스크롤 보정만 둔다(본문 padding-top 중복 제거). */
 :root {
   --header-height: 88px;
-}
-main {
-  padding-top: var(--header-height);
 }
 html {
   scroll-padding-top: var(--header-height);
